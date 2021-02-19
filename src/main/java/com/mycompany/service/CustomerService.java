@@ -1,11 +1,11 @@
 package com.mycompany.service;
 
-import com.mycompany.model.Customer;
+import com.mycompany.repository.Customer;
 import com.mycompany.repository.CustomerRepository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class CustomerService {
@@ -17,15 +17,22 @@ public class CustomerService {
         this.repository = repository;
     }
 
-    public List<Customer> findAllCustomer(){
+    public List<Customer> findAllCustomers() {
         return repository.findAll();
     }
 
-    public Customer findCustomerById(String id){
+    public Customer findCustomerById(String id) {
         return repository.findByIdCustomer(id);
     }
 
-    public void delete(Customer customer){
+    public void delete(Customer customer) {
         repository.delete(customer);
+    }
+
+    public Customer save(Customer customer) {
+        String id = UUID.randomUUID().toString();
+        customer.setId(id);
+        customer.setHref("https://host:port/tmf-api/customerManagement/v4/customer/" + id);
+        return customer;
     }
 }

@@ -1,54 +1,59 @@
 package com.mycompany.controller;
 
-import com.mycompany.exception.ResourceNotFoundException;
-import com.mycompany.model.Customer;
-import com.mycompany.repository.CustomerRepository;
+import com.mycompany.repository.Account;
+import com.mycompany.repository.Customer;
+import com.mycompany.model.FullCustomer;
+import com.mycompany.service.AccountService;
 import com.mycompany.service.CustomerService;
-import org.aspectj.apache.bcel.classfile.Code;
+import com.mycompany.service.FullCustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/customerManagement/v4")
 public class CustomerController {
 
-    /*final CustomerRepository repository;
 
-    public CustomerController(CustomerRepository repository) {
-        this.repository = repository;
-    }*/
+    final
+    FullCustomerService fullCustomerService;
 
-    private final CustomerService customerService;
-
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
+    public CustomerController(FullCustomerService fullCustomerService) {
+        this.fullCustomerService = fullCustomerService;
     }
 
-    @GetMapping("/customer")
+
+
+   /* @GetMapping("/customer")
     public List<Customer> getAll() {
-        return customerService.findAllCustomer();
+        return customerService.findAllCustomers();
     }
-
+*/
 
     @GetMapping("/customer/{id}")
-    public ResponseEntity<Customer> getCustomerById(@PathVariable(value = "id") String id) {
-        Customer customer = customerService.findCustomerById(id);
-        return ResponseEntity.ok().body(customer);
+    public ResponseEntity<FullCustomer> getCustomerById(@PathVariable(value = "id") String id) {
+        FullCustomer fullCustomer = fullCustomerService.getFullCustomerById(id);
+        if (fullCustomer == null)
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        return ResponseEntity.ok().body(fullCustomer);
     }
 
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+   /* @PostMapping("/customer")
+    public Customer createCustomer(@RequestBody Customer customer) {
+        return customerService.save(customer);
+    }
+
     @DeleteMapping("/customer/{id}")
-    public void deleteCustomer(@PathVariable(value = "id") String id)  {
+    public ResponseEntity deleteCustomer(@PathVariable(value = "id") String id) {
         Customer customer = customerService.findCustomerById(id);
+        if (customer == null)
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         customerService.delete(customer);
-
-    }
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }*/
 
 }
