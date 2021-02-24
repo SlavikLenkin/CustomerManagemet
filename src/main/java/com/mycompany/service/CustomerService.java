@@ -22,7 +22,7 @@ public class CustomerService {
     }
 
     public Customer findCustomerById(String id) {
-        return repository.findByIdCustomer(id);
+        return repository.findCustomerById(id);
     }
 
     public void delete(Customer customer) {
@@ -33,6 +33,7 @@ public class CustomerService {
         String id = UUID.randomUUID().toString();
         customer.setId(id);
         customer.setHref("https://host:port/tmf-api/customerManagement/v4/customer/" + id);
+        repository.save(customer);
         return customer;
     }
 }

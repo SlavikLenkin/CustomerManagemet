@@ -5,9 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.mycompany.repository.Account;
 import com.mycompany.repository.Customer;
+import com.mycompany.repository.EngagedParty;
 import com.mycompany.repository.ValidFor;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -29,11 +28,25 @@ public class FullCustomer {
 
     private ValidFor validFor;
 
-    private List<Account> account;
+    private EngagedParty engagedParty;
+
+    private List<Account> accounts;
 
 
 
 
+    @JsonIgnore
+    public Customer getCustomer(){
+        Customer customer = new Customer();
+        customer.setHref(href);
+        customer.setId(id);
+        customer.setName(name);
+        customer.setStatus(status);
+        customer.setStatusReason(statusReason);
+        customer.setValidFor(validFor);
+
+        return customer;
+    }
 
     public void setCustomer(Customer customer) {
         this.href = customer.getHref();
@@ -44,12 +57,20 @@ public class FullCustomer {
         this.validFor = customer.getValidFor();
     }
 
-    public List<Account> getAccount() {
-        return account;
+    public EngagedParty getEngagedParty() {
+        return engagedParty;
     }
 
-    public void setAccount(List<Account> account) {
-        this.account = account;
+    public void setEngagedParty(EngagedParty engagedParty) {
+        this.engagedParty = engagedParty;
+    }
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
     }
 
     public String getHref() {
@@ -109,7 +130,7 @@ public class FullCustomer {
                 ", status='" + status + '\'' +
                 ", statusReason='" + statusReason + '\'' +
                 ", validFor=" + validFor +
-                ", account=" + account +
+                ", account=" + accounts +
                 '}';
     }
 }

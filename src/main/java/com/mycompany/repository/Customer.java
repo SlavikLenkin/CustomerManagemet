@@ -37,6 +37,24 @@ public class Customer implements Serializable {
     @Column(name = "account_id")
     private String accountId;
 
+    @Column(name = "engaged_party_id")
+    private String engagedPartyId;
+
+    @Column(name = "pay_method_id")
+    private String payMethodId;
+
+    @Column(name = "contact_medium_id")
+    private String contactMediumId;
+
+    @Column(name = "characteristic_id")
+    private String characteristicId;
+
+    @Column(name = "agreement_id")
+    private String agreementId;
+
+    @Column(name = "related_party_id")
+    private String relatedPartyId;
+
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_customer")
@@ -91,6 +109,8 @@ public class Customer implements Serializable {
     public void setValidFor(ValidFor validFor) {
         this.validFor = validFor;
     }
+
+
 
     @Override
     public String toString() {

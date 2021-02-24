@@ -1,5 +1,6 @@
 package com.mycompany.controller;
 
+import com.mycompany.ApiPath;
 import com.mycompany.repository.Account;
 import com.mycompany.repository.Customer;
 import com.mycompany.model.FullCustomer;
@@ -11,16 +12,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/customerManagement/v4")
-public class CustomerController {
+public class CustomerController implements ApiPath {
 
 
     final
     FullCustomerService fullCustomerService;
+
+
 
     public CustomerController(FullCustomerService fullCustomerService) {
         this.fullCustomerService = fullCustomerService;
@@ -28,32 +32,32 @@ public class CustomerController {
 
 
 
-   /* @GetMapping("/customer")
-    public List<Customer> getAll() {
-        return customerService.findAllCustomers();
+    @GetMapping(PATH_CUSTOMER)
+    public List<FullCustomer> getAll() {
+        return fullCustomerService.getAllFullCustomer();
     }
-*/
 
-    @GetMapping("/customer/{id}")
-    public ResponseEntity<FullCustomer> getCustomerById(@PathVariable(value = "id") String id) {
+
+    @GetMapping(PATH_CUSTOMER_ID)
+    public ResponseEntity<FullCustomer> getCustomerById(@PathVariable(value = ID) String id) {
         FullCustomer fullCustomer = fullCustomerService.getFullCustomerById(id);
         if (fullCustomer == null)
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         return ResponseEntity.ok().body(fullCustomer);
     }
 
-   /* @PostMapping("/customer")
-    public Customer createCustomer(@RequestBody Customer customer) {
-        return customerService.save(customer);
+    @PostMapping(PATH_CUSTOMER)
+    public FullCustomer createCustomer(@Valid @RequestBody FullCustomer fullCustomer) {
+        return fullCustomerService.save(fullCustomer);
     }
 
     @DeleteMapping("/customer/{id}")
-    public ResponseEntity deleteCustomer(@PathVariable(value = "id") String id) {
-        Customer customer = customerService.findCustomerById(id);
-        if (customer == null)
+    public ResponseEntity deleteCustomer(@PathVariable(value = ID) String id) {
+        FullCustomer fullCustomer = fullCustomerService.getFullCustomerById(id);
+        if (fullCustomer == null)
             return new ResponseEntity(HttpStatus.NOT_FOUND);
-        customerService.delete(customer);
+        fullCustomerService.delete(fullCustomer);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
-    }*/
+    }
 
 }
