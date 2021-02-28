@@ -1,19 +1,18 @@
 package com.mycompany.model;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.mycompany.repository.Account;
-import com.mycompany.repository.Customer;
-import com.mycompany.repository.EngagedParty;
-import com.mycompany.repository.ValidFor;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.mycompany.repository.*;
 
 import java.util.List;
 
-
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class FullCustomer {
-
+public class CustomerDto {
 
 
     private String href;
@@ -30,23 +29,11 @@ public class FullCustomer {
 
     private EngagedParty engagedParty;
 
+    @JsonProperty(value = "account")
     private List<Account> accounts;
 
-
-
-
-    @JsonIgnore
-    public Customer getCustomer(){
-        Customer customer = new Customer();
-        customer.setHref(href);
-        customer.setId(id);
-        customer.setName(name);
-        customer.setStatus(status);
-        customer.setStatusReason(statusReason);
-        customer.setValidFor(validFor);
-
-        return customer;
-    }
+    @JsonProperty(value = "relatedParty")
+    private List<RelatedParty> relatedParties;
 
     public void setCustomer(Customer customer) {
         this.href = customer.getHref();
@@ -55,6 +42,15 @@ public class FullCustomer {
         this.status = customer.getStatus();
         this.statusReason = customer.getStatusReason();
         this.validFor = customer.getValidFor();
+
+    }
+
+    public List<RelatedParty> getRelatedParties() {
+        return relatedParties;
+    }
+
+    public void setRelatedParties(List<RelatedParty> relatedParties) {
+        this.relatedParties = relatedParties;
     }
 
     public EngagedParty getEngagedParty() {
@@ -124,13 +120,14 @@ public class FullCustomer {
     @Override
     public String toString() {
         return "FullCustomer{" +
-                "href='" + href + '\'' +
+                ", href='" + href + '\'' +
                 ", id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", status='" + status + '\'' +
                 ", statusReason='" + statusReason + '\'' +
                 ", validFor=" + validFor +
-                ", account=" + accounts +
+                ", engagedParty=" + engagedParty +
+                ", accounts=" + accounts +
                 '}';
     }
 }

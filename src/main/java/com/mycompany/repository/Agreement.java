@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "agreement")
-public class Agreemetn {
+public class Agreement {
 
 
     @Column(name = "href")
@@ -12,13 +12,12 @@ public class Agreemetn {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     @Column(name = "name")
     private String name;
 
-    public Agreemetn() {
+    public Agreement() {
     }
 
     public String getId() {

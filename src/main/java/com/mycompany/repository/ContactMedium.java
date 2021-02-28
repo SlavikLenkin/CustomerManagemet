@@ -11,7 +11,6 @@ public class ContactMedium {
     @JsonIgnore
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     @Column(name = "preferred")

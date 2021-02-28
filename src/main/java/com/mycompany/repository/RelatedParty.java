@@ -1,6 +1,8 @@
 package com.mycompany.repository;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -8,13 +10,11 @@ import java.io.Serializable;
 @Table(name = "related_party")
 public class RelatedParty implements Serializable {
 
-
     @Column(name = "href")
     private String href;
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     @Column(name = "name")

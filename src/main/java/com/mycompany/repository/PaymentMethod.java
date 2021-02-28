@@ -11,7 +11,6 @@ public class PaymentMethod implements Serializable {
     private String href;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     private String name;

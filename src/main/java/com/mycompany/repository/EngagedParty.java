@@ -1,6 +1,8 @@
 package com.mycompany.repository;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -11,10 +13,14 @@ import java.io.Serializable;
 public class EngagedParty implements Serializable {
 
 
+    @JsonProperty(value = "@referredType")
+    @Transient
+    private String type = "Organization";
+
+
     private String href;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     private String name;
@@ -49,7 +55,8 @@ public class EngagedParty implements Serializable {
     @Override
     public String toString() {
         return "EngagedParty{" +
-                "href='" + href + '\'' +
+                "type='" + type + '\'' +
+                ", href='" + href + '\'' +
                 ", id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 '}';

@@ -1,19 +1,13 @@
 package com.mycompany.controller;
 
 import com.mycompany.ApiPath;
-import com.mycompany.repository.Account;
-import com.mycompany.repository.Customer;
-import com.mycompany.model.FullCustomer;
-import com.mycompany.service.AccountService;
-import com.mycompany.service.CustomerService;
-import com.mycompany.service.FullCustomerService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.mycompany.model.CustomerDto;
+import com.mycompany.service.CustomerDtoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -22,41 +16,41 @@ public class CustomerController implements ApiPath {
 
 
     final
-    FullCustomerService fullCustomerService;
+    CustomerDtoService customerDtoService;
 
 
 
-    public CustomerController(FullCustomerService fullCustomerService) {
-        this.fullCustomerService = fullCustomerService;
+    public CustomerController(CustomerDtoService customerDtoService) {
+        this.customerDtoService = customerDtoService;
     }
 
 
 
     @GetMapping(PATH_CUSTOMER)
-    public List<FullCustomer> getAll() {
-        return fullCustomerService.getAllFullCustomer();
+    public List<CustomerDto> getAll() {
+        return customerDtoService.getAllFullCustomer();
     }
 
 
     @GetMapping(PATH_CUSTOMER_ID)
-    public ResponseEntity<FullCustomer> getCustomerById(@PathVariable(value = ID) String id) {
-        FullCustomer fullCustomer = fullCustomerService.getFullCustomerById(id);
-        if (fullCustomer == null)
+    public ResponseEntity<CustomerDto> getCustomerById(@PathVariable(value = ID) String id) {
+        CustomerDto customerDto = customerDtoService.getFullCustomerById(id);
+        if (customerDto == null)
             return new ResponseEntity(HttpStatus.NOT_FOUND);
-        return ResponseEntity.ok().body(fullCustomer);
+        return ResponseEntity.ok().body(customerDto);
     }
 
     @PostMapping(PATH_CUSTOMER)
-    public FullCustomer createCustomer(@Valid @RequestBody FullCustomer fullCustomer) {
-        return fullCustomerService.save(fullCustomer);
+    public CustomerDto createCustomer(@Valid @RequestBody CustomerDto customerDto) {
+        return customerDtoService.save(customerDto);
     }
 
     @DeleteMapping("/customer/{id}")
     public ResponseEntity deleteCustomer(@PathVariable(value = ID) String id) {
-        FullCustomer fullCustomer = fullCustomerService.getFullCustomerById(id);
-        if (fullCustomer == null)
+        CustomerDto customerDto = customerDtoService.getFullCustomerById(id);
+        if (customerDto == null)
             return new ResponseEntity(HttpStatus.NOT_FOUND);
-        fullCustomerService.delete(fullCustomer);
+        customerDtoService.delete(customerDto);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 

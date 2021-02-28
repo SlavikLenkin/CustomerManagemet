@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class EngagedPartyService {
@@ -32,6 +33,22 @@ public class EngagedPartyService {
         System.out.println(customer.getEngagedPartyId());
         return findEngagedPartyById(str);
     }
+
+
+    public EngagedParty save(EngagedParty engagedParty){
+        if (engagedParty == null){
+            return null;
+        }
+        String id = UUID.randomUUID().toString();
+        engagedParty.setId(id);
+        engagedParty.setHref("https://host:port/tmf-api/customerManagement/v4/customer/" + id);
+        repository.save(engagedParty);
+        return engagedParty;
+    }
+
+    public void delete(EngagedParty engagedParty){repository.delete(engagedParty);}
+
+
 
 
 

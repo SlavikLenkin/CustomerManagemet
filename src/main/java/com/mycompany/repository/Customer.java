@@ -1,7 +1,12 @@
 package com.mycompany.repository;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.vladmihalcea.hibernate.type.array.StringArrayType;
 import lombok.Data;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,6 +17,10 @@ import java.util.List;
 @Table(name = "customer")
 @Data
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@TypeDef(
+        name = "string-array",
+        typeClass = StringArrayType.class
+)
 public class Customer implements Serializable {
 
 
@@ -34,32 +43,37 @@ public class Customer implements Serializable {
     private ValidFor validFor;
 
 
-    @Column(name = "account_id")
-    private String accountId;
+    @Type(type= "string-array")
+    @Column(name = "account_id",columnDefinition = "text[]")
+    private String[] accountId;
+
 
     @Column(name = "engaged_party_id")
     private String engagedPartyId;
 
-    @Column(name = "pay_method_id")
-    private String payMethodId;
+    @Type(type= "string-array")
+    @Column(name = "pay_method_id",columnDefinition = "text[]")
+    private String[] payMethodId;
 
-    @Column(name = "contact_medium_id")
-    private String contactMediumId;
+    @Type(type= "string-array")
+    @Column(name = "contact_medium_id",columnDefinition = "text[]")
+    private String[] contactMediumId;
 
-    @Column(name = "characteristic_id")
-    private String characteristicId;
+    @Type(type= "string-array")
+    @Column(name = "characteristic_id",columnDefinition = "text[]")
+    private String[] characteristicId;
 
-    @Column(name = "agreement_id")
-    private String agreementId;
+    @Type(type= "string-array")
+    @Column(name = "agreement_id",columnDefinition = "text[]")
+    private String[] agreementId;
 
-    @Column(name = "related_party_id")
-    private String relatedPartyId;
-
+    @Type(type= "string-array")
+    @Column(name = "related_party_id",columnDefinition = "text[]")
+    private String[] relatedPartyId;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_customer")
     private List<CreditProfile> creditProfile ;
-
 
 
     public String getHref() {
@@ -111,17 +125,15 @@ public class Customer implements Serializable {
     }
 
 
-
     @Override
     public String toString() {
         return "Customer{" +
-                "href='" + href + '\''  +
+                ", href='" + href + '\'' +
                 ", id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", status='" + status + '\'' +
                 ", statusReason='" + statusReason + '\'' +
                 ", validFor=" + validFor +
-                ", accountId='" + accountId + '\'' +
                 '}';
     }
 }

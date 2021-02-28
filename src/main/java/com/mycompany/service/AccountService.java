@@ -23,30 +23,20 @@ public class AccountService {
         return repository.findAccountById(id);
     }*/
 
-    public List<Account> findAllAccount(Customer customer) {
+    public List<Account> findAllAccounts(Customer customer) {
         List<Account> accounts = new ArrayList<>();
         if (customer.getAccountId() == null)
             return accounts;
-        String[] idAccounts = customer.getAccountId()
-                .substring(1,customer.getAccountId().length()-1)
-                .split(",");
-        System.out.println(idAccounts[0]);
-        System.out.println(idAccounts[1]);
-        accounts = repository.findAccountById(idAccounts);
-        /*for (String idAccount : idAccounts) {
-            List<String> strings = new ArrayList<>();
-            strings.add(idAccount);
-          *//*  idAccount = idAccount.
-                    replaceAll("[^A-Za-zА-Яа-я0-9]", "");*//*
-            Account account = findAccountById(idAccount);
-            if (account != null)
-                accounts.add(account);
-        }*/
+        System.out.println("Tut");
+        accounts = repository.findAccountById(customer.getAccountId());
         return accounts;
     }
 
 
     public List<Account> save(List<Account> accounts) {
+        if (accounts == null){
+            return null;
+        }
         for (Account account: accounts) {
             String id = UUID.randomUUID().toString();
             account.setId(id);
