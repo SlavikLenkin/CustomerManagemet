@@ -37,6 +37,9 @@ public class CustomerDto {
     @JsonProperty(value = "characteristic")
     private List<Characteristic> characteristics;
 
+    @JsonProperty(value = "agreement")
+    private List<Agreement> agreements;
+
     public void setCustomer(Customer customer) {
         this.href = customer.getHref();
         this.id = customer.getId();
@@ -45,6 +48,14 @@ public class CustomerDto {
         this.statusReason = customer.getStatusReason();
         this.validFor = customer.getValidFor();
 
+    }
+
+    public List<Agreement> getAgreements() {
+        return agreements;
+    }
+
+    public void setAgreements(List<Agreement> agreements) {
+        this.agreements = agreements;
     }
 
     public List<Characteristic> getCharacteristics() {

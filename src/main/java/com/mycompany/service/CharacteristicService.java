@@ -4,7 +4,6 @@ package com.mycompany.service;
 import com.mycompany.repository.Characteristic;
 import com.mycompany.repository.CharacteristicRepository;
 import com.mycompany.repository.Customer;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,20 +21,20 @@ public class CharacteristicService {
         this.repository = repository;
     }
 
-    public List<Characteristic> findAllCharacteristics(Customer customer){
+    public List<Characteristic> findAllCharacteristics(Customer customer) {
         List<Characteristic> characteristics = new ArrayList<>();
-        if (customer.getCharacteristicId()==null){
+        if (customer.getCharacteristicId() == null) {
             return characteristics;
         }
         characteristics = repository.findCharacteristicById(customer.getCharacteristicId());
         return characteristics;
     }
 
-    public List<Characteristic> save(List<Characteristic> characteristics){
-        if (characteristics==null){
+    public List<Characteristic> save(List<Characteristic> characteristics) {
+        if (characteristics == null) {
             return null;
         }
-        for (Characteristic characteristic : characteristics){
+        for (Characteristic characteristic : characteristics) {
             String id = UUID.randomUUID().toString();
             characteristic.setId(id);
             repository.save(characteristic);
@@ -43,7 +42,9 @@ public class CharacteristicService {
         return characteristics;
     }
 
-    public void delete(Characteristic characteristic){repository.delete(characteristic);}
+    public void delete(Characteristic characteristic) {
+        repository.delete(characteristic);
+    }
 
 }
 
