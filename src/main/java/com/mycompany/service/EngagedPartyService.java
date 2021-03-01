@@ -1,14 +1,10 @@
 package com.mycompany.service;
 
-import com.mycompany.repository.Account;
 import com.mycompany.repository.Customer;
 import com.mycompany.repository.EngagedParty;
 import com.mycompany.repository.EngagedPartyRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -25,7 +21,7 @@ public class EngagedPartyService {
         return repository.findEngagedPartyById(id);
     }
 
-    public EngagedParty findEngagedParty(Customer customer){
+    public EngagedParty findEngagedParty(Customer customer) {
         EngagedParty engagedParty = new EngagedParty();
         if (customer.getEngagedPartyId() == null)
             return engagedParty;
@@ -35,8 +31,8 @@ public class EngagedPartyService {
     }
 
 
-    public EngagedParty save(EngagedParty engagedParty){
-        if (engagedParty == null){
+    public EngagedParty save(EngagedParty engagedParty) {
+        if (engagedParty == null) {
             return null;
         }
         String id = UUID.randomUUID().toString();
@@ -46,10 +42,9 @@ public class EngagedPartyService {
         return engagedParty;
     }
 
-    public void delete(EngagedParty engagedParty){repository.delete(engagedParty);}
-
-
-
+    public void delete(EngagedParty engagedParty) {
+        repository.delete(engagedParty);
+    }
 
 
 }

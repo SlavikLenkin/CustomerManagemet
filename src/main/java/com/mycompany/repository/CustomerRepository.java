@@ -7,11 +7,11 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface    CustomerRepository extends JpaRepository<Customer,Integer> {
+public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
     String queryFindCustomers = "select * from customer\n" +
             "where id = :id ";
 
-    @Query(value = queryFindCustomers,nativeQuery = true)
+    @Query(value = queryFindCustomers, nativeQuery = true)
     Customer findCustomerById(@Param("id") String id);
 }

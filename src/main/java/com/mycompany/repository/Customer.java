@@ -1,8 +1,6 @@
 package com.mycompany.repository;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vladmihalcea.hibernate.type.array.StringArrayType;
 import lombok.Data;
 import org.hibernate.annotations.Type;
@@ -43,37 +41,37 @@ public class Customer implements Serializable {
     private ValidFor validFor;
 
 
-    @Type(type= "string-array")
-    @Column(name = "account_id",columnDefinition = "text[]")
+    @Type(type = "string-array")
+    @Column(name = "account_id", columnDefinition = "text[]")
     private String[] accountId;
 
 
     @Column(name = "engaged_party_id")
     private String engagedPartyId;
 
-    @Type(type= "string-array")
-    @Column(name = "pay_method_id",columnDefinition = "text[]")
+    @Type(type = "string-array")
+    @Column(name = "pay_method_id", columnDefinition = "text[]")
     private String[] payMethodId;
 
-    @Type(type= "string-array")
-    @Column(name = "contact_medium_id",columnDefinition = "text[]")
+    @Type(type = "string-array")
+    @Column(name = "contact_medium_id", columnDefinition = "text[]")
     private String[] contactMediumId;
 
-    @Type(type= "string-array")
-    @Column(name = "characteristic_id",columnDefinition = "text[]")
+    @Type(type = "string-array")
+    @Column(name = "characteristic_id", columnDefinition = "text[]")
     private String[] characteristicId;
 
-    @Type(type= "string-array")
-    @Column(name = "agreement_id",columnDefinition = "text[]")
+    @Type(type = "string-array")
+    @Column(name = "agreement_id", columnDefinition = "text[]")
     private String[] agreementId;
 
-    @Type(type= "string-array")
-    @Column(name = "related_party_id",columnDefinition = "text[]")
+    @Type(type = "string-array")
+    @Column(name = "related_party_id", columnDefinition = "text[]")
     private String[] relatedPartyId;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_customer")
-    private List<CreditProfile> creditProfile ;
+    private List<CreditProfile> creditProfile;
 
 
     public String getHref() {

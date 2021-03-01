@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomerTransformer {
 
-    public Customer transform(CustomerDto customerDto){
+    public Customer transform(CustomerDto customerDto) {
         Customer target = new Customer();
         target.setHref(customerDto.getHref());
         target.setId(customerDto.getId());

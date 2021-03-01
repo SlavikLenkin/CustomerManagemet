@@ -7,15 +7,13 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface EngagedPartyRepository extends JpaRepository<EngagedParty,Integer> {
+public interface EngagedPartyRepository extends JpaRepository<EngagedParty, Integer> {
 
     String queryFindEngagedParty = "select * from engaged_party  \n" +
             "where id = :id ";
 
     @Query(value = queryFindEngagedParty, nativeQuery = true)
     EngagedParty findEngagedPartyById(@Param("id") String id);
-
-
 
 
 }

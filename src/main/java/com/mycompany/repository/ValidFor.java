@@ -1,7 +1,5 @@
 package com.mycompany.repository;
 
-import lombok.Data;
-
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
@@ -11,10 +9,10 @@ import java.util.Date;
 public class ValidFor implements Serializable {
 
     @Column(name = "start_date_time")
-    private Date  startDateTime;
+    private Date startDateTime;
 
     @Column(name = "end_date_time")
-    private Date  endDateTime;
+    private Date endDateTime;
 
     public ValidFor() {
     }

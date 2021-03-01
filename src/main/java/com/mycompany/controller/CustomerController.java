@@ -19,11 +19,9 @@ public class CustomerController implements ApiPath {
     CustomerDtoService customerDtoService;
 
 
-
     public CustomerController(CustomerDtoService customerDtoService) {
         this.customerDtoService = customerDtoService;
     }
-
 
 
     @GetMapping(PATH_CUSTOMER)

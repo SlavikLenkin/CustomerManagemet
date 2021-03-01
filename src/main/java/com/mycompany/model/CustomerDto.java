@@ -1,12 +1,8 @@
 package com.mycompany.model;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.mycompany.repository.*;
 
 import java.util.List;
@@ -35,6 +31,12 @@ public class CustomerDto {
     @JsonProperty(value = "relatedParty")
     private List<RelatedParty> relatedParties;
 
+    @JsonProperty(value = "paymentMethod")
+    private List<PaymentMethod> paymentMethods;
+
+    @JsonProperty(value = "characteristic")
+    private List<Characteristic> characteristics;
+
     public void setCustomer(Customer customer) {
         this.href = customer.getHref();
         this.id = customer.getId();
@@ -43,6 +45,22 @@ public class CustomerDto {
         this.statusReason = customer.getStatusReason();
         this.validFor = customer.getValidFor();
 
+    }
+
+    public List<Characteristic> getCharacteristics() {
+        return characteristics;
+    }
+
+    public void setCharacteristics(List<Characteristic> characteristics) {
+        this.characteristics = characteristics;
+    }
+
+    public List<PaymentMethod> getPaymentMethods() {
+        return paymentMethods;
+    }
+
+    public void setPaymentMethods(List<PaymentMethod> paymentMethods) {
+        this.paymentMethods = paymentMethods;
     }
 
     public List<RelatedParty> getRelatedParties() {
@@ -119,8 +137,8 @@ public class CustomerDto {
 
     @Override
     public String toString() {
-        return "FullCustomer{" +
-                ", href='" + href + '\'' +
+        return "CustomerDto{" +
+                "href='" + href + '\'' +
                 ", id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", status='" + status + '\'' +
@@ -128,6 +146,8 @@ public class CustomerDto {
                 ", validFor=" + validFor +
                 ", engagedParty=" + engagedParty +
                 ", accounts=" + accounts +
+                ", relatedParties=" + relatedParties +
+                ", paymentMethods=" + paymentMethods +
                 '}';
     }
 }

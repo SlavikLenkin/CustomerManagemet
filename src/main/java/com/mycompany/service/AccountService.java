@@ -27,17 +27,16 @@ public class AccountService {
         List<Account> accounts = new ArrayList<>();
         if (customer.getAccountId() == null)
             return accounts;
-        System.out.println("Tut");
         accounts = repository.findAccountById(customer.getAccountId());
         return accounts;
     }
 
 
     public List<Account> save(List<Account> accounts) {
-        if (accounts == null){
+        if (accounts == null) {
             return null;
         }
-        for (Account account: accounts) {
+        for (Account account : accounts) {
             String id = UUID.randomUUID().toString();
             account.setId(id);
             account.setHref("https://host:port/tmf-api/customerManagement/v4/customer/" + id);
@@ -46,7 +45,7 @@ public class AccountService {
         return accounts;
     }
 
-    public void delete(Account account){
+    public void delete(Account account) {
         repository.delete(account);
     }
 

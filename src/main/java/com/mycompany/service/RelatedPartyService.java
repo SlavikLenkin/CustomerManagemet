@@ -4,8 +4,6 @@ package com.mycompany.service;
 import com.mycompany.repository.Customer;
 import com.mycompany.repository.RelatedParty;
 import com.mycompany.repository.RelatedPartyRepository;
-import jdk.nashorn.internal.ir.IfNode;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -34,7 +32,7 @@ public class RelatedPartyService {
         if (relatedParties == null) {
             return null;
         }
-        for (RelatedParty relatedParty : relatedParties){
+        for (RelatedParty relatedParty : relatedParties) {
             String id = UUID.randomUUID().toString();
             relatedParty.setId(id);
             relatedParty.setHref("https://host:port/tmf-api/customerManagement/v4/customer/" + id);
@@ -43,6 +41,8 @@ public class RelatedPartyService {
         return relatedParties;
     }
 
-    public void delete(RelatedParty relatedParty){repository.delete(relatedParty);}
+    public void delete(RelatedParty relatedParty) {
+        repository.delete(relatedParty);
+    }
 
 }
