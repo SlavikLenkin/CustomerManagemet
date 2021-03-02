@@ -1,13 +1,12 @@
 package com.mycompany.model;
 
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mycompany.repository.*;
 
 import java.util.List;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+//@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CustomerDto {
 
 
@@ -40,6 +39,12 @@ public class CustomerDto {
     @JsonProperty(value = "agreement")
     private List<Agreement> agreements;
 
+    /*@JsonProperty(value = "contactMedium")
+    private List<ContactMedium> contactMediumList;*/
+
+    @JsonProperty(value = "contactMedium")
+    private List<ContactMediumDto> contactMediumDtoList;
+
     public void setCustomer(Customer customer) {
         this.href = customer.getHref();
         this.id = customer.getId();
@@ -49,6 +54,22 @@ public class CustomerDto {
         this.validFor = customer.getValidFor();
 
     }
+
+    public List<ContactMediumDto> getContactMediumDtoList() {
+        return contactMediumDtoList;
+    }
+
+    public void setContactMediumDtoList(List<ContactMediumDto> contactMediumDtoList) {
+        this.contactMediumDtoList = contactMediumDtoList;
+    }
+
+  /*  public List<ContactMedium> getContactMediumList() {
+        return contactMediumList;
+    }
+
+    public void setContactMediumList(List<ContactMedium> contactMediumList) {
+        this.contactMediumList = contactMediumList;
+    }*/
 
     public List<Agreement> getAgreements() {
         return agreements;

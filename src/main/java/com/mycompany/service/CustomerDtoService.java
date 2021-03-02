@@ -1,5 +1,6 @@
 package com.mycompany.service;
 
+import com.mycompany.model.ContactMediumDto;
 import com.mycompany.model.CustomerDto;
 import com.mycompany.repository.*;
 import com.mycompany.transfomer.CustomerTransformer;
@@ -19,6 +20,8 @@ public class CustomerDtoService {
     private final PaymentMethodService paymentMethodService;
     private final CharacteristicService characteristicService;
     private final AgreementService agreementService;
+    /*  private final ContactMediumService contactMediumService;*/
+    private final ContactMediumDtoService contactMediumService;
 
 
     ////// Можно ли так????
@@ -29,6 +32,8 @@ public class CustomerDtoService {
     private List<PaymentMethod> paymentMethods;
     private List<Characteristic> characteristics;
     private List<Agreement> agreements;
+    /* private List<ContactMedium> contactMediumList;*/
+    private List<ContactMediumDto> contactMediumDtoList;
 
 
     private void setData(CustomerDto customerDto) {
@@ -39,12 +44,13 @@ public class CustomerDtoService {
         paymentMethods = customerDto.getPaymentMethods();
         characteristics = customerDto.getCharacteristics();
         agreements = customerDto.getAgreements();
+        contactMediumDtoList = customerDto.getContactMediumDtoList();
     }
     //////
 
     public CustomerDtoService(CustomerService customerService, AccountService accountService,
                               EngagedPartyService engagedPartyService, RelatedPartyService relatedPartyService,
-                              PaymentMethodService paymentMethodService, CharacteristicService characteristicService, AgreementService agreementService) {
+                              PaymentMethodService paymentMethodService, CharacteristicService characteristicService, AgreementService agreementService/*, ContactMediumService contactMediumService*/, ContactMediumDtoService contactMediumService) {
         this.customerService = customerService;
         this.accountService = accountService;
         this.engagedPartyService = engagedPartyService;
@@ -52,6 +58,8 @@ public class CustomerDtoService {
         this.paymentMethodService = paymentMethodService;
         this.characteristicService = characteristicService;
         this.agreementService = agreementService;
+
+        this.contactMediumService = contactMediumService;
     }
 
     private CustomerDto getFullCustomer(Customer customer) {
@@ -60,6 +68,8 @@ public class CustomerDtoService {
         List<PaymentMethod> paymentMethods = paymentMethodService.findAllPaymentMethods(customer);
         List<Characteristic> characteristics = characteristicService.findAllCharacteristics(customer);
         List<Agreement> agreements = agreementService.findAllAgreements(customer);
+        List<ContactMediumDto> contactMediumDtoList = contactMediumService.getAllContactMediumDto(customer);
+
 
         EngagedParty engagedParty = engagedPartyService.findEngagedParty(customer);
 
@@ -71,6 +81,7 @@ public class CustomerDtoService {
         customerDto.setPaymentMethods(paymentMethods);
         customerDto.setCharacteristics(characteristics);
         customerDto.setAgreements(agreements);
+        customerDto.setContactMediumDtoList(contactMediumDtoList);
         return customerDto;
     }
 
@@ -105,6 +116,7 @@ public class CustomerDtoService {
         customerDto.setPaymentMethods(paymentMethodService.save(paymentMethods));
         customerDto.setCharacteristics(characteristicService.save(characteristics));
         customerDto.setAgreements(agreementService.save(agreements));
+        customerDto.setContactMediumDtoList(contactMediumService.save(contactMediumDtoList));
 
 
         accounts = customerDto.getAccounts();
@@ -113,6 +125,7 @@ public class CustomerDtoService {
         paymentMethods = customerDto.getPaymentMethods();
         characteristics = customerDto.getCharacteristics();
         agreements = customerDto.getAgreements();
+        contactMediumDtoList = customerDto.getContactMediumDtoList();
 
         Customer customer = transformer.transform(customerDto);
         if (engagedParty != null) {
@@ -169,7 +182,17 @@ public class CustomerDtoService {
             customer.setAgreementId(idAgreements);
         }
 
-        //customer.setRelatedPartyId(null);
+        if (contactMediumDtoList != null) {
+            String[] idContactMedium = new String[contactMediumDtoList.size()];
+            i = 0;
+            for (ContactMediumDto contactMediumDto : contactMediumDtoList) {
+                System.out.println(contactMediumDto.getMediumType());
+                System.out.println(contactMediumDto.getId());
+                idContactMedium[i] = contactMediumDto.getId();
+                i++;
+            }
+            customer.setContactMediumId(idContactMedium);
+        }
 
         customerDto.setCustomer(customerService.save(customer));
         return customerDto;
@@ -207,6 +230,10 @@ public class CustomerDtoService {
         for (Agreement agreement : agreements) {
             agreementService.delete(agreement);
         }
+
+      /*  for (ContactMedium contactMedium : contactMediumList){
+            contactMediumService.delete(contactMedium);
+        }*/
 
         customerService.delete(transformer.transform(customerDto));
     }

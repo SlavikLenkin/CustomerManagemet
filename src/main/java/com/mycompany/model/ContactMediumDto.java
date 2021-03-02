@@ -1,34 +1,39 @@
-package com.mycompany.repository;
+package com.mycompany.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.mycompany.repository.ContactMedium;
+import com.mycompany.repository.MediumCharacteristic;
+import com.mycompany.repository.ValidFor;
 
-import javax.persistence.*;
+//@JsonInclude(JsonInclude.Include.NON_EMPTY)
+public class ContactMediumDto {
 
-@Entity
-@Table(name = "contact_medium")
-public class ContactMedium {
 
-    @JsonIgnore
-    @Id
-    @Column(name = "id")
     private String id;
 
-    @Column(name = "preferred")
+
     private boolean preferred;
 
-    @Column(name = "medium_type")
+
     private String mediumType;
 
-    @Embedded
+
     private ValidFor validFor;
 
     @JsonIgnore
-    @Column(name = "medium_characteristic_id")
     private String MediumCharacteristicId;
 
+    @JsonProperty(value = "characteristic")
+    private MediumCharacteristic mediumCharacteristic;
 
-    public ContactMedium() {
+    public void setContactMedium(ContactMedium contactMedium) {
+        this.id = contactMedium.getId();
+        this.preferred = contactMedium.isPreferred();
+        this.mediumType = contactMedium.getMediumType();
+        this.validFor = contactMedium.getValidFor();
     }
+
 
     public String getId() {
         return id;
@@ -70,13 +75,11 @@ public class ContactMedium {
         MediumCharacteristicId = mediumCharacteristicId;
     }
 
-    @Override
-    public String toString() {
-        return "ContactMedium{" +
-                "id='" + id + '\'' +
-                ", preferred=" + preferred +
-                ", mediumType='" + mediumType + '\'' +
-                ", validFor=" + validFor +
-                '}';
+    public MediumCharacteristic getMediumCharacteristic() {
+        return mediumCharacteristic;
+    }
+
+    public void setMediumCharacteristic(MediumCharacteristic mediumCharacteristic) {
+        this.mediumCharacteristic = mediumCharacteristic;
     }
 }
