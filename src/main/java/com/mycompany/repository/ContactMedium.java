@@ -73,7 +73,6 @@ public class ContactMedium {
     @Override
     public String toString() {
         return "ContactMedium{" +
-                "id='" + id + '\'' +
                 ", preferred=" + preferred +
                 ", mediumType='" + mediumType + '\'' +
                 ", validFor=" + validFor +

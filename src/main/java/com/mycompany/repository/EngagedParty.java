@@ -16,7 +16,7 @@ public class EngagedParty implements Serializable {
 
     @JsonProperty(value = "@referredType")
     @Transient
-    private String type = "Organization";
+    private final String type = "Organization";
 
 
     private String href;

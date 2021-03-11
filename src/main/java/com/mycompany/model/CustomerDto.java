@@ -39,11 +39,12 @@ public class CustomerDto {
     @JsonProperty(value = "agreement")
     private List<Agreement> agreements;
 
-    /*@JsonProperty(value = "contactMedium")
-    private List<ContactMedium> contactMediumList;*/
-
     @JsonProperty(value = "contactMedium")
     private List<ContactMediumDto> contactMediumDtoList;
+
+    @JsonProperty(value = "creditProfile")
+    private List<CreditProfile> creditProfiles;
+
 
     public void setCustomer(Customer customer) {
         this.href = customer.getHref();
@@ -55,6 +56,15 @@ public class CustomerDto {
 
     }
 
+
+    public List<CreditProfile> getCreditProfiles() {
+        return creditProfiles;
+    }
+
+    public void setCreditProfiles(List<CreditProfile> creditProfiles) {
+        this.creditProfiles = creditProfiles;
+    }
+
     public List<ContactMediumDto> getContactMediumDtoList() {
         return contactMediumDtoList;
     }
@@ -63,13 +73,6 @@ public class CustomerDto {
         this.contactMediumDtoList = contactMediumDtoList;
     }
 
-  /*  public List<ContactMedium> getContactMediumList() {
-        return contactMediumList;
-    }
-
-    public void setContactMediumList(List<ContactMedium> contactMediumList) {
-        this.contactMediumList = contactMediumList;
-    }*/
 
     public List<Agreement> getAgreements() {
         return agreements;
@@ -180,6 +183,10 @@ public class CustomerDto {
                 ", accounts=" + accounts +
                 ", relatedParties=" + relatedParties +
                 ", paymentMethods=" + paymentMethods +
+                ", characteristics=" + characteristics +
+                ", agreements=" + agreements +
+                ", contactMediumDtoList=" + contactMediumDtoList +
+                ", creditProfiles=" + creditProfiles +
                 '}';
     }
 }

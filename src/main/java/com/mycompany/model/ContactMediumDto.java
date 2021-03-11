@@ -1,12 +1,13 @@
 package com.mycompany.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mycompany.repository.ContactMedium;
 import com.mycompany.repository.MediumCharacteristic;
 import com.mycompany.repository.ValidFor;
 
-//@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ContactMediumDto {
 
 
@@ -26,6 +27,7 @@ public class ContactMediumDto {
 
     @JsonProperty(value = "characteristic")
     private MediumCharacteristic mediumCharacteristic;
+
 
     public void setContactMedium(ContactMedium contactMedium) {
         this.id = contactMedium.getId();

@@ -1,13 +1,16 @@
 package com.mycompany.repository;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "credit_profile")
-public class CreditProfile {
+@Data
+public class CreditProfile implements Serializable {
 
     @JsonIgnore
     @Id
@@ -17,8 +20,8 @@ public class CreditProfile {
     @Column(name = "credit_profile_date")
     private Date creditProfileDate;
 
-    @Column(name = "credit_risck_raiting")
-    private int creditRisckRaiting;
+    @Column(name = "credit_risk_rating")
+    private int creditRiskRating;
 
     @Column(name = "credit_score")
     private int creditScore;
@@ -45,12 +48,12 @@ public class CreditProfile {
         this.creditProfileDate = creditProfileDate;
     }
 
-    public int getCreditRisckRaiting() {
-        return creditRisckRaiting;
+    public int getCreditRiskRating() {
+        return creditRiskRating;
     }
 
-    public void setCreditRisckRaiting(int creditRisckRaiting) {
-        this.creditRisckRaiting = creditRisckRaiting;
+    public void setCreditRiskRating(int creditRiskRating) {
+        this.creditRiskRating = creditRiskRating;
     }
 
     public int getCreditScore() {
@@ -74,7 +77,7 @@ public class CreditProfile {
         return "CreditProfile{" +
                 "id='" + id + '\'' +
                 ", creditProfileDate=" + creditProfileDate +
-                ", creditRisckRaiting=" + creditRisckRaiting +
+                ", creditRiskRating=" + creditRiskRating +
                 ", creditScore=" + creditScore +
                 ", validFor=" + validFor +
                 '}';

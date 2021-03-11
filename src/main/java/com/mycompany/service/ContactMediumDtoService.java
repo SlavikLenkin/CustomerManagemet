@@ -20,15 +20,15 @@ public class ContactMediumDtoService {
     private ContactMediumTransformer transformer;
     private MediumCharacteristic mediumCharacteristic;
 
-    private void setData(ContactMediumDto contactMediumDto) {
-        transformer = new ContactMediumTransformer();
-        mediumCharacteristic = contactMediumDto.getMediumCharacteristic();
-    }
-
 
     public ContactMediumDtoService(ContactMediumService contactMediumService, MediumCharacteristicService mediumCharacteristicService) {
         this.contactMediumService = contactMediumService;
         this.mediumCharacteristicService = mediumCharacteristicService;
+    }
+
+    private void setData(ContactMediumDto contactMediumDto) {
+        transformer = new ContactMediumTransformer();
+        mediumCharacteristic = contactMediumDto.getMediumCharacteristic();
     }
 
     private ContactMediumDto getContactMediumDto(ContactMedium contactMedium) {
@@ -38,11 +38,15 @@ public class ContactMediumDtoService {
         contactMediumDto.setContactMedium(contactMedium);
         contactMediumDto.setMediumCharacteristic(mediumCharacteristic);
 
+
         return contactMediumDto;
     }
 
     public List<ContactMediumDto> getAllContactMediumDto(Customer customer) {
         List<ContactMediumDto> allContactMediumDto = new ArrayList<>();
+        if (contactMediumService.findAllContactsMedium(customer) == null) {
+            return allContactMediumDto;
+        }
         List<ContactMedium> contactMediumList = contactMediumService.findAllContactsMedium(customer);
         for (ContactMedium contactMedium : contactMediumList) {
             allContactMediumDto.add(getContactMediumDto(contactMedium));
@@ -63,16 +67,33 @@ public class ContactMediumDtoService {
             ContactMedium contactMedium = transformer.transform(contactMediumDto);
 
             if (mediumCharacteristic != null) {
-                System.out.println(mediumCharacteristic.getId());
                 contactMedium.setMediumCharacteristicId(mediumCharacteristic.getId());
             }
 
             contactMediumDto.setContactMedium(contactMedium);
+            contactMediumDto.setId(contactMedium.getId());
             contactMediumList.add(contactMedium);
         }
-        contactMediumService.save(contactMediumList);
+
+        contactMediumList = contactMediumService.save(contactMediumList);
+
+        int i = 0;
+        for (ContactMediumDto contactMediumDto : contactsMediumDto) {
+
+
+            contactMediumDto.setId(contactMediumList.get(i).getId());
+            i++;
+
+        }
+
+   
         return contactsMediumDto;
 
+    }
+
+    public void delete(ContactMediumDto contactMediumDto) {
+        mediumCharacteristicService.delete(contactMediumDto.getMediumCharacteristic());
+        contactMediumService.delete(transformer.transform(contactMediumDto));
     }
 
 

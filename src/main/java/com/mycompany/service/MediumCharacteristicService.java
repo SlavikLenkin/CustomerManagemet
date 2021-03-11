@@ -20,9 +20,9 @@ public class MediumCharacteristicService {
 
 
     public MediumCharacteristic findMediumCharacteristic(ContactMedium contactMedium) {
-        MediumCharacteristic mediumCharacteristic = new MediumCharacteristic();
+        MediumCharacteristic mediumCharacteristic;
         if (contactMedium.getMediumCharacteristicId() == null) {
-            return mediumCharacteristic;
+            return null;
         }
         mediumCharacteristic = repository.findMediumCharacteristicById(contactMedium.getMediumCharacteristicId());
         return mediumCharacteristic;
@@ -41,6 +41,8 @@ public class MediumCharacteristicService {
     }
 
     public void delete(MediumCharacteristic mediumCharacteristic) {
-        repository.delete(mediumCharacteristic);
+        if (mediumCharacteristic != null) {
+            repository.delete(mediumCharacteristic);
+        }
     }
 }

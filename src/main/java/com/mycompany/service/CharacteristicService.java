@@ -32,7 +32,7 @@ public class CharacteristicService {
 
     public List<Characteristic> save(List<Characteristic> characteristics) {
         if (characteristics == null) {
-            return null;
+            return characteristics;
         }
         for (Characteristic characteristic : characteristics) {
             String id = UUID.randomUUID().toString();

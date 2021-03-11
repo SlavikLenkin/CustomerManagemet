@@ -8,7 +8,6 @@ import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 
 @Entity
@@ -69,9 +68,9 @@ public class Customer implements Serializable {
     @Column(name = "related_party_id", columnDefinition = "text[]")
     private String[] relatedPartyId;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_customer")
-    private List<CreditProfile> creditProfile;
+    @Type(type = "string-array")
+    @Column(name = "credit_profile_id", columnDefinition = "text[]")
+    private String[] creditProfileId;
 
 
     public String getHref() {

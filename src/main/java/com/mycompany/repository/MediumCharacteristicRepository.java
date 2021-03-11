@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 public interface MediumCharacteristicRepository extends JpaRepository<MediumCharacteristic, Integer> {
 
     String queryFindMediumCharacteristic = "select * from medium_characteristic\n" +
-            "where id IN :id ";
+            "where id = :id ";
 
     @Query(value = queryFindMediumCharacteristic, nativeQuery = true)
     MediumCharacteristic findMediumCharacteristicById(@Param("id") String id);

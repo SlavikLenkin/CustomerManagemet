@@ -32,7 +32,7 @@ public class ContactMediumService {
 
     public List<ContactMedium> save(List<ContactMedium> contactsMedium) {
         if (contactsMedium == null) {
-            return null;
+            return contactsMedium;
         }
         for (ContactMedium contactMedium : contactsMedium) {
             String id = UUID.randomUUID().toString();
