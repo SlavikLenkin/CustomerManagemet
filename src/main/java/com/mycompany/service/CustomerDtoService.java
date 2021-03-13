@@ -153,10 +153,10 @@ public class CustomerDtoService {
                 if (accountUpdate!= null)
                 for (Account account : accounts) {
                     if (account.getId().equals(accountUpdate.getId())) {
-                        if (account.getName()!=null){
+                        if (accountUpdate.getName()!=null){
                             account.setName(accountUpdate.getName());
                         }
-                        if (account.getDescription()!=null){
+                        if (accountUpdate.getDescription()!=null){
                             account.setDescription(accountUpdate.getDescription());
                         }
                     }
@@ -177,10 +177,10 @@ public class CustomerDtoService {
             for (RelatedParty relatedPartyUpdate : relatedPartiesUpdate) {
                 for (RelatedParty relatedParty : relatedParties) {
                     if (relatedParty.getId().equals(relatedPartyUpdate.getId())) {
-                        if (relatedParty.getName()!=null){
+                        if (relatedPartyUpdate.getName()!=null){
                             relatedParty.setName(relatedPartyUpdate.getName());
                         }
-                        if (relatedParty.getRole()!=null){
+                        if (relatedPartyUpdate.getRole()!=null){
                             relatedParty.setRole(relatedPartyUpdate.getRole());
                         }
                     }
@@ -209,7 +209,7 @@ public class CustomerDtoService {
             for (PaymentMethod paymentMethodUpdate : paymentMethodsUpdate) {
                 for (PaymentMethod paymentMethod : paymentMethods) {
                     if (paymentMethod.getId().equals(paymentMethodUpdate.getId())) {
-                        if (paymentMethod.getName()!=null){
+                        if (paymentMethodUpdate.getName()!=null){
                             paymentMethod.setName(paymentMethodUpdate.getName());
                         }
                     }
@@ -219,10 +219,10 @@ public class CustomerDtoService {
             customerDto.setPaymentMethods(paymentMethodService.update(paymentMethods));
         }
 
-        i = 0;
-        System.out.println(paymentMethods.size());
+
         if (paymentMethods != null) {
             String[] idPaymentMethods = new String[paymentMethods.size()];
+            i = 0;
             for (PaymentMethod paymentMethod : paymentMethods) {
                 idPaymentMethods[i] = paymentMethod.getId();
                 i++;
@@ -230,6 +230,189 @@ public class CustomerDtoService {
             }
             customer.setPayMethodId(idPaymentMethods);
         }
+
+
+        List<Characteristic> characteristicsUpdate = customerDtoUpdate.getCharacteristics();
+        characteristics = customerDto.getCharacteristics();
+
+        if (characteristicsUpdate != null) {
+            for (Characteristic characteristicUpdate : characteristicsUpdate) {
+                for (Characteristic characteristic : characteristics) {
+                    if (characteristic.getId().equals(characteristicUpdate.getId())) {
+                        if (characteristicUpdate.getName()!=null){
+                            characteristic.setName(characteristicUpdate.getName());
+                        }
+                        if (characteristicUpdate.getValue()!=null){
+                            characteristic.setValue(characteristicUpdate.getValue());
+                        }
+                        if (characteristicUpdate.getValueType()!=null){
+                            characteristic.setValueType(characteristicUpdate.getValueType());
+                        }
+                    }
+                }
+
+            }
+            customerDto.setCharacteristics(characteristicService.update(characteristics));
+        }
+
+
+        if (characteristics != null) {
+            String[] idCharacteristics = new String[characteristics.size()];
+            i = 0;
+            for (Characteristic characteristic : characteristics) {
+                idCharacteristics[i] = characteristic.getId();
+                i++;
+            }
+            customer.setCharacteristicId(idCharacteristics);
+        }
+
+
+        List<Agreement> agreementsUpdate = customerDtoUpdate.getAgreements();
+        agreements = customerDto.getAgreements();
+
+        if (agreementsUpdate != null) {
+            for (Agreement agreementUpdate : agreementsUpdate) {
+                for (Agreement agreement : agreements) {
+                    if (agreement.getId().equals(agreementUpdate.getId())) {
+                        if (agreementUpdate.getName()!=null){
+                            agreement.setName(agreementUpdate.getName());
+                        }
+                    }
+                }
+
+            }
+            customerDto.setAgreements(agreementService.update(agreements));
+        }
+
+        if (agreements != null) {
+            String[] idAgreements = new String[agreements.size()];
+            i = 0;
+            for (Agreement agreement : agreements) {
+                idAgreements[i] = agreement.getId();
+                i++;
+            }
+            customer.setAgreementId(idAgreements);
+        }
+
+
+
+        //////MediumCharacteristic
+        List<ContactMediumDto> contactMediumDtoListUpdate = customerDtoUpdate.getContactMediumDtoList();
+        contactMediumDtoList = customerDto.getContactMediumDtoList();
+
+        if(contactMediumDtoListUpdate!=null){
+            for (ContactMediumDto contactMediumDtoUpdate : contactMediumDtoListUpdate){
+                for (ContactMediumDto contactMediumDto : contactMediumDtoList){
+                    if (contactMediumDto.getId().equals(contactMediumDtoUpdate.getId())) {
+                        if (contactMediumDtoUpdate.isPreferred() != contactMediumDto.isPreferred()) {
+                            contactMediumDto.setPreferred(contactMediumDtoUpdate.isPreferred());
+                        }
+                        if (contactMediumDtoUpdate.getMediumType() != null) {
+                            contactMediumDto.setMediumType(contactMediumDtoUpdate.getMediumType());
+                        }
+                        if (contactMediumDtoUpdate.getValidFor() != null) {
+                            contactMediumDto.setValidFor(contactMediumDtoUpdate.getValidFor());
+                        }
+                        if (contactMediumDtoUpdate.getMediumCharacteristic()!=null){
+                            MediumCharacteristic mediumCharacteristicUpdate = contactMediumDtoUpdate
+                                    .getMediumCharacteristic();
+                            MediumCharacteristic mediumCharacteristic = contactMediumDto
+                                    .getMediumCharacteristic();
+                            if (mediumCharacteristicUpdate.getCity()!=null){
+                                mediumCharacteristic.setCity(mediumCharacteristicUpdate.getCity());
+                            }
+                            if (mediumCharacteristicUpdate.getContactType()!=null){
+                                mediumCharacteristic.setContactType(mediumCharacteristicUpdate.getContactType());
+                            }
+                            if (mediumCharacteristicUpdate.getCountry()!=null){
+                                mediumCharacteristic.setCountry(mediumCharacteristicUpdate.getCountry());
+                            }
+                            if (mediumCharacteristicUpdate.getEmailAddress()!=null){
+                                mediumCharacteristic.setEmailAddress(mediumCharacteristicUpdate.getEmailAddress());
+                            }
+                            if (mediumCharacteristicUpdate.getFaxNumber()!=null){
+                                mediumCharacteristic.setFaxNumber(mediumCharacteristicUpdate.getFaxNumber());
+                            }
+                            if (mediumCharacteristicUpdate.getPhoneNumber()!=null){
+                                mediumCharacteristic.setPhoneNumber(mediumCharacteristicUpdate.getPhoneNumber());
+                            }
+                            if (mediumCharacteristicUpdate.getPostCode()!=null) {
+                                mediumCharacteristic.setPostCode(mediumCharacteristicUpdate.getPostCode());
+                            }
+                            if (mediumCharacteristicUpdate.getSocialNetworkId()!=null){
+                                mediumCharacteristic.setSocialNetworkId(mediumCharacteristicUpdate
+                                        .getSocialNetworkId());
+                            }
+                            if (mediumCharacteristicUpdate.getStateOrProvince()!=null){
+                                mediumCharacteristic.setStateOrProvince(mediumCharacteristicUpdate
+                                        .getStateOrProvince());
+                            }
+                            if (mediumCharacteristicUpdate.getStreet1()!=null) {
+                                mediumCharacteristic.setStreet1(mediumCharacteristicUpdate.getStreet1());
+                            }
+                            if (mediumCharacteristicUpdate.getStreet2()!=null){
+                                mediumCharacteristic.setStreet2(mediumCharacteristicUpdate.getStreet2());
+                            }
+                            contactMediumDto.setMediumCharacteristic(mediumCharacteristic);
+                        }
+                    }
+                }
+            }
+            customerDto.setContactMediumDtoList(contactMediumDtoService.update(contactMediumDtoList));
+        }
+
+        if (contactMediumDtoList != null) {
+            String[] idContactMedium = new String[contactMediumDtoList.size()];
+            i = 0;
+            for (ContactMediumDto contactMediumDto : contactMediumDtoList) {
+                idContactMedium[i] = contactMediumDto.getId();
+                i++;
+            }
+            customer.setContactMediumId(idContactMedium);
+        }
+
+
+
+        List<CreditProfile> creditProfilesUpdate = customerDtoUpdate.getCreditProfiles();
+        creditProfiles = customerDto.getCreditProfiles();
+
+        if (creditProfilesUpdate != null) {
+            for (CreditProfile creditProfileUpdate : creditProfilesUpdate) {
+                for (CreditProfile creditProfile : creditProfiles) {
+                    if (creditProfile.getId().equals(creditProfileUpdate.getId())) {
+                        if (creditProfileUpdate.getCreditProfileDate()!=null){
+                            creditProfile.setCreditProfileDate(creditProfileUpdate.getCreditProfileDate());
+                        }
+                        if(creditProfileUpdate.getCreditRiskRating()!=0){
+                            creditProfile.setCreditRiskRating(creditProfileUpdate.getCreditRiskRating());
+                        }
+                        if (creditProfileUpdate.getCreditScore()!=0){
+                            creditProfile.setCreditScore(creditProfileUpdate.getCreditScore());
+                        }
+                        if (creditProfileUpdate.getValidFor()!=null){
+                            creditProfile.setValidFor(creditProfileUpdate.getValidFor());
+                        }
+                    }
+                }
+
+            }
+
+            customerDto.setCreditProfiles(creditProfileService.update(creditProfiles));
+        }
+
+
+        if (creditProfiles != null) {
+            String[] idCreditProfile = new String[creditProfiles.size()];
+            i = 0;
+            for (CreditProfile creditProfile : creditProfiles) {
+                idCreditProfile[i] = creditProfile.getId();
+                i++;
+                System.out.println(idCreditProfile[i-1] + "ssss");
+            }
+            customer.setCreditProfileId(idCreditProfile);
+        }
+
+
 
 
         customerDto.setCustomer(customerService.update(customer));

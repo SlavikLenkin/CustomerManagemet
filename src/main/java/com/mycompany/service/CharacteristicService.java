@@ -46,5 +46,11 @@ public class CharacteristicService {
         repository.delete(characteristic);
     }
 
+    public List<Characteristic> update(List<Characteristic> characteristics) {
+        for (Characteristic characteristic : characteristics){
+            repository.save(characteristic);
+        }
+        return characteristics;
+    }
 }
 

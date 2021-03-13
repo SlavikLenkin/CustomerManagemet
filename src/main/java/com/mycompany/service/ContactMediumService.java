@@ -45,4 +45,11 @@ public class ContactMediumService {
     public void delete(ContactMedium contactMedium) {
         repository.delete(contactMedium);
     }
+
+    public List<ContactMedium> update(List<ContactMedium> contactMediumList) {
+        for (ContactMedium contactMedium : contactMediumList){
+            repository.save(contactMedium);
+        }
+        return contactMediumList;
+    }
 }

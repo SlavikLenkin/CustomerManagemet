@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Table(name = "characteristic")
 public class Characteristic {
 
-    @JsonIgnore
+
     @Id
     @Column(name = "id")
     private String id;

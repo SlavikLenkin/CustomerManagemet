@@ -35,7 +35,6 @@ public class MediumCharacteristicService {
         }
         String id = UUID.randomUUID().toString();
         mediumCharacteristic.setId(id);
-        System.out.println(mediumCharacteristic.getId());
         repository.save(mediumCharacteristic);
         return mediumCharacteristic;
     }
@@ -44,5 +43,10 @@ public class MediumCharacteristicService {
         if (mediumCharacteristic != null) {
             repository.delete(mediumCharacteristic);
         }
+    }
+
+    public MediumCharacteristic update(MediumCharacteristic mediumCharacteristic) {
+        repository.save(mediumCharacteristic);
+        return mediumCharacteristic;
     }
 }

@@ -97,4 +97,41 @@ public class ContactMediumDtoService {
     }
 
 
+    public List<ContactMediumDto> update(List<ContactMediumDto> contactMediumDtoList) {
+
+
+        List<ContactMedium> contactMediumList = new ArrayList<>();
+        if (contactMediumDtoList == null) {
+            return null;
+        }
+        for (ContactMediumDto contactMediumDto :contactMediumDtoList ) {
+            setData(contactMediumDto);
+            contactMediumDto.setMediumCharacteristic(mediumCharacteristicService.update(mediumCharacteristic));
+
+            mediumCharacteristic = contactMediumDto.getMediumCharacteristic();
+            ContactMedium contactMedium = transformer.transform(contactMediumDto);
+
+            if (mediumCharacteristic != null) {
+                contactMedium.setMediumCharacteristicId(mediumCharacteristic.getId());
+            }
+
+            contactMediumDto.setContactMedium(contactMedium);
+            contactMediumDto.setId(contactMedium.getId());
+            contactMediumList.add(contactMedium);
+        }
+
+        contactMediumList = contactMediumService.update(contactMediumList);
+
+        int i = 0;
+        for (ContactMediumDto contactMediumDto : contactMediumDtoList) {
+
+
+            contactMediumDto.setId(contactMediumList.get(i).getId());
+            i++;
+
+        }
+        return contactMediumDtoList;
+
+
+    }
 }

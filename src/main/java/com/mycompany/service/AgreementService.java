@@ -47,4 +47,10 @@ public class AgreementService {
         repository.delete(agreement);
     }
 
+    public List<Agreement> update(List<Agreement> agreements) {
+        for (Agreement agreement : agreements){
+            repository.save(agreement);
+        }
+        return agreements;
+    }
 }

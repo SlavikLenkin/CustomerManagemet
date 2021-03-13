@@ -43,4 +43,10 @@ public class CreditProfileService {
         repository.delete(creditProfile);
     }
 
+    public List<CreditProfile> update(List<CreditProfile> creditProfiles) {
+        for (CreditProfile creditProfile : creditProfiles){
+            repository.save(creditProfile);
+        }
+        return creditProfiles;
+    }
 }
