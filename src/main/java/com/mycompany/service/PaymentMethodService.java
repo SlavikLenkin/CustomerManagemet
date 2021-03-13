@@ -43,6 +43,13 @@ public class PaymentMethodService {
     public void delete(PaymentMethod paymentMethod) {
         repository.delete(paymentMethod);
     }
+
+    public List<PaymentMethod> update(List<PaymentMethod> paymentMethods) {
+        for (PaymentMethod paymentMethod : paymentMethods){
+            repository.save(paymentMethod);
+        }
+        return paymentMethods;
+    }
 }
 
 

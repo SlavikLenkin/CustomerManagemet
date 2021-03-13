@@ -36,4 +36,9 @@ public class CustomerService {
         repository.save(customer);
         return customer;
     }
+
+    public Customer update(Customer customer){
+        repository.save(customer);
+        return customer;
+    }
 }

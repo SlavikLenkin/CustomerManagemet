@@ -19,9 +19,6 @@ public class AccountService {
         this.repository = repository;
     }
 
-  /*  public Account findAccountById(String id) {
-        return repository.findAccountById(id);
-    }*/
 
     public List<Account> findAllAccounts(Customer customer) {
         List<Account> accounts = new ArrayList<>();
@@ -40,6 +37,13 @@ public class AccountService {
             String id = UUID.randomUUID().toString();
             account.setId(id);
             account.setHref("https://host:port/tmf-api/customerManagement/v4/customer/" + id);
+            repository.save(account);
+        }
+        return accounts;
+    }
+
+    public List<Account> update(List<Account> accounts){
+        for (Account account :accounts){
             repository.save(account);
         }
         return accounts;

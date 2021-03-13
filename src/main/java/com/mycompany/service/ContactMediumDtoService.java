@@ -86,7 +86,7 @@ public class ContactMediumDtoService {
 
         }
 
-   
+
         return contactsMediumDto;
 
     }

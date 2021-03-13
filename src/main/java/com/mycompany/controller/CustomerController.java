@@ -43,7 +43,17 @@ public class CustomerController implements ApiPath {
         return customerDtoService.save(customerDto);
     }
 
-    @DeleteMapping("/customer/{id}")
+    @RequestMapping(value = PATH_CUSTOMER_ID, method = RequestMethod.PATCH)
+    public ResponseEntity<CustomerDto> patchCustomer(@PathVariable(value = ID) String id,
+                                                     @RequestBody CustomerDto customerDtoUpdate){
+
+        CustomerDto customerDto = customerDtoService.updateFullCustomerById(id,customerDtoUpdate);
+
+
+        return ResponseEntity.ok().body(customerDto);
+    }
+
+    @DeleteMapping(PATH_CUSTOMER_ID)
     public ResponseEntity deleteCustomer(@PathVariable(value = ID) String id) {
         CustomerDto customerDto = customerDtoService.getFullCustomerById(id);
         if (customerDto == null)

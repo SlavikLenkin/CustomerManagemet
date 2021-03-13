@@ -30,6 +30,10 @@ public class EngagedPartyService {
         return findEngagedPartyById(str);
     }
 
+    public EngagedParty update(EngagedParty engagedParty){
+        repository.save(engagedParty);
+        return engagedParty;
+    }
 
     public EngagedParty save(EngagedParty engagedParty) {
         if (engagedParty == null) {

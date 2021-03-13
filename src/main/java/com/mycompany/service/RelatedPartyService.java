@@ -41,6 +41,13 @@ public class RelatedPartyService {
         return relatedParties;
     }
 
+    public List<RelatedParty> update(List<RelatedParty> relatedParties){
+        for (RelatedParty relatedParty : relatedParties){
+            repository.save(relatedParty);
+        }
+        return relatedParties;
+    }
+
     public void delete(RelatedParty relatedParty) {
         repository.delete(relatedParty);
     }

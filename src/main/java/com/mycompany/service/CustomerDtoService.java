@@ -104,6 +104,138 @@ public class CustomerDtoService {
         return getFullCustomer(customer);
     }
 
+    public CustomerDto updateFullCustomerById(String id, CustomerDto customerDtoUpdate) {
+        CustomerDto customerDto = getFullCustomerById(id);
+        Customer customerUpdate = customerTransformer.transform(customerDtoUpdate);
+        Customer customer = customerTransformer.transform(customerDto);
+
+
+
+        if (customerUpdate.getName() != null) {
+            customer.setName(customerUpdate.getName());
+        }
+
+        if (customerUpdate.getStatus() != null) {
+            customer.setStatus(customerUpdate.getStatus());
+        }
+
+        if (customerUpdate.getStatusReason() != null) {
+            customer.setStatusReason(customerUpdate.getStatusReason());
+        }
+
+        if (customerUpdate.getValidFor() != null) {
+            customer.setValidFor(customerUpdate.getValidFor());
+        }
+
+
+        EngagedParty engagedPartyUpdate = customerDtoUpdate.getEngagedParty();
+        engagedParty = customerDto.getEngagedParty();
+
+        if (engagedPartyUpdate !=null){
+            if (engagedPartyUpdate.getName()!=null){
+                engagedParty.setName(engagedPartyUpdate.getName());
+            }
+        }
+
+        customerDto.setEngagedParty(engagedPartyService.update(engagedParty));
+
+        if (engagedParty != null) {
+            customer.setEngagedPartyId(engagedParty.getId());
+        }
+
+
+
+        List<Account> accountsUpdate = customerDtoUpdate.getAccounts();
+        accounts = customerDto.getAccounts();
+
+        if (accountsUpdate != null) {
+            for (Account accountUpdate : accountsUpdate) {
+                if (accountUpdate!= null)
+                for (Account account : accounts) {
+                    if (account.getId().equals(accountUpdate.getId())) {
+                        if (account.getName()!=null){
+                            account.setName(accountUpdate.getName());
+                        }
+                        if (account.getDescription()!=null){
+                            account.setDescription(accountUpdate.getDescription());
+                        }
+                    }
+                }
+
+            }
+            customerDto.setAccounts(accountService.update(accounts));
+
+        }
+
+        setAccountId(customer);
+
+
+        List<RelatedParty> relatedPartiesUpdate = customerDtoUpdate.getRelatedParties();
+        relatedParties = customerDto.getRelatedParties();
+
+        if (relatedPartiesUpdate != null) {
+            for (RelatedParty relatedPartyUpdate : relatedPartiesUpdate) {
+                for (RelatedParty relatedParty : relatedParties) {
+                    if (relatedParty.getId().equals(relatedPartyUpdate.getId())) {
+                        if (relatedParty.getName()!=null){
+                            relatedParty.setName(relatedPartyUpdate.getName());
+                        }
+                        if (relatedParty.getRole()!=null){
+                            relatedParty.setRole(relatedPartyUpdate.getRole());
+                        }
+                    }
+                }
+
+            }
+            customerDto.setRelatedParties(relatedPartyService.update(relatedParties));
+        }
+
+
+        int i = 0;
+        if (relatedParties != null) {
+            String[] idRelatedParties = new String[relatedParties.size()];
+            for (RelatedParty relatedParty : relatedParties) {
+                idRelatedParties[i] = relatedParty.getId();
+                i++;
+            }
+            customer.setRelatedPartyId(idRelatedParties);
+        }
+
+
+        List<PaymentMethod> paymentMethodsUpdate = customerDtoUpdate.getPaymentMethods();
+        paymentMethods = customerDto.getPaymentMethods();
+
+        if (paymentMethodsUpdate != null) {
+            for (PaymentMethod paymentMethodUpdate : paymentMethodsUpdate) {
+                for (PaymentMethod paymentMethod : paymentMethods) {
+                    if (paymentMethod.getId().equals(paymentMethodUpdate.getId())) {
+                        if (paymentMethod.getName()!=null){
+                            paymentMethod.setName(paymentMethodUpdate.getName());
+                        }
+                    }
+                }
+
+            }
+            customerDto.setPaymentMethods(paymentMethodService.update(paymentMethods));
+        }
+
+        i = 0;
+        System.out.println(paymentMethods.size());
+        if (paymentMethods != null) {
+            String[] idPaymentMethods = new String[paymentMethods.size()];
+            for (PaymentMethod paymentMethod : paymentMethods) {
+                idPaymentMethods[i] = paymentMethod.getId();
+                i++;
+                System.out.println(idPaymentMethods[i-1]);
+            }
+            customer.setPayMethodId(idPaymentMethods);
+        }
+
+
+        customerDto.setCustomer(customerService.update(customer));
+        return customerDto;
+    }
+
     public CustomerDto save(CustomerDto customerDto) {
 
         setData(customerDto);
@@ -131,15 +263,8 @@ public class CustomerDtoService {
             customer.setEngagedPartyId(engagedParty.getId());
         }
 
-        int i = 0;
-        if (accounts != null) {
-            String[] idAccounts = new String[accounts.size()];
-            for (Account account : accounts) {
-                idAccounts[i] = account.getId();
-                i++;
-            }
-            customer.setAccountId(idAccounts);
-        }
+        setAccountId(customer);
+        int i;
 
         if (relatedParties != null) {
             String[] idRelatedParties = new String[relatedParties.size()];
@@ -203,6 +328,18 @@ public class CustomerDtoService {
 
         customerDto.setCustomer(customerService.save(customer));
         return customerDto;
+    }
+
+    private void setAccountId(Customer customer) {
+        int i = 0;
+        if (accounts != null) {
+            String[] idAccounts = new String[accounts.size()];
+            for (Account account : accounts) {
+                idAccounts[i] = account.getId();
+                i++;
+            }
+            customer.setAccountId(idAccounts);
+        }
     }
 
     public void delete(CustomerDto customerDto) {
