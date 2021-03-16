@@ -19,13 +19,13 @@ public class PaymentMethodService {
         this.repository = repository;
     }
 
-    public List<PaymentMethod> findAllPaymentMethods(Customer customer) {
-        List<PaymentMethod> paymentMethods = new ArrayList<>();
-        if (customer.getPayMethodId() == null)
-            return paymentMethods;
-        paymentMethods = repository.findPaymentMethodById(customer.getPayMethodId());
-        return paymentMethods;
-    }
+//    public List<PaymentMethod> findAllPaymentMethods(Customer customer) {
+//        List<PaymentMethod> paymentMethods = new ArrayList<>();
+//        if (customer.getPayMethodId() == null)
+//            return paymentMethods;
+//        paymentMethods = repository.findPaymentMethodById(customer.getPayMethodId());
+//        return paymentMethods;
+//    }
 
     public List<PaymentMethod> save(List<PaymentMethod> paymentMethods) {
         if (paymentMethods == null) {

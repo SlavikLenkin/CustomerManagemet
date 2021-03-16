@@ -17,15 +17,15 @@ public class CreditProfileService {
     public CreditProfileService(CreditProfileRepository repository) {
         this.repository = repository;
     }
-
-    public List<CreditProfile> findAllCreditProfile(Customer customer) {
-        List<CreditProfile> creditProfiles = new ArrayList<>();
-        if (customer.getCreditProfileId() == null) {
-            return creditProfiles;
-        }
-        creditProfiles = repository.findCreditProfileById(customer.getCreditProfileId());
-        return creditProfiles;
-    }
+//
+//    public List<CreditProfile> findAllCreditProfile(Customer customer) {
+//        List<CreditProfile> creditProfiles = new ArrayList<>();
+//        if (customer.getCreditProfileId() == null) {
+//            return creditProfiles;
+//        }
+//        creditProfiles = repository.findCreditProfileById(customer.getCreditProfileId());
+//        return creditProfiles;
+//    }
 
     public List<CreditProfile> save(List<CreditProfile> creditProfiles) {
         if (creditProfiles == null) {

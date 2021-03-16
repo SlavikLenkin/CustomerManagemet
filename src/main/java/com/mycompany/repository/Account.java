@@ -1,15 +1,15 @@
 package com.mycompany.repository;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "account")
-@Data
 public class Account implements Serializable {
 
 
@@ -22,6 +22,9 @@ public class Account implements Serializable {
 
     private String name;
 
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "accounts")
+    private Set<Customer> customerList;
 
     public Account() {
     }
@@ -32,6 +35,14 @@ public class Account implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Set<Customer> getCustomerList() {
+        return customerList;
+    }
+
+    public void setCustomerList(Set<Customer> customerList) {
+        this.customerList = customerList;
     }
 
     public String getHref() {

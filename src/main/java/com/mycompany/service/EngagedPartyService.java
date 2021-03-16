@@ -21,14 +21,14 @@ public class EngagedPartyService {
         return repository.findEngagedPartyById(id);
     }
 
-    public EngagedParty findEngagedParty(Customer customer) {
+   /* public EngagedParty findEngagedParty(Customer customer) {
         EngagedParty engagedParty = new EngagedParty();
         if (customer.getEngagedPartyId() == null)
             return engagedParty;
         String str = customer.getEngagedPartyId();
         System.out.println(customer.getEngagedPartyId());
         return findEngagedPartyById(str);
-    }
+    }*/
 
     public EngagedParty update(EngagedParty engagedParty){
         repository.save(engagedParty);

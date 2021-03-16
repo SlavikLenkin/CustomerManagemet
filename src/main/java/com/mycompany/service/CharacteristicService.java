@@ -20,15 +20,15 @@ public class CharacteristicService {
     public CharacteristicService(CharacteristicRepository repository) {
         this.repository = repository;
     }
-
-    public List<Characteristic> findAllCharacteristics(Customer customer) {
-        List<Characteristic> characteristics = new ArrayList<>();
-        if (customer.getCharacteristicId() == null) {
-            return characteristics;
-        }
-        characteristics = repository.findCharacteristicById(customer.getCharacteristicId());
-        return characteristics;
-    }
+//
+//    public List<Characteristic> findAllCharacteristics(Customer customer) {
+//        List<Characteristic> characteristics = new ArrayList<>();
+//        if (customer.getCharacteristicId() == null) {
+//            return characteristics;
+//        }
+//        characteristics = repository.findCharacteristicById(customer.getCharacteristicId());
+//        return characteristics;
+//    }
 
     public List<Characteristic> save(List<Characteristic> characteristics) {
         if (characteristics == null) {

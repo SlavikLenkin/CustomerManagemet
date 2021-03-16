@@ -26,6 +26,7 @@ public class CustomerService {
     }
 
     public void delete(Customer customer) {
+        repository.deleteAccountsById(customer.getId());
         repository.delete(customer);
     }
 
@@ -37,7 +38,7 @@ public class CustomerService {
         return customer;
     }
 
-    public Customer update(Customer customer){
+    public Customer update(Customer customer) {
         repository.save(customer);
         return customer;
     }

@@ -20,13 +20,13 @@ public class RelatedPartyService {
         this.repository = repository;
     }
 
-    public List<RelatedParty> findAllRelatedParties(Customer customer) {
-        List<RelatedParty> relatedParties = new ArrayList<>();
-        if (customer.getRelatedPartyId() == null)
-            return relatedParties;
-        relatedParties = repository.findRelatedPartyById(customer.getRelatedPartyId());
-        return relatedParties;
-    }
+//    public List<RelatedParty> findAllRelatedParties(Customer customer) {
+//        List<RelatedParty> relatedParties = new ArrayList<>();
+//        if (customer.getRelatedPartyId() == null)
+//            return relatedParties;
+//        relatedParties = repository.findRelatedPartyById(customer.getRelatedPartyId());
+//        return relatedParties;
+//    }
 
     public List<RelatedParty> save(List<RelatedParty> relatedParties) {
         if (relatedParties == null) {

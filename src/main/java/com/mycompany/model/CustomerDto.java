@@ -4,7 +4,11 @@ package com.mycompany.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mycompany.repository.*;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 //@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CustomerDto {
@@ -22,12 +26,16 @@ public class CustomerDto {
 
     private ValidFor validFor;
 
-    private EngagedParty engagedParty;
+   /* private EngagedParty engagedParty;*/
 
     @JsonProperty(value = "account")
-    private List<Account> accounts;
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinTable(name="customer_account",
+            joinColumns = {@JoinColumn(name = "customer_id")},
+            inverseJoinColumns ={ @JoinColumn(name = "account_id")})
+    private List<Account> accounts = new ArrayList<>();
 
-    @JsonProperty(value = "relatedParty")
+   /* @JsonProperty(value = "relatedParty")
     private List<RelatedParty> relatedParties;
 
     @JsonProperty(value = "paymentMethod")
@@ -43,7 +51,7 @@ public class CustomerDto {
     private List<ContactMediumDto> contactMediumDtoList;
 
     @JsonProperty(value = "creditProfile")
-    private List<CreditProfile> creditProfiles;
+    private List<CreditProfile> creditProfiles;*/
 
 
     public void setCustomer(Customer customer) {
@@ -57,7 +65,7 @@ public class CustomerDto {
     }
 
 
-    public List<CreditProfile> getCreditProfiles() {
+    /*public List<CreditProfile> getCreditProfiles() {
         return creditProfiles;
     }
 
@@ -104,15 +112,15 @@ public class CustomerDto {
 
     public void setRelatedParties(List<RelatedParty> relatedParties) {
         this.relatedParties = relatedParties;
-    }
+    }*/
 
-    public EngagedParty getEngagedParty() {
+   /* public EngagedParty getEngagedParty() {
         return engagedParty;
     }
 
     public void setEngagedParty(EngagedParty engagedParty) {
         this.engagedParty = engagedParty;
-    }
+    }*/
 
     public List<Account> getAccounts() {
         return accounts;
@@ -179,14 +187,14 @@ public class CustomerDto {
                 ", status='" + status + '\'' +
                 ", statusReason='" + statusReason + '\'' +
                 ", validFor=" + validFor +
-                ", engagedParty=" + engagedParty +
+                /*", engagedParty=" + engagedParty +*/
                 ", accounts=" + accounts +
-                ", relatedParties=" + relatedParties +
+               /* ", relatedParties=" + relatedParties +
                 ", paymentMethods=" + paymentMethods +
                 ", characteristics=" + characteristics +
                 ", agreements=" + agreements +
                 ", contactMediumDtoList=" + contactMediumDtoList +
-                ", creditProfiles=" + creditProfiles +
+                ", creditProfiles=" + creditProfiles +*/
                 '}';
     }
 }

@@ -21,14 +21,14 @@ public class ContactMediumService {
         this.repository = repository;
     }
 
-    public List<ContactMedium> findAllContactsMedium(Customer customer) {
-        List<ContactMedium> contactsMedium = new ArrayList<>();
-        if (customer.getContactMediumId() == null) {
-            return contactsMedium;
-        }
-        contactsMedium = repository.findContactMediumById(customer.getContactMediumId());
-        return contactsMedium;
-    }
+//    public List<ContactMedium> findAllContactsMedium(Customer customer) {
+//        List<ContactMedium> contactsMedium = new ArrayList<>();
+//        if (customer.getContactMediumId() == null) {
+//            return contactsMedium;
+//        }
+//        contactsMedium = repository.findContactMediumById(customer.getContactMediumId());
+//        return contactsMedium;
+//    }
 
     public List<ContactMedium> save(List<ContactMedium> contactsMedium) {
         if (contactsMedium == null) {

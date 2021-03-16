@@ -20,13 +20,13 @@ public class AccountService {
     }
 
 
-    public List<Account> findAllAccounts(Customer customer) {
+   /* public List<Account> findAllAccounts(Customer customer) {
         List<Account> accounts = new ArrayList<>();
         if (customer.getAccountId() == null)
             return accounts;
         accounts = repository.findAccountById(customer.getAccountId());
         return accounts;
-    }
+    }*/
 
 
     public List<Account> save(List<Account> accounts) {

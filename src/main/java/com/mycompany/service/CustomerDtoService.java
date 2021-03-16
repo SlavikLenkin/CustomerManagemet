@@ -4,6 +4,7 @@ import com.mycompany.model.ContactMediumDto;
 import com.mycompany.model.CustomerDto;
 import com.mycompany.repository.*;
 import com.mycompany.transfomer.CustomerTransformer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class CustomerDtoService {
     private final ContactMediumDtoService contactMediumDtoService;
     private final CreditProfileService creditProfileService;
     private final CustomerTransformer customerTransformer;
+    private final CustomerAccountService customerAccountService;
 
 
     ////// Можно ли так????
@@ -39,7 +41,7 @@ public class CustomerDtoService {
                               EngagedPartyService engagedPartyService, RelatedPartyService relatedPartyService,
                               PaymentMethodService paymentMethodService, CharacteristicService characteristicService,
                               AgreementService agreementService, ContactMediumDtoService contactMediumService,
-                              CreditProfileService creditProfileService, CustomerTransformer customerTransformer) {
+                              CreditProfileService creditProfileService, CustomerTransformer customerTransformer, CustomerAccountService customerAccountService) {
         this.customerService = customerService;
         this.accountService = accountService;
         this.engagedPartyService = engagedPartyService;
@@ -50,42 +52,44 @@ public class CustomerDtoService {
         this.contactMediumDtoService = contactMediumService;
         this.creditProfileService = creditProfileService;
         this.customerTransformer = customerTransformer;
+        this.customerAccountService = customerAccountService;
     }
     //////
 
     private void setData(CustomerDto customerDto) {
-        engagedParty = customerDto.getEngagedParty();
+      /*  engagedParty = customerDto.getEngagedParty();*/
         accounts = customerDto.getAccounts();
-        relatedParties = customerDto.getRelatedParties();
+       /* relatedParties = customerDto.getRelatedParties();
         paymentMethods = customerDto.getPaymentMethods();
         characteristics = customerDto.getCharacteristics();
         agreements = customerDto.getAgreements();
         contactMediumDtoList = customerDto.getContactMediumDtoList();
-        creditProfiles = customerDto.getCreditProfiles();
+        creditProfiles = customerDto.getCreditProfiles();*/
     }
 
     private CustomerDto getFullCustomer(Customer customer) {
-        List<Account> accounts = accountService.findAllAccounts(customer);
-        List<RelatedParty> relatedParties = relatedPartyService.findAllRelatedParties(customer);
+      /*  List<Account> accounts = accountService.findAllAccounts(customer);*/
+       /* List<RelatedParty> relatedParties = relatedPartyService.findAllRelatedParties(customer);
         List<PaymentMethod> paymentMethods = paymentMethodService.findAllPaymentMethods(customer);
         List<Characteristic> characteristics = characteristicService.findAllCharacteristics(customer);
         List<Agreement> agreements = agreementService.findAllAgreements(customer);
         List<ContactMediumDto> contactMediumDtoList = contactMediumDtoService.getAllContactMediumDto(customer);
-        List<CreditProfile> creditProfiles = creditProfileService.findAllCreditProfile(customer);
+        List<CreditProfile> creditProfiles = creditProfileService.findAllCreditProfile(customer);*/
 
 
-        EngagedParty engagedParty = engagedPartyService.findEngagedParty(customer);
+          /*  EngagedParty engagedParty = engagedPartyService.findEngagedParty(customer);*/
 
         CustomerDto customerDto = new CustomerDto();
+        customerDto.setAccounts(customer.getAccounts());
         customerDto.setCustomer(customer);
-        customerDto.setEngagedParty(engagedParty);
-        customerDto.setAccounts(accounts);
-        customerDto.setRelatedParties(relatedParties);
+       /* customerDto.setEngagedParty(engagedParty);*/
+      /*  customerDto.setAccounts(accounts);*/
+      /*  customerDto.setRelatedParties(relatedParties);
         customerDto.setPaymentMethods(paymentMethods);
         customerDto.setCharacteristics(characteristics);
         customerDto.setAgreements(agreements);
         customerDto.setContactMediumDtoList(contactMediumDtoList);
-        customerDto.setCreditProfiles(creditProfiles);
+        customerDto.setCreditProfiles(creditProfiles);*/
 
         return customerDto;
     }
@@ -106,10 +110,9 @@ public class CustomerDtoService {
 
     public CustomerDto updateFullCustomerById(String id, CustomerDto customerDtoUpdate) {
         CustomerDto customerDto = getFullCustomerById(id);
+
         Customer customerUpdate = customerTransformer.transform(customerDtoUpdate);
         Customer customer = customerTransformer.transform(customerDto);
-
-
 
         if (customerUpdate.getName() != null) {
             customer.setName(customerUpdate.getName());
@@ -128,7 +131,7 @@ public class CustomerDtoService {
         }
 
 
-        EngagedParty engagedPartyUpdate = customerDtoUpdate.getEngagedParty();
+       /* EngagedParty engagedPartyUpdate = customerDtoUpdate.getEngagedParty();
         engagedParty = customerDto.getEngagedParty();
 
         if (engagedPartyUpdate !=null){
@@ -141,13 +144,15 @@ public class CustomerDtoService {
 
         if (engagedParty != null) {
             customer.setEngagedPartyId(engagedParty.getId());
-        }
+        }*/
 
 
 
         List<Account> accountsUpdate = customerDtoUpdate.getAccounts();
         accounts = customerDto.getAccounts();
 
+        System.out.println(accountsUpdate.size());
+        System.out.println(customerDto.getAccounts());
         if (accountsUpdate != null) {
             for (Account accountUpdate : accountsUpdate) {
                 if (accountUpdate!= null)
@@ -167,7 +172,7 @@ public class CustomerDtoService {
 
         }
 
-        setAccountId(customer);
+        /*setAccountId(customer);
 
 
         List<RelatedParty> relatedPartiesUpdate = customerDtoUpdate.getRelatedParties();
@@ -407,11 +412,10 @@ public class CustomerDtoService {
             for (CreditProfile creditProfile : creditProfiles) {
                 idCreditProfile[i] = creditProfile.getId();
                 i++;
-                System.out.println(idCreditProfile[i-1] + "ssss");
             }
             customer.setCreditProfileId(idCreditProfile);
         }
-
+*/
 
 
 
@@ -422,31 +426,33 @@ public class CustomerDtoService {
     public CustomerDto save(CustomerDto customerDto) {
 
         setData(customerDto);
-        customerDto.setEngagedParty(engagedPartyService.save(engagedParty));
+      /*  customerDto.setEngagedParty(engagedPartyService.save(engagedParty));*/
         customerDto.setAccounts(accountService.save(accounts));
-        customerDto.setRelatedParties(relatedPartyService.save(relatedParties));
+       /* customerDto.setRelatedParties(relatedPartyService.save(relatedParties));
         customerDto.setPaymentMethods(paymentMethodService.save(paymentMethods));
         customerDto.setCharacteristics(characteristicService.save(characteristics));
         customerDto.setAgreements(agreementService.save(agreements));
         customerDto.setContactMediumDtoList(contactMediumDtoService.save(contactMediumDtoList));
-        customerDto.setCreditProfiles(creditProfileService.save(creditProfiles));
+        customerDto.setCreditProfiles(creditProfileService.save(creditProfiles));*/
 
         accounts = customerDto.getAccounts();
-        relatedParties = customerDto.getRelatedParties();
+        /*relatedParties = customerDto.getRelatedParties();
         engagedParty = customerDto.getEngagedParty();
         paymentMethods = customerDto.getPaymentMethods();
         characteristics = customerDto.getCharacteristics();
         agreements = customerDto.getAgreements();
         contactMediumDtoList = customerDto.getContactMediumDtoList();
-        creditProfiles = customerDto.getCreditProfiles();
+        creditProfiles = customerDto.getCreditProfiles();*/
 
 
         Customer customer = customerTransformer.transform(customerDto);
-        if (engagedParty != null) {
-            customer.setEngagedPartyId(engagedParty.getId());
-        }
 
-        setAccountId(customer);
+
+       /* if (engagedParty != null) {
+            customer.setEngagedPartyId(engagedParty.getId());
+        }*/
+
+       /* setAccountId(customer);
         int i;
 
         if (relatedParties != null) {
@@ -507,13 +513,24 @@ public class CustomerDtoService {
                 i++;
             }
             customer.setCreditProfileId(idCreditProfile);
-        }
+        }*/
 
         customerDto.setCustomer(customerService.save(customer));
+
+        List<CustomerAccount> customerAccounts = new ArrayList<>();
+        for (Account account : accounts){
+            CustomerAccount customerAccount = new CustomerAccount();
+            customerAccount.setCustomerId(customerDto.getId());
+            customerAccount.setAccountId(account.getId());
+            customerAccounts.add(customerAccount);
+            System.out.println(account.getId());
+        }
+        customerAccountService.save(customerAccounts);
+
         return customerDto;
     }
 
-    private void setAccountId(Customer customer) {
+   /* private void setAccountId(Customer customer) {
         int i = 0;
         if (accounts != null) {
             String[] idAccounts = new String[accounts.size()];
@@ -523,14 +540,16 @@ public class CustomerDtoService {
             }
             customer.setAccountId(idAccounts);
         }
-    }
+    }*/
 
     public void delete(CustomerDto customerDto) {
 
         setData(customerDto);
 
+        customerService.delete(customerTransformer.transform(customerDto));
 
-        engagedPartyService.delete(engagedParty);
+
+       /* engagedPartyService.delete(engagedParty);
 
         for (Account account : accounts) {
             accountService.delete(account);
@@ -562,6 +581,6 @@ public class CustomerDtoService {
         }
 
         customerService.delete(customerTransformer.transform(customerDto));
+    }*/
     }
-
 }

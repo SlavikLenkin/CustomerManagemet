@@ -42,7 +42,7 @@ public class ContactMediumDtoService {
         return contactMediumDto;
     }
 
-    public List<ContactMediumDto> getAllContactMediumDto(Customer customer) {
+   /* public List<ContactMediumDto> getAllContactMediumDto(Customer customer) {
         List<ContactMediumDto> allContactMediumDto = new ArrayList<>();
         if (contactMediumService.findAllContactsMedium(customer) == null) {
             return allContactMediumDto;
@@ -52,7 +52,7 @@ public class ContactMediumDtoService {
             allContactMediumDto.add(getContactMediumDto(contactMedium));
         }
         return allContactMediumDto;
-    }
+    }*/
 
     public List<ContactMediumDto> save(List<ContactMediumDto> contactsMediumDto) {
         List<ContactMedium> contactMediumList = new ArrayList<>();

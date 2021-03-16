@@ -6,15 +6,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Integer> {
 
-    String queryFindAccount = "select * from account\n" +
-            "where id IN :id ";
+    String queryFindAccount = "select h from account h\n" +
+            "where h id IN :id ";
 
     @Query(value = queryFindAccount, nativeQuery = true)
-    List<Account> findAccountById(@Param("id") String[] id);
-
-
+    Set<Account> findAccountById(@Param("id") String[] id);
 }

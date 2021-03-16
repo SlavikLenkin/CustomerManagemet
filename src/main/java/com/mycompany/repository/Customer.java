@@ -1,5 +1,6 @@
 package com.mycompany.repository;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.vladmihalcea.hibernate.type.array.StringArrayType;
 import lombok.Data;
@@ -8,11 +9,14 @@ import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 @Entity
 @Table(name = "customer")
-@Data
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @TypeDef(
         name = "string-array",
@@ -40,7 +44,21 @@ public class Customer implements Serializable {
     private ValidFor validFor;
 
 
-    @Type(type = "string-array")
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinTable(name="customer_account",
+            joinColumns = {@JoinColumn(name = "customer_id")},
+            inverseJoinColumns ={ @JoinColumn(name = "account_id")})
+    private List<Account> accounts = new ArrayList<>();
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
+    }
+
+    /* @Type(type = "string-array")
     @Column(name = "account_id", columnDefinition = "text[]")
     private String[] accountId;
 
@@ -70,7 +88,7 @@ public class Customer implements Serializable {
 
     @Type(type = "string-array")
     @Column(name = "credit_profile_id", columnDefinition = "text[]")
-    private String[] creditProfileId;
+    private String[] creditProfileId;*/
 
 
     public String getHref() {
