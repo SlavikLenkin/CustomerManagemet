@@ -26,32 +26,28 @@ public class CustomerDto {
 
     private ValidFor validFor;
 
-   /* private EngagedParty engagedParty;*/
+    private EngagedParty engagedParty;
 
     @JsonProperty(value = "account")
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinTable(name="customer_account",
-            joinColumns = {@JoinColumn(name = "customer_id")},
-            inverseJoinColumns ={ @JoinColumn(name = "account_id")})
-    private List<Account> accounts = new ArrayList<>();
-
-   /* @JsonProperty(value = "relatedParty")
-    private List<RelatedParty> relatedParties;
-
-    @JsonProperty(value = "paymentMethod")
-    private List<PaymentMethod> paymentMethods;
-
-    @JsonProperty(value = "characteristic")
-    private List<Characteristic> characteristics;
+    private List<Account> accounts;
 
     @JsonProperty(value = "agreement")
     private List<Agreement> agreements;
 
-    @JsonProperty(value = "contactMedium")
-    private List<ContactMediumDto> contactMediumDtoList;
+    @JsonProperty(value = "characteristic")
+    private List<Characteristic> characteristics;
 
     @JsonProperty(value = "creditProfile")
-    private List<CreditProfile> creditProfiles;*/
+    private List<CreditProfile> creditProfiles;
+
+    @JsonProperty(value = "paymentMethod")
+    private List<PaymentMethod> paymentMethods;
+
+    @JsonProperty(value = "relatedParty")
+    private List<RelatedParty> relatedParties;
+
+    @JsonProperty(value = "contactMedium")
+    private List<ContactMediumDto> contactMediumDtoList;
 
 
     public void setCustomer(Customer customer) {
@@ -64,15 +60,6 @@ public class CustomerDto {
 
     }
 
-
-    /*public List<CreditProfile> getCreditProfiles() {
-        return creditProfiles;
-    }
-
-    public void setCreditProfiles(List<CreditProfile> creditProfiles) {
-        this.creditProfiles = creditProfiles;
-    }
-
     public List<ContactMediumDto> getContactMediumDtoList() {
         return contactMediumDtoList;
     }
@@ -81,21 +68,20 @@ public class CustomerDto {
         this.contactMediumDtoList = contactMediumDtoList;
     }
 
-
-    public List<Agreement> getAgreements() {
-        return agreements;
+    public EngagedParty getEngagedParty() {
+        return engagedParty;
     }
 
-    public void setAgreements(List<Agreement> agreements) {
-        this.agreements = agreements;
+    public void setEngagedParty(EngagedParty engagedParty) {
+        this.engagedParty = engagedParty;
     }
 
-    public List<Characteristic> getCharacteristics() {
-        return characteristics;
+    public List<RelatedParty> getRelatedParties() {
+        return relatedParties;
     }
 
-    public void setCharacteristics(List<Characteristic> characteristics) {
-        this.characteristics = characteristics;
+    public void setRelatedParties(List<RelatedParty> relatedParties) {
+        this.relatedParties = relatedParties;
     }
 
     public List<PaymentMethod> getPaymentMethods() {
@@ -106,21 +92,30 @@ public class CustomerDto {
         this.paymentMethods = paymentMethods;
     }
 
-    public List<RelatedParty> getRelatedParties() {
-        return relatedParties;
+    public List<CreditProfile> getCreditProfiles() {
+        return creditProfiles;
     }
 
-    public void setRelatedParties(List<RelatedParty> relatedParties) {
-        this.relatedParties = relatedParties;
-    }*/
-
-   /* public EngagedParty getEngagedParty() {
-        return engagedParty;
+    public void setCreditProfiles(List<CreditProfile> creditProfiles) {
+        this.creditProfiles = creditProfiles;
     }
 
-    public void setEngagedParty(EngagedParty engagedParty) {
-        this.engagedParty = engagedParty;
-    }*/
+    public List<Characteristic> getCharacteristics() {
+        return characteristics;
+    }
+
+    public void setCharacteristics(List<Characteristic> characteristics) {
+        this.characteristics = characteristics;
+    }
+
+    public List<Agreement> getAgreements() {
+        return agreements;
+    }
+
+    public void setAgreements(List<Agreement> agreements) {
+        this.agreements = agreements;
+    }
+
 
     public List<Account> getAccounts() {
         return accounts;
@@ -178,23 +173,4 @@ public class CustomerDto {
         this.validFor = validFor;
     }
 
-    @Override
-    public String toString() {
-        return "CustomerDto{" +
-                "href='" + href + '\'' +
-                ", id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", status='" + status + '\'' +
-                ", statusReason='" + statusReason + '\'' +
-                ", validFor=" + validFor +
-                /*", engagedParty=" + engagedParty +*/
-                ", accounts=" + accounts +
-               /* ", relatedParties=" + relatedParties +
-                ", paymentMethods=" + paymentMethods +
-                ", characteristics=" + characteristics +
-                ", agreements=" + agreements +
-                ", contactMediumDtoList=" + contactMediumDtoList +
-                ", creditProfiles=" + creditProfiles +*/
-                '}';
-    }
 }

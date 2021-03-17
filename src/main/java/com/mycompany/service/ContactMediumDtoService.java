@@ -32,7 +32,6 @@ public class ContactMediumDtoService {
     }
 
     private ContactMediumDto getContactMediumDto(ContactMedium contactMedium) {
-        MediumCharacteristic mediumCharacteristic = mediumCharacteristicService.findMediumCharacteristic(contactMedium);
 
         ContactMediumDto contactMediumDto = new ContactMediumDto();
         contactMediumDto.setContactMedium(contactMedium);
@@ -42,50 +41,31 @@ public class ContactMediumDtoService {
         return contactMediumDto;
     }
 
-   /* public List<ContactMediumDto> getAllContactMediumDto(Customer customer) {
-        List<ContactMediumDto> allContactMediumDto = new ArrayList<>();
-        if (contactMediumService.findAllContactsMedium(customer) == null) {
-            return allContactMediumDto;
-        }
-        List<ContactMedium> contactMediumList = contactMediumService.findAllContactsMedium(customer);
-        for (ContactMedium contactMedium : contactMediumList) {
-            allContactMediumDto.add(getContactMediumDto(contactMedium));
-        }
-        return allContactMediumDto;
-    }*/
 
-    public List<ContactMediumDto> save(List<ContactMediumDto> contactsMediumDto) {
+
+    public List<ContactMediumDto> save(List<ContactMediumDto> contactsMediumDto, Customer customer) {
+
+
         List<ContactMedium> contactMediumList = new ArrayList<>();
-        if (contactsMediumDto == null) {
+        if (contactsMediumDto == null){
             return null;
         }
         for (ContactMediumDto contactMediumDto : contactsMediumDto) {
+            contactMediumDto.setCustomer(customer);
             setData(contactMediumDto);
-            contactMediumDto.setMediumCharacteristic(mediumCharacteristicService.save(mediumCharacteristic));
+            contactMediumDto.setMediumCharacteristic(mediumCharacteristicService
+                    .save(mediumCharacteristic));
 
             mediumCharacteristic = contactMediumDto.getMediumCharacteristic();
             ContactMedium contactMedium = transformer.transform(contactMediumDto);
 
-            if (mediumCharacteristic != null) {
-                contactMedium.setMediumCharacteristicId(mediumCharacteristic.getId());
-            }
 
             contactMediumDto.setContactMedium(contactMedium);
             contactMediumDto.setId(contactMedium.getId());
             contactMediumList.add(contactMedium);
         }
 
-        contactMediumList = contactMediumService.save(contactMediumList);
-
-        int i = 0;
-        for (ContactMediumDto contactMediumDto : contactsMediumDto) {
-
-
-            contactMediumDto.setId(contactMediumList.get(i).getId());
-            i++;
-
-        }
-
+        contactMediumList = contactMediumService.save(contactMediumList,customer);
 
         return contactsMediumDto;
 
@@ -111,9 +91,6 @@ public class ContactMediumDtoService {
             mediumCharacteristic = contactMediumDto.getMediumCharacteristic();
             ContactMedium contactMedium = transformer.transform(contactMediumDto);
 
-            if (mediumCharacteristic != null) {
-                contactMedium.setMediumCharacteristicId(mediumCharacteristic.getId());
-            }
 
             contactMediumDto.setContactMedium(contactMedium);
             contactMediumDto.setId(contactMedium.getId());

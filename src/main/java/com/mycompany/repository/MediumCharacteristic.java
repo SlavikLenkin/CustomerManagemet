@@ -1,12 +1,10 @@
 package com.mycompany.repository;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -48,7 +46,20 @@ public class MediumCharacteristic implements Serializable {
     @Column(name = "street_2")
     private String street2;
 
+    @JsonIgnore
+    @OneToOne
+    @JoinColumn(name = "contact_medium_id",referencedColumnName = "id")
+    private ContactMedium contactMedium;
+
     public MediumCharacteristic() {
+    }
+
+    public ContactMedium getContactMedium() {
+        return contactMedium;
+    }
+
+    public void setContactMedium(ContactMedium contactMedium) {
+        this.contactMedium = contactMedium;
     }
 
     public String getId() {

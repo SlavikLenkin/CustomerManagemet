@@ -54,42 +54,20 @@ public class CustomerDtoService {
         this.customerTransformer = customerTransformer;
         this.customerAccountService = customerAccountService;
     }
-    //////
 
-    private void setData(CustomerDto customerDto) {
-      /*  engagedParty = customerDto.getEngagedParty();*/
-        accounts = customerDto.getAccounts();
-       /* relatedParties = customerDto.getRelatedParties();
-        paymentMethods = customerDto.getPaymentMethods();
-        characteristics = customerDto.getCharacteristics();
-        agreements = customerDto.getAgreements();
-        contactMediumDtoList = customerDto.getContactMediumDtoList();
-        creditProfiles = customerDto.getCreditProfiles();*/
-    }
 
     private CustomerDto getFullCustomer(Customer customer) {
-      /*  List<Account> accounts = accountService.findAllAccounts(customer);*/
-       /* List<RelatedParty> relatedParties = relatedPartyService.findAllRelatedParties(customer);
-        List<PaymentMethod> paymentMethods = paymentMethodService.findAllPaymentMethods(customer);
-        List<Characteristic> characteristics = characteristicService.findAllCharacteristics(customer);
-        List<Agreement> agreements = agreementService.findAllAgreements(customer);
-        List<ContactMediumDto> contactMediumDtoList = contactMediumDtoService.getAllContactMediumDto(customer);
-        List<CreditProfile> creditProfiles = creditProfileService.findAllCreditProfile(customer);*/
-
-
-          /*  EngagedParty engagedParty = engagedPartyService.findEngagedParty(customer);*/
 
         CustomerDto customerDto = new CustomerDto();
+        customerDto.setEngagedParty(customer.getEngagedParty());
         customerDto.setAccounts(customer.getAccounts());
+        customerDto.setAgreements(customer.getAgreements());
+        customerDto.setCharacteristics(customer.getCharacteristics());
+        customerDto.setCreditProfiles(customer.getCreditProfiles());
+        customerDto.setPaymentMethods(customer.getPaymentMethods());
+        customerDto.setRelatedParties(customer.getRelatedParties());
         customerDto.setCustomer(customer);
-       /* customerDto.setEngagedParty(engagedParty);*/
-      /*  customerDto.setAccounts(accounts);*/
-      /*  customerDto.setRelatedParties(relatedParties);
-        customerDto.setPaymentMethods(paymentMethods);
-        customerDto.setCharacteristics(characteristics);
-        customerDto.setAgreements(agreements);
-        customerDto.setContactMediumDtoList(contactMediumDtoList);
-        customerDto.setCreditProfiles(creditProfiles);*/
+
 
         return customerDto;
     }
@@ -131,7 +109,7 @@ public class CustomerDtoService {
         }
 
 
-       /* EngagedParty engagedPartyUpdate = customerDtoUpdate.getEngagedParty();
+       EngagedParty engagedPartyUpdate = customerDtoUpdate.getEngagedParty();
         engagedParty = customerDto.getEngagedParty();
 
         if (engagedPartyUpdate !=null){
@@ -142,17 +120,11 @@ public class CustomerDtoService {
 
         customerDto.setEngagedParty(engagedPartyService.update(engagedParty));
 
-        if (engagedParty != null) {
-            customer.setEngagedPartyId(engagedParty.getId());
-        }*/
-
-
 
         List<Account> accountsUpdate = customerDtoUpdate.getAccounts();
         accounts = customerDto.getAccounts();
 
-        System.out.println(accountsUpdate.size());
-        System.out.println(customerDto.getAccounts());
+
         if (accountsUpdate != null) {
             for (Account accountUpdate : accountsUpdate) {
                 if (accountUpdate!= null)
@@ -172,68 +144,22 @@ public class CustomerDtoService {
 
         }
 
-        /*setAccountId(customer);
 
+        List<Agreement> agreementsUpdate = customerDtoUpdate.getAgreements();
+        agreements = customerDto.getAgreements();
 
-        List<RelatedParty> relatedPartiesUpdate = customerDtoUpdate.getRelatedParties();
-        relatedParties = customerDto.getRelatedParties();
-
-        if (relatedPartiesUpdate != null) {
-            for (RelatedParty relatedPartyUpdate : relatedPartiesUpdate) {
-                for (RelatedParty relatedParty : relatedParties) {
-                    if (relatedParty.getId().equals(relatedPartyUpdate.getId())) {
-                        if (relatedPartyUpdate.getName()!=null){
-                            relatedParty.setName(relatedPartyUpdate.getName());
-                        }
-                        if (relatedPartyUpdate.getRole()!=null){
-                            relatedParty.setRole(relatedPartyUpdate.getRole());
+        if (agreementsUpdate != null) {
+            for (Agreement agreementUpdate : agreementsUpdate) {
+                for (Agreement agreement : agreements) {
+                    if (agreement.getId().equals(agreementUpdate.getId())) {
+                        if (agreementUpdate.getName()!=null){
+                            agreement.setName(agreementUpdate.getName());
                         }
                     }
                 }
 
             }
-            customerDto.setRelatedParties(relatedPartyService.update(relatedParties));
-        }
-
-
-        int i = 0;
-        if (relatedParties != null) {
-            String[] idRelatedParties = new String[relatedParties.size()];
-            for (RelatedParty relatedParty : relatedParties) {
-                idRelatedParties[i] = relatedParty.getId();
-                i++;
-            }
-            customer.setRelatedPartyId(idRelatedParties);
-        }
-
-
-        List<PaymentMethod> paymentMethodsUpdate = customerDtoUpdate.getPaymentMethods();
-        paymentMethods = customerDto.getPaymentMethods();
-
-        if (paymentMethodsUpdate != null) {
-            for (PaymentMethod paymentMethodUpdate : paymentMethodsUpdate) {
-                for (PaymentMethod paymentMethod : paymentMethods) {
-                    if (paymentMethod.getId().equals(paymentMethodUpdate.getId())) {
-                        if (paymentMethodUpdate.getName()!=null){
-                            paymentMethod.setName(paymentMethodUpdate.getName());
-                        }
-                    }
-                }
-
-            }
-            customerDto.setPaymentMethods(paymentMethodService.update(paymentMethods));
-        }
-
-
-        if (paymentMethods != null) {
-            String[] idPaymentMethods = new String[paymentMethods.size()];
-            i = 0;
-            for (PaymentMethod paymentMethod : paymentMethods) {
-                idPaymentMethods[i] = paymentMethod.getId();
-                i++;
-                System.out.println(idPaymentMethods[i-1]);
-            }
-            customer.setPayMethodId(idPaymentMethods);
+            customerDto.setAgreements(agreementService.update(agreements));
         }
 
 
@@ -260,45 +186,76 @@ public class CustomerDtoService {
             customerDto.setCharacteristics(characteristicService.update(characteristics));
         }
 
+        List<CreditProfile> creditProfilesUpdate = customerDtoUpdate.getCreditProfiles();
+        creditProfiles = customerDto.getCreditProfiles();
 
-        if (characteristics != null) {
-            String[] idCharacteristics = new String[characteristics.size()];
-            i = 0;
-            for (Characteristic characteristic : characteristics) {
-                idCharacteristics[i] = characteristic.getId();
-                i++;
-            }
-            customer.setCharacteristicId(idCharacteristics);
-        }
-
-
-        List<Agreement> agreementsUpdate = customerDtoUpdate.getAgreements();
-        agreements = customerDto.getAgreements();
-
-        if (agreementsUpdate != null) {
-            for (Agreement agreementUpdate : agreementsUpdate) {
-                for (Agreement agreement : agreements) {
-                    if (agreement.getId().equals(agreementUpdate.getId())) {
-                        if (agreementUpdate.getName()!=null){
-                            agreement.setName(agreementUpdate.getName());
+        if (creditProfilesUpdate != null) {
+            for (CreditProfile creditProfileUpdate : creditProfilesUpdate) {
+                for (CreditProfile creditProfile : creditProfiles) {
+                    if (creditProfile.getId().equals(creditProfileUpdate.getId())) {
+                        if (creditProfileUpdate.getCreditProfileDate()!=null){
+                            creditProfile.setCreditProfileDate(creditProfileUpdate.getCreditProfileDate());
+                        }
+                        if(creditProfileUpdate.getCreditRiskRating()!=0){
+                            creditProfile.setCreditRiskRating(creditProfileUpdate.getCreditRiskRating());
+                        }
+                        if (creditProfileUpdate.getCreditScore()!=0){
+                            creditProfile.setCreditScore(creditProfileUpdate.getCreditScore());
+                        }
+                        if (creditProfileUpdate.getValidFor()!=null){
+                            creditProfile.setValidFor(creditProfileUpdate.getValidFor());
                         }
                     }
                 }
 
             }
-            customerDto.setAgreements(agreementService.update(agreements));
+
+            customerDto.setCreditProfiles(creditProfileService.update(creditProfiles));
         }
 
-        if (agreements != null) {
-            String[] idAgreements = new String[agreements.size()];
-            i = 0;
-            for (Agreement agreement : agreements) {
-                idAgreements[i] = agreement.getId();
-                i++;
+        List<PaymentMethod> paymentMethodsUpdate = customerDtoUpdate.getPaymentMethods();
+        paymentMethods = customerDto.getPaymentMethods();
+
+        if (paymentMethodsUpdate != null) {
+            for (PaymentMethod paymentMethodUpdate : paymentMethodsUpdate) {
+                for (PaymentMethod paymentMethod : paymentMethods) {
+                    if (paymentMethod.getId().equals(paymentMethodUpdate.getId())) {
+                        if (paymentMethodUpdate.getName()!=null){
+                            paymentMethod.setName(paymentMethodUpdate.getName());
+                        }
+                    }
+                }
+
             }
-            customer.setAgreementId(idAgreements);
+            customerDto.setPaymentMethods(paymentMethodService.update(paymentMethods));
         }
 
+        List<RelatedParty> relatedPartiesUpdate = customerDtoUpdate.getRelatedParties();
+        relatedParties = customerDto.getRelatedParties();
+
+        if (relatedPartiesUpdate != null) {
+            for (RelatedParty relatedPartyUpdate : relatedPartiesUpdate) {
+                for (RelatedParty relatedParty : relatedParties) {
+                    if (relatedParty.getId().equals(relatedPartyUpdate.getId())) {
+                        if (relatedPartyUpdate.getName()!=null){
+                            relatedParty.setName(relatedPartyUpdate.getName());
+                        }
+                        if (relatedPartyUpdate.getRole()!=null){
+                            relatedParty.setRole(relatedPartyUpdate.getRole());
+                        }
+                    }
+                }
+
+            }
+            customerDto.setRelatedParties(relatedPartyService.update(relatedParties));
+        }
+
+
+
+
+
+
+        /*
 
 
         //////MediumCharacteristic
@@ -378,43 +335,7 @@ public class CustomerDtoService {
 
 
 
-        List<CreditProfile> creditProfilesUpdate = customerDtoUpdate.getCreditProfiles();
-        creditProfiles = customerDto.getCreditProfiles();
 
-        if (creditProfilesUpdate != null) {
-            for (CreditProfile creditProfileUpdate : creditProfilesUpdate) {
-                for (CreditProfile creditProfile : creditProfiles) {
-                    if (creditProfile.getId().equals(creditProfileUpdate.getId())) {
-                        if (creditProfileUpdate.getCreditProfileDate()!=null){
-                            creditProfile.setCreditProfileDate(creditProfileUpdate.getCreditProfileDate());
-                        }
-                        if(creditProfileUpdate.getCreditRiskRating()!=0){
-                            creditProfile.setCreditRiskRating(creditProfileUpdate.getCreditRiskRating());
-                        }
-                        if (creditProfileUpdate.getCreditScore()!=0){
-                            creditProfile.setCreditScore(creditProfileUpdate.getCreditScore());
-                        }
-                        if (creditProfileUpdate.getValidFor()!=null){
-                            creditProfile.setValidFor(creditProfileUpdate.getValidFor());
-                        }
-                    }
-                }
-
-            }
-
-            customerDto.setCreditProfiles(creditProfileService.update(creditProfiles));
-        }
-
-
-        if (creditProfiles != null) {
-            String[] idCreditProfile = new String[creditProfiles.size()];
-            i = 0;
-            for (CreditProfile creditProfile : creditProfiles) {
-                idCreditProfile[i] = creditProfile.getId();
-                i++;
-            }
-            customer.setCreditProfileId(idCreditProfile);
-        }
 */
 
 
@@ -425,162 +346,26 @@ public class CustomerDtoService {
 
     public CustomerDto save(CustomerDto customerDto) {
 
-        setData(customerDto);
-      /*  customerDto.setEngagedParty(engagedPartyService.save(engagedParty));*/
-        customerDto.setAccounts(accountService.save(accounts));
-       /* customerDto.setRelatedParties(relatedPartyService.save(relatedParties));
-        customerDto.setPaymentMethods(paymentMethodService.save(paymentMethods));
-        customerDto.setCharacteristics(characteristicService.save(characteristics));
-        customerDto.setAgreements(agreementService.save(agreements));
-        customerDto.setContactMediumDtoList(contactMediumDtoService.save(contactMediumDtoList));
-        customerDto.setCreditProfiles(creditProfileService.save(creditProfiles));*/
-
-        accounts = customerDto.getAccounts();
-        /*relatedParties = customerDto.getRelatedParties();
-        engagedParty = customerDto.getEngagedParty();
-        paymentMethods = customerDto.getPaymentMethods();
-        characteristics = customerDto.getCharacteristics();
-        agreements = customerDto.getAgreements();
-        contactMediumDtoList = customerDto.getContactMediumDtoList();
-        creditProfiles = customerDto.getCreditProfiles();*/
-
-
         Customer customer = customerTransformer.transform(customerDto);
-
-
-       /* if (engagedParty != null) {
-            customer.setEngagedPartyId(engagedParty.getId());
-        }*/
-
-       /* setAccountId(customer);
-        int i;
-
-        if (relatedParties != null) {
-            String[] idRelatedParties = new String[relatedParties.size()];
-            i = 0;
-            for (RelatedParty relatedParty : relatedParties) {
-                idRelatedParties[i] = relatedParty.getId();
-                i++;
-            }
-            customer.setRelatedPartyId(idRelatedParties);
-        }
-
-        if (paymentMethods != null) {
-            String[] idPaymentMethods = new String[paymentMethods.size()];
-            i = 0;
-            for (PaymentMethod paymentMethod : paymentMethods) {
-                idPaymentMethods[i] = paymentMethod.getId();
-                i++;
-            }
-            customer.setPayMethodId(idPaymentMethods);
-        }
-
-        if (characteristics != null) {
-            String[] idCharacteristics = new String[characteristics.size()];
-            i = 0;
-            for (Characteristic characteristic : characteristics) {
-                idCharacteristics[i] = characteristic.getId();
-                i++;
-            }
-            customer.setCharacteristicId(idCharacteristics);
-        }
-
-        if (agreements != null) {
-            String[] idAgreements = new String[agreements.size()];
-            i = 0;
-            for (Agreement agreement : agreements) {
-                idAgreements[i] = agreement.getId();
-                i++;
-            }
-            customer.setAgreementId(idAgreements);
-        }
-
-        if (contactMediumDtoList != null) {
-            String[] idContactMedium = new String[contactMediumDtoList.size()];
-            i = 0;
-            for (ContactMediumDto contactMediumDto : contactMediumDtoList) {
-                idContactMedium[i] = contactMediumDto.getId();
-                i++;
-            }
-            customer.setContactMediumId(idContactMedium);
-        }
-
-        if (creditProfiles != null) {
-            String[] idCreditProfile = new String[creditProfiles.size()];
-            i = 0;
-            for (CreditProfile creditProfile : creditProfiles) {
-                idCreditProfile[i] = creditProfile.getId();
-                i++;
-            }
-            customer.setCreditProfileId(idCreditProfile);
-        }*/
-
         customerDto.setCustomer(customerService.save(customer));
 
-        List<CustomerAccount> customerAccounts = new ArrayList<>();
-        for (Account account : accounts){
-            CustomerAccount customerAccount = new CustomerAccount();
-            customerAccount.setCustomerId(customerDto.getId());
-            customerAccount.setAccountId(account.getId());
-            customerAccounts.add(customerAccount);
-            System.out.println(account.getId());
-        }
-        customerAccountService.save(customerAccounts);
+        customerDto.setEngagedParty(engagedPartyService.save(customerDto.getEngagedParty(),customer));
+        customerDto.setAccounts(accountService.save(customerDto.getAccounts(),customer));
+        customerDto.setAgreements(agreementService.save(customerDto.getAgreements(),customer));
+        customerDto.setCharacteristics(characteristicService.save(customerDto.getCharacteristics(),customer));
+        customerDto.setCreditProfiles(creditProfileService.save(customerDto.getCreditProfiles(),customer));
+        customerDto.setPaymentMethods(paymentMethodService.save(customerDto.getPaymentMethods(),customer));
+        customerDto.setRelatedParties(relatedPartyService.save(customerDto.getRelatedParties(),customer));
+        customerDto.setContactMediumDtoList(contactMediumDtoService.save(customerDto.getContactMediumDtoList(),customer));
+
+
 
         return customerDto;
     }
 
-   /* private void setAccountId(Customer customer) {
-        int i = 0;
-        if (accounts != null) {
-            String[] idAccounts = new String[accounts.size()];
-            for (Account account : accounts) {
-                idAccounts[i] = account.getId();
-                i++;
-            }
-            customer.setAccountId(idAccounts);
-        }
-    }*/
+
 
     public void delete(CustomerDto customerDto) {
-
-        setData(customerDto);
-
         customerService.delete(customerTransformer.transform(customerDto));
-
-
-       /* engagedPartyService.delete(engagedParty);
-
-        for (Account account : accounts) {
-            accountService.delete(account);
-        }
-
-        for (RelatedParty relatedParty : relatedParties) {
-            relatedPartyService.delete(relatedParty);
-        }
-
-        for (PaymentMethod paymentMethod : paymentMethods) {
-            paymentMethodService.delete(paymentMethod);
-        }
-
-        for (Characteristic characteristic : characteristics) {
-            characteristicService.delete(characteristic);
-        }
-
-        for (Agreement agreement : agreements) {
-            agreementService.delete(agreement);
-        }
-
-
-        for (ContactMediumDto contactMediumDto : contactMediumDtoList) {
-            contactMediumDtoService.delete(contactMediumDto);
-        }
-
-        for (CreditProfile creditProfile : creditProfiles) {
-            creditProfileService.delete(creditProfile);
-        }
-
-        customerService.delete(customerTransformer.transform(customerDto));
-    }*/
     }
 }

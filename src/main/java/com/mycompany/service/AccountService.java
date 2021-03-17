@@ -20,20 +20,12 @@ public class AccountService {
     }
 
 
-   /* public List<Account> findAllAccounts(Customer customer) {
-        List<Account> accounts = new ArrayList<>();
-        if (customer.getAccountId() == null)
-            return accounts;
-        accounts = repository.findAccountById(customer.getAccountId());
-        return accounts;
-    }*/
-
-
-    public List<Account> save(List<Account> accounts) {
+    public List<Account> save(List<Account> accounts, Customer customer) {
         if (accounts == null) {
             return null;
         }
         for (Account account : accounts) {
+            account.setCustomer(customer);
             String id = UUID.randomUUID().toString();
             account.setId(id);
             account.setHref("https://host:port/tmf-api/customerManagement/v4/customer/" + id);

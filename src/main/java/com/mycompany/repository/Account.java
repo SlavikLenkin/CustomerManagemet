@@ -23,8 +23,9 @@ public class Account implements Serializable {
     private String name;
 
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "accounts")
-    private Set<Customer> customerList;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     public Account() {
     }
@@ -37,12 +38,12 @@ public class Account implements Serializable {
         this.description = description;
     }
 
-    public Set<Customer> getCustomerList() {
-        return customerList;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCustomerList(Set<Customer> customerList) {
-        this.customerList = customerList;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public String getHref() {

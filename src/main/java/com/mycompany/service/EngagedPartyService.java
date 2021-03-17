@@ -21,24 +21,17 @@ public class EngagedPartyService {
         return repository.findEngagedPartyById(id);
     }
 
-   /* public EngagedParty findEngagedParty(Customer customer) {
-        EngagedParty engagedParty = new EngagedParty();
-        if (customer.getEngagedPartyId() == null)
-            return engagedParty;
-        String str = customer.getEngagedPartyId();
-        System.out.println(customer.getEngagedPartyId());
-        return findEngagedPartyById(str);
-    }*/
 
     public EngagedParty update(EngagedParty engagedParty){
         repository.save(engagedParty);
         return engagedParty;
     }
 
-    public EngagedParty save(EngagedParty engagedParty) {
+    public EngagedParty save(EngagedParty engagedParty,Customer customer) {
         if (engagedParty == null) {
             return null;
         }
+        engagedParty.setCustomer(customer);
         String id = UUID.randomUUID().toString();
         engagedParty.setId(id);
         engagedParty.setHref("https://host:port/tmf-api/customerManagement/v4/customer/" + id);

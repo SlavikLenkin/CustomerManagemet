@@ -3,10 +3,7 @@ package com.mycompany.repository;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "characteristic")
@@ -26,9 +23,21 @@ public class Characteristic {
     @Column(name = "value_type")
     private String valueType;
 
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
     public Characteristic() {
     }
 
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 
     public String getId() {
         return id;

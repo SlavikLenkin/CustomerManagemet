@@ -28,11 +28,12 @@ public class RelatedPartyService {
 //        return relatedParties;
 //    }
 
-    public List<RelatedParty> save(List<RelatedParty> relatedParties) {
+    public List<RelatedParty> save(List<RelatedParty> relatedParties,Customer customer) {
         if (relatedParties == null) {
             return null;
         }
         for (RelatedParty relatedParty : relatedParties) {
+            relatedParty.setCustomer(customer);
             String id = UUID.randomUUID().toString();
             relatedParty.setId(id);
             relatedParty.setHref("https://host:port/tmf-api/customerManagement/v4/customer/" + id);

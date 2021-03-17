@@ -20,21 +20,13 @@ public class CharacteristicService {
     public CharacteristicService(CharacteristicRepository repository) {
         this.repository = repository;
     }
-//
-//    public List<Characteristic> findAllCharacteristics(Customer customer) {
-//        List<Characteristic> characteristics = new ArrayList<>();
-//        if (customer.getCharacteristicId() == null) {
-//            return characteristics;
-//        }
-//        characteristics = repository.findCharacteristicById(customer.getCharacteristicId());
-//        return characteristics;
-//    }
 
-    public List<Characteristic> save(List<Characteristic> characteristics) {
+    public List<Characteristic> save(List<Characteristic> characteristics, Customer customer) {
         if (characteristics == null) {
             return characteristics;
         }
         for (Characteristic characteristic : characteristics) {
+            characteristic.setCustomer(customer);
             String id = UUID.randomUUID().toString();
             characteristic.setId(id);
             repository.save(characteristic);

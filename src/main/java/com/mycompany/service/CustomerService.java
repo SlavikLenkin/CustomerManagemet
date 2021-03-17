@@ -4,6 +4,7 @@ import com.mycompany.repository.Customer;
 import com.mycompany.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,7 +27,6 @@ public class CustomerService {
     }
 
     public void delete(Customer customer) {
-        repository.deleteAccountsById(customer.getId());
         repository.delete(customer);
     }
 

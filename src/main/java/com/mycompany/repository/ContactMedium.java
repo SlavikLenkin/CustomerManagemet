@@ -23,9 +23,28 @@ public class ContactMedium {
     private ValidFor validFor;
 
     @JsonIgnore
-    @Column(name = "medium_characteristic_id")
-    private String MediumCharacteristicId;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
+    @OneToOne(mappedBy = "contactMedium")
+    private MediumCharacteristic mediumCharacteristic;
+
+    public MediumCharacteristic getMediumCharacteristic() {
+        return mediumCharacteristic;
+    }
+
+    public void setMediumCharacteristic(MediumCharacteristic mediumCharacteristic) {
+        this.mediumCharacteristic = mediumCharacteristic;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 
     public ContactMedium() {
     }
@@ -62,13 +81,7 @@ public class ContactMedium {
         this.validFor = validFor;
     }
 
-    public String getMediumCharacteristicId() {
-        return MediumCharacteristicId;
-    }
 
-    public void setMediumCharacteristicId(String mediumCharacteristicId) {
-        MediumCharacteristicId = mediumCharacteristicId;
-    }
 
     @Override
     public String toString() {

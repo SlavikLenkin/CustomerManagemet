@@ -19,14 +19,14 @@ public class MediumCharacteristicService {
     }
 
 
-    public MediumCharacteristic findMediumCharacteristic(ContactMedium contactMedium) {
+  /*  public MediumCharacteristic findMediumCharacteristic(ContactMedium contactMedium) {
         MediumCharacteristic mediumCharacteristic;
         if (contactMedium.getMediumCharacteristicId() == null) {
             return null;
         }
         mediumCharacteristic = repository.findMediumCharacteristicById(contactMedium.getMediumCharacteristicId());
         return mediumCharacteristic;
-    }
+    }*/
 
     public MediumCharacteristic save(MediumCharacteristic mediumCharacteristic) {
         if (mediumCharacteristic == null) {

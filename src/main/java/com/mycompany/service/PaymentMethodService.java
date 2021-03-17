@@ -27,11 +27,12 @@ public class PaymentMethodService {
 //        return paymentMethods;
 //    }
 
-    public List<PaymentMethod> save(List<PaymentMethod> paymentMethods) {
+    public List<PaymentMethod> save(List<PaymentMethod> paymentMethods,Customer customer) {
         if (paymentMethods == null) {
             return null;
         }
         for (PaymentMethod paymentMethod : paymentMethods) {
+            paymentMethod.setCustomer(customer);
             String id = UUID.randomUUID().toString();
             paymentMethod.setId(id);
             paymentMethod.setHref("https://host:port/tmf-api/customerManagement/v4/customer/" + id);

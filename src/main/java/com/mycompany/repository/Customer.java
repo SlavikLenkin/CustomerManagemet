@@ -43,12 +43,85 @@ public class Customer implements Serializable {
     @Embedded
     private ValidFor validFor;
 
+    @OneToOne(mappedBy = "customer")
+    private EngagedParty engagedParty;
 
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinTable(name="customer_account",
-            joinColumns = {@JoinColumn(name = "customer_id")},
-            inverseJoinColumns ={ @JoinColumn(name = "account_id")})
-    private List<Account> accounts = new ArrayList<>();
+    @OneToMany(mappedBy = "customer")
+    private List<Account> accounts;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Agreement> agreements;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Characteristic> characteristics;
+
+    @OneToMany(mappedBy = "customer")
+    private List<CreditProfile> creditProfiles;
+
+    @OneToMany(mappedBy = "customer")
+    private List<PaymentMethod> paymentMethods;
+
+    @OneToMany(mappedBy = "customer")
+    private List<RelatedParty> relatedParties;
+
+    @OneToMany(mappedBy = "customer")
+    private List<ContactMedium> contactMediumList;
+
+    public List<ContactMedium> getContactMediumList() {
+        return contactMediumList;
+    }
+
+    public void setContactMediumList(List<ContactMedium> contactMediumList) {
+        this.contactMediumList = contactMediumList;
+    }
+
+    public EngagedParty getEngagedParty() {
+        return engagedParty;
+    }
+
+    public void setEngagedParty(EngagedParty engagedParty) {
+        this.engagedParty = engagedParty;
+    }
+
+    public List<RelatedParty> getRelatedParties() {
+        return relatedParties;
+    }
+
+    public void setRelatedParties(List<RelatedParty> relatedParties) {
+        this.relatedParties = relatedParties;
+    }
+
+    public List<PaymentMethod> getPaymentMethods() {
+        return paymentMethods;
+    }
+
+    public void setPaymentMethods(List<PaymentMethod> paymentMethods) {
+        this.paymentMethods = paymentMethods;
+    }
+
+    public List<CreditProfile> getCreditProfiles() {
+        return creditProfiles;
+    }
+
+    public void setCreditProfiles(List<CreditProfile> creditProfiles) {
+        this.creditProfiles = creditProfiles;
+    }
+
+    public List<Characteristic> getCharacteristics() {
+        return characteristics;
+    }
+
+    public void setCharacteristics(List<Characteristic> characteristics) {
+        this.characteristics = characteristics;
+    }
+
+    public List<Agreement> getAgreements() {
+        return agreements;
+    }
+
+    public void setAgreements(List<Agreement> agreements) {
+        this.agreements = agreements;
+    }
 
     public List<Account> getAccounts() {
         return accounts;
@@ -57,38 +130,6 @@ public class Customer implements Serializable {
     public void setAccounts(List<Account> accounts) {
         this.accounts = accounts;
     }
-
-    /* @Type(type = "string-array")
-    @Column(name = "account_id", columnDefinition = "text[]")
-    private String[] accountId;
-
-
-    @Column(name = "engaged_party_id")
-    private String engagedPartyId;
-
-    @Type(type = "string-array")
-    @Column(name = "pay_method_id", columnDefinition = "text[]")
-    private String[] payMethodId;
-
-    @Type(type = "string-array")
-    @Column(name = "contact_medium_id", columnDefinition = "text[]")
-    private String[] contactMediumId;
-
-    @Type(type = "string-array")
-    @Column(name = "characteristic_id", columnDefinition = "text[]")
-    private String[] characteristicId;
-
-    @Type(type = "string-array")
-    @Column(name = "agreement_id", columnDefinition = "text[]")
-    private String[] agreementId;
-
-    @Type(type = "string-array")
-    @Column(name = "related_party_id", columnDefinition = "text[]")
-    private String[] relatedPartyId;
-
-    @Type(type = "string-array")
-    @Column(name = "credit_profile_id", columnDefinition = "text[]")
-    private String[] creditProfileId;*/
 
 
     public String getHref() {
