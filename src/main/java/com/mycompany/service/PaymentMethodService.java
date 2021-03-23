@@ -5,7 +5,6 @@ import com.mycompany.repository.PaymentMethod;
 import com.mycompany.repository.PaymentMethodRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,7 +26,7 @@ public class PaymentMethodService {
 //        return paymentMethods;
 //    }
 
-    public List<PaymentMethod> save(List<PaymentMethod> paymentMethods,Customer customer) {
+    public List<PaymentMethod> save(List<PaymentMethod> paymentMethods, Customer customer) {
         if (paymentMethods == null) {
             return null;
         }
@@ -46,7 +45,7 @@ public class PaymentMethodService {
     }
 
     public List<PaymentMethod> update(List<PaymentMethod> paymentMethods) {
-        for (PaymentMethod paymentMethod : paymentMethods){
+        for (PaymentMethod paymentMethod : paymentMethods) {
             repository.save(paymentMethod);
         }
         return paymentMethods;

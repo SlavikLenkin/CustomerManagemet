@@ -8,7 +8,6 @@ import com.mycompany.repository.Customer;
 import com.mycompany.repository.MediumCharacteristic;
 import com.mycompany.repository.ValidFor;
 
-import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 

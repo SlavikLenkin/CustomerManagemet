@@ -28,11 +28,11 @@ public class MediumCharacteristicService {
         return mediumCharacteristic;
     }*/
 
-    public MediumCharacteristic save(MediumCharacteristic mediumCharacteristic) {
+    public MediumCharacteristic save(MediumCharacteristic mediumCharacteristic, ContactMedium contactMedium) {
         if (mediumCharacteristic == null) {
-            System.out.println("null");
             return null;
         }
+        mediumCharacteristic.setContactMedium(contactMedium);
         String id = UUID.randomUUID().toString();
         mediumCharacteristic.setId(id);
         repository.save(mediumCharacteristic);

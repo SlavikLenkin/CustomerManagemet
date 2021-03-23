@@ -4,18 +4,19 @@ import com.mycompany.repository.Customer;
 import com.mycompany.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
 @Service
 public class CustomerService {
 
+
     final
     CustomerRepository repository;
 
     public CustomerService(CustomerRepository repository) {
         this.repository = repository;
+
     }
 
     public List<Customer> findAllCustomers() {
@@ -39,7 +40,7 @@ public class CustomerService {
     }
 
     public Customer update(Customer customer) {
-        repository.save(customer);
+        repository.updateCustomerById(customer);
         return customer;
     }
 }

@@ -22,12 +22,12 @@ public class EngagedPartyService {
     }
 
 
-    public EngagedParty update(EngagedParty engagedParty){
+    public EngagedParty update(EngagedParty engagedParty) {
         repository.save(engagedParty);
         return engagedParty;
     }
 
-    public EngagedParty save(EngagedParty engagedParty,Customer customer) {
+    public EngagedParty save(EngagedParty engagedParty, Customer customer) {
         if (engagedParty == null) {
             return null;
         }

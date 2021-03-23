@@ -48,7 +48,7 @@ public class MediumCharacteristic implements Serializable {
 
     @JsonIgnore
     @OneToOne
-    @JoinColumn(name = "contact_medium_id",referencedColumnName = "id")
+    @JoinColumn(name = "contact_medium_id", referencedColumnName = "id")
     private ContactMedium contactMedium;
 
     public MediumCharacteristic() {

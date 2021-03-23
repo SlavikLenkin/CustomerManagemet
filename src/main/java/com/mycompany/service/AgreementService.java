@@ -5,7 +5,6 @@ import com.mycompany.repository.AgreementRepository;
 import com.mycompany.repository.Customer;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,7 +20,7 @@ public class AgreementService {
     }
 
 
-    public List<Agreement> save(List<Agreement> agreements,Customer customer) {
+    public List<Agreement> save(List<Agreement> agreements, Customer customer) {
         if (agreements == null) {
             return null;
         }
@@ -40,7 +39,7 @@ public class AgreementService {
     }
 
     public List<Agreement> update(List<Agreement> agreements) {
-        for (Agreement agreement : agreements){
+        for (Agreement agreement : agreements) {
             repository.save(agreement);
         }
         return agreements;

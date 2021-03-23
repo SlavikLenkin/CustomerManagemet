@@ -6,7 +6,6 @@ import com.mycompany.repository.RelatedParty;
 import com.mycompany.repository.RelatedPartyRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,7 +27,7 @@ public class RelatedPartyService {
 //        return relatedParties;
 //    }
 
-    public List<RelatedParty> save(List<RelatedParty> relatedParties,Customer customer) {
+    public List<RelatedParty> save(List<RelatedParty> relatedParties, Customer customer) {
         if (relatedParties == null) {
             return null;
         }
@@ -42,8 +41,8 @@ public class RelatedPartyService {
         return relatedParties;
     }
 
-    public List<RelatedParty> update(List<RelatedParty> relatedParties){
-        for (RelatedParty relatedParty : relatedParties){
+    public List<RelatedParty> update(List<RelatedParty> relatedParties) {
+        for (RelatedParty relatedParty : relatedParties) {
             repository.save(relatedParty);
         }
         return relatedParties;

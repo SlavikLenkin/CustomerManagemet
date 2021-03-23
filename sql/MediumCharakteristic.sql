@@ -16,7 +16,13 @@ CREATE TABLE public.medium_characteristic
     state_or_province character varying COLLATE pg_catalog."default",
     street_1 character varying COLLATE pg_catalog."default",
     street_2 character varying COLLATE pg_catalog."default",
-    CONSTRAINT medium_characteristic_pkey PRIMARY KEY (id)
+    contact_medium_id character varying COLLATE pg_catalog."default",
+    CONSTRAINT medium_characteristic_pkey PRIMARY KEY (id),
+    CONSTRAINT medium_characteristic_fkey FOREIGN KEY (contact_medium_id)
+        REFERENCES public.contact_medium (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+        NOT VALID
 )
 
 TABLESPACE pg_default;

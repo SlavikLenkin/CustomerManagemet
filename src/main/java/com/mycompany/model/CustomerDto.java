@@ -4,11 +4,7 @@ package com.mycompany.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mycompany.repository.*;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 //@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CustomerDto {

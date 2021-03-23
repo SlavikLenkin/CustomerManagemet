@@ -6,7 +6,6 @@ import com.mycompany.repository.CharacteristicRepository;
 import com.mycompany.repository.Customer;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,7 +38,7 @@ public class CharacteristicService {
     }
 
     public List<Characteristic> update(List<Characteristic> characteristics) {
-        for (Characteristic characteristic : characteristics){
+        for (Characteristic characteristic : characteristics) {
             repository.save(characteristic);
         }
         return characteristics;

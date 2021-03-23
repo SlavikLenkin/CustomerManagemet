@@ -5,7 +5,6 @@ import com.mycompany.repository.CreditProfileRepository;
 import com.mycompany.repository.Customer;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,7 +18,7 @@ public class CreditProfileService {
     }
 
 
-    public List<CreditProfile> save(List<CreditProfile> creditProfiles,Customer customer) {
+    public List<CreditProfile> save(List<CreditProfile> creditProfiles, Customer customer) {
         if (creditProfiles == null) {
             return null;
         }
@@ -37,7 +36,7 @@ public class CreditProfileService {
     }
 
     public List<CreditProfile> update(List<CreditProfile> creditProfiles) {
-        for (CreditProfile creditProfile : creditProfiles){
+        for (CreditProfile creditProfile : creditProfiles) {
             repository.save(creditProfile);
         }
         return creditProfiles;

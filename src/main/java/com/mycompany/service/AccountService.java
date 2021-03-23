@@ -5,7 +5,6 @@ import com.mycompany.repository.AccountRepository;
 import com.mycompany.repository.Customer;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,8 +33,8 @@ public class AccountService {
         return accounts;
     }
 
-    public List<Account> update(List<Account> accounts){
-        for (Account account :accounts){
+    public List<Account> update(List<Account> accounts) {
+        for (Account account : accounts) {
             repository.save(account);
         }
         return accounts;

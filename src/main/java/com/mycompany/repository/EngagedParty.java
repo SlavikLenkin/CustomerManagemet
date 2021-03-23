@@ -26,7 +26,7 @@ public class EngagedParty implements Serializable {
 
     @JsonIgnore
     @OneToOne
-    @JoinColumn(name = "customer_id",referencedColumnName = "id")
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
     public EngagedParty() {

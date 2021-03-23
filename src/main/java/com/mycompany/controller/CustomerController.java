@@ -4,7 +4,6 @@ import com.mycompany.ApiPath;
 import com.mycompany.model.CustomerDto;
 import com.mycompany.service.CustomerDtoService;
 import com.mycompany.service.CustomerService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,11 +47,11 @@ public class CustomerController implements ApiPath {
         return customerDtoService.save(customerDto);
     }
 
-   @RequestMapping(value = PATH_CUSTOMER_ID, method = RequestMethod.PATCH)
+    @RequestMapping(value = PATH_CUSTOMER_ID, method = RequestMethod.PATCH)
     public ResponseEntity<CustomerDto> patchCustomer(@PathVariable(value = ID) String id,
-                                                     @RequestBody CustomerDto customerDtoUpdate){
+                                                     @RequestBody CustomerDto customerDtoUpdate) {
 
-        CustomerDto customerDto = customerDtoService.updateFullCustomerById(id,customerDtoUpdate);
+        CustomerDto customerDto = customerDtoService.updateFullCustomerById(id, customerDtoUpdate);
 
 
         return ResponseEntity.ok().body(customerDto);
