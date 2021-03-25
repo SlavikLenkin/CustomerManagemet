@@ -42,5 +42,6 @@ public class CustomerService {
     public Customer update(Customer customer) {
         repository.updateCustomerById(customer);
         return customer;
+
     }
 }

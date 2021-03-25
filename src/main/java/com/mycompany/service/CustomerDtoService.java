@@ -319,7 +319,7 @@ public class CustomerDtoService {
         }
 
 
-        customerService.update(customer);/// тут проблема
+        customerDto.setCustomer(customerService.update(customer));
 
         return customerDto;
     }
