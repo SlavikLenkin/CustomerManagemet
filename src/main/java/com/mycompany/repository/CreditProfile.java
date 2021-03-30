@@ -29,6 +29,11 @@ public class CreditProfile implements Serializable {
     @Embedded
     private ValidFor validFor;
 
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
     public CreditProfile() {
     }
 

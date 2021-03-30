@@ -6,7 +6,6 @@ import com.mycompany.repository.CharacteristicRepository;
 import com.mycompany.repository.Customer;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,20 +20,12 @@ public class CharacteristicService {
         this.repository = repository;
     }
 
-    public List<Characteristic> findAllCharacteristics(Customer customer) {
-        List<Characteristic> characteristics = new ArrayList<>();
-        if (customer.getCharacteristicId() == null) {
-            return characteristics;
-        }
-        characteristics = repository.findCharacteristicById(customer.getCharacteristicId());
-        return characteristics;
-    }
-
-    public List<Characteristic> save(List<Characteristic> characteristics) {
+    public List<Characteristic> save(List<Characteristic> characteristics, Customer customer) {
         if (characteristics == null) {
             return characteristics;
         }
         for (Characteristic characteristic : characteristics) {
+            characteristic.setCustomer(customer);
             String id = UUID.randomUUID().toString();
             characteristic.setId(id);
             repository.save(characteristic);
@@ -47,7 +38,7 @@ public class CharacteristicService {
     }
 
     public List<Characteristic> update(List<Characteristic> characteristics) {
-        for (Characteristic characteristic : characteristics){
+        for (Characteristic characteristic : characteristics) {
             repository.save(characteristic);
         }
         return characteristics;

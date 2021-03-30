@@ -19,20 +19,20 @@ public class MediumCharacteristicService {
     }
 
 
-    public MediumCharacteristic findMediumCharacteristic(ContactMedium contactMedium) {
+  /*  public MediumCharacteristic findMediumCharacteristic(ContactMedium contactMedium) {
         MediumCharacteristic mediumCharacteristic;
         if (contactMedium.getMediumCharacteristicId() == null) {
             return null;
         }
         mediumCharacteristic = repository.findMediumCharacteristicById(contactMedium.getMediumCharacteristicId());
         return mediumCharacteristic;
-    }
+    }*/
 
-    public MediumCharacteristic save(MediumCharacteristic mediumCharacteristic) {
+    public MediumCharacteristic save(MediumCharacteristic mediumCharacteristic, ContactMedium contactMedium) {
         if (mediumCharacteristic == null) {
-            System.out.println("null");
             return null;
         }
+        mediumCharacteristic.setContactMedium(contactMedium);
         String id = UUID.randomUUID().toString();
         mediumCharacteristic.setId(id);
         repository.save(mediumCharacteristic);

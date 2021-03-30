@@ -10,11 +10,13 @@ import java.util.UUID;
 @Service
 public class CustomerService {
 
+
     final
     CustomerRepository repository;
 
     public CustomerService(CustomerRepository repository) {
         this.repository = repository;
+
     }
 
     public List<Customer> findAllCustomers() {
@@ -37,8 +39,9 @@ public class CustomerService {
         return customer;
     }
 
-    public Customer update(Customer customer){
-        repository.save(customer);
+    public Customer update(Customer customer) {
+        repository.updateCustomerById(customer);
         return customer;
+
     }
 }

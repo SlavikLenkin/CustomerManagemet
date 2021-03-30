@@ -27,23 +27,23 @@ public class CustomerDto {
     @JsonProperty(value = "account")
     private List<Account> accounts;
 
-    @JsonProperty(value = "relatedParty")
-    private List<RelatedParty> relatedParties;
-
-    @JsonProperty(value = "paymentMethod")
-    private List<PaymentMethod> paymentMethods;
+    @JsonProperty(value = "agreement")
+    private List<Agreement> agreements;
 
     @JsonProperty(value = "characteristic")
     private List<Characteristic> characteristics;
 
-    @JsonProperty(value = "agreement")
-    private List<Agreement> agreements;
+    @JsonProperty(value = "creditProfile")
+    private List<CreditProfile> creditProfiles;
+
+    @JsonProperty(value = "paymentMethod")
+    private List<PaymentMethod> paymentMethods;
+
+    @JsonProperty(value = "relatedParty")
+    private List<RelatedParty> relatedParties;
 
     @JsonProperty(value = "contactMedium")
     private List<ContactMediumDto> contactMediumDtoList;
-
-    @JsonProperty(value = "creditProfile")
-    private List<CreditProfile> creditProfiles;
 
 
     public void setCustomer(Customer customer) {
@@ -56,15 +56,6 @@ public class CustomerDto {
 
     }
 
-
-    public List<CreditProfile> getCreditProfiles() {
-        return creditProfiles;
-    }
-
-    public void setCreditProfiles(List<CreditProfile> creditProfiles) {
-        this.creditProfiles = creditProfiles;
-    }
-
     public List<ContactMediumDto> getContactMediumDtoList() {
         return contactMediumDtoList;
     }
@@ -73,29 +64,12 @@ public class CustomerDto {
         this.contactMediumDtoList = contactMediumDtoList;
     }
 
-
-    public List<Agreement> getAgreements() {
-        return agreements;
+    public EngagedParty getEngagedParty() {
+        return engagedParty;
     }
 
-    public void setAgreements(List<Agreement> agreements) {
-        this.agreements = agreements;
-    }
-
-    public List<Characteristic> getCharacteristics() {
-        return characteristics;
-    }
-
-    public void setCharacteristics(List<Characteristic> characteristics) {
-        this.characteristics = characteristics;
-    }
-
-    public List<PaymentMethod> getPaymentMethods() {
-        return paymentMethods;
-    }
-
-    public void setPaymentMethods(List<PaymentMethod> paymentMethods) {
-        this.paymentMethods = paymentMethods;
+    public void setEngagedParty(EngagedParty engagedParty) {
+        this.engagedParty = engagedParty;
     }
 
     public List<RelatedParty> getRelatedParties() {
@@ -106,13 +80,38 @@ public class CustomerDto {
         this.relatedParties = relatedParties;
     }
 
-    public EngagedParty getEngagedParty() {
-        return engagedParty;
+    public List<PaymentMethod> getPaymentMethods() {
+        return paymentMethods;
     }
 
-    public void setEngagedParty(EngagedParty engagedParty) {
-        this.engagedParty = engagedParty;
+    public void setPaymentMethods(List<PaymentMethod> paymentMethods) {
+        this.paymentMethods = paymentMethods;
     }
+
+    public List<CreditProfile> getCreditProfiles() {
+        return creditProfiles;
+    }
+
+    public void setCreditProfiles(List<CreditProfile> creditProfiles) {
+        this.creditProfiles = creditProfiles;
+    }
+
+    public List<Characteristic> getCharacteristics() {
+        return characteristics;
+    }
+
+    public void setCharacteristics(List<Characteristic> characteristics) {
+        this.characteristics = characteristics;
+    }
+
+    public List<Agreement> getAgreements() {
+        return agreements;
+    }
+
+    public void setAgreements(List<Agreement> agreements) {
+        this.agreements = agreements;
+    }
+
 
     public List<Account> getAccounts() {
         return accounts;
@@ -170,23 +169,4 @@ public class CustomerDto {
         this.validFor = validFor;
     }
 
-    @Override
-    public String toString() {
-        return "CustomerDto{" +
-                "href='" + href + '\'' +
-                ", id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", status='" + status + '\'' +
-                ", statusReason='" + statusReason + '\'' +
-                ", validFor=" + validFor +
-                ", engagedParty=" + engagedParty +
-                ", accounts=" + accounts +
-                ", relatedParties=" + relatedParties +
-                ", paymentMethods=" + paymentMethods +
-                ", characteristics=" + characteristics +
-                ", agreements=" + agreements +
-                ", contactMediumDtoList=" + contactMediumDtoList +
-                ", creditProfiles=" + creditProfiles +
-                '}';
-    }
 }

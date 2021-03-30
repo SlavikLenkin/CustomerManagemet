@@ -6,7 +6,6 @@ import com.mycompany.repository.ContactMediumRepository;
 import com.mycompany.repository.Customer;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,20 +20,13 @@ public class ContactMediumService {
         this.repository = repository;
     }
 
-    public List<ContactMedium> findAllContactsMedium(Customer customer) {
-        List<ContactMedium> contactsMedium = new ArrayList<>();
-        if (customer.getContactMediumId() == null) {
-            return contactsMedium;
-        }
-        contactsMedium = repository.findContactMediumById(customer.getContactMediumId());
-        return contactsMedium;
-    }
 
-    public List<ContactMedium> save(List<ContactMedium> contactsMedium) {
+    public List<ContactMedium> save(List<ContactMedium> contactsMedium, Customer customer) {
         if (contactsMedium == null) {
             return contactsMedium;
         }
         for (ContactMedium contactMedium : contactsMedium) {
+            contactMedium.setCustomer(customer);
             String id = UUID.randomUUID().toString();
             contactMedium.setId(id);
             repository.save(contactMedium);
@@ -42,12 +34,25 @@ public class ContactMediumService {
         return contactsMedium;
     }
 
+    public ContactMedium saveOne(ContactMedium contactMedium, Customer customer) {
+        contactMedium.setCustomer(customer);
+        String id = UUID.randomUUID().toString();
+        contactMedium.setId(id);
+        repository.save(contactMedium);
+        return contactMedium;
+    }
+
+    public ContactMedium updateOne(ContactMedium contactMedium) {
+        repository.save(contactMedium);
+        return contactMedium;
+    }
+
     public void delete(ContactMedium contactMedium) {
         repository.delete(contactMedium);
     }
 
     public List<ContactMedium> update(List<ContactMedium> contactMediumList) {
-        for (ContactMedium contactMedium : contactMediumList){
+        for (ContactMedium contactMedium : contactMediumList) {
             repository.save(contactMedium);
         }
         return contactMediumList;

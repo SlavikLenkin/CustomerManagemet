@@ -11,13 +11,6 @@ CREATE TABLE public.customer
     status_reason character varying(100) COLLATE pg_catalog."default",
     start_date_time timestamp with time zone,
     end_date_time timestamp with time zone,
-    account_id character varying[] COLLATE pg_catalog."default",
-    pay_method_id character varying[] COLLATE pg_catalog."default",
-    contact_medium_id character varying[] COLLATE pg_catalog."default",
-    characteristic_id character varying[] COLLATE pg_catalog."default",
-    agreement_id character varying[] COLLATE pg_catalog."default",
-    related_party_id character varying[] COLLATE pg_catalog."default",
-    engaged_party_id character varying COLLATE pg_catalog."default",
     CONSTRAINT customer_pkey PRIMARY KEY (id)
 )
 

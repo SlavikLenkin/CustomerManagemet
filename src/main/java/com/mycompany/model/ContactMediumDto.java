@@ -4,8 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mycompany.repository.ContactMedium;
+import com.mycompany.repository.Customer;
 import com.mycompany.repository.MediumCharacteristic;
 import com.mycompany.repository.ValidFor;
+
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ContactMediumDto {
@@ -28,6 +32,11 @@ public class ContactMediumDto {
     @JsonProperty(value = "characteristic")
     private MediumCharacteristic mediumCharacteristic;
 
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
 
     public void setContactMedium(ContactMedium contactMedium) {
         this.id = contactMedium.getId();
@@ -36,6 +45,13 @@ public class ContactMediumDto {
         this.validFor = contactMedium.getValidFor();
     }
 
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 
     public String getId() {
         return id;

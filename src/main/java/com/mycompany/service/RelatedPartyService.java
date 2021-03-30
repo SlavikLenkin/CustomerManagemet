@@ -6,7 +6,6 @@ import com.mycompany.repository.RelatedParty;
 import com.mycompany.repository.RelatedPartyRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,19 +19,20 @@ public class RelatedPartyService {
         this.repository = repository;
     }
 
-    public List<RelatedParty> findAllRelatedParties(Customer customer) {
-        List<RelatedParty> relatedParties = new ArrayList<>();
-        if (customer.getRelatedPartyId() == null)
-            return relatedParties;
-        relatedParties = repository.findRelatedPartyById(customer.getRelatedPartyId());
-        return relatedParties;
-    }
+//    public List<RelatedParty> findAllRelatedParties(Customer customer) {
+//        List<RelatedParty> relatedParties = new ArrayList<>();
+//        if (customer.getRelatedPartyId() == null)
+//            return relatedParties;
+//        relatedParties = repository.findRelatedPartyById(customer.getRelatedPartyId());
+//        return relatedParties;
+//    }
 
-    public List<RelatedParty> save(List<RelatedParty> relatedParties) {
+    public List<RelatedParty> save(List<RelatedParty> relatedParties, Customer customer) {
         if (relatedParties == null) {
             return null;
         }
         for (RelatedParty relatedParty : relatedParties) {
+            relatedParty.setCustomer(customer);
             String id = UUID.randomUUID().toString();
             relatedParty.setId(id);
             relatedParty.setHref("https://host:port/tmf-api/customerManagement/v4/customer/" + id);
@@ -41,8 +41,8 @@ public class RelatedPartyService {
         return relatedParties;
     }
 
-    public List<RelatedParty> update(List<RelatedParty> relatedParties){
-        for (RelatedParty relatedParty : relatedParties){
+    public List<RelatedParty> update(List<RelatedParty> relatedParties) {
+        for (RelatedParty relatedParty : relatedParties) {
             repository.save(relatedParty);
         }
         return relatedParties;

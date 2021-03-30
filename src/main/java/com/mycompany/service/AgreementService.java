@@ -5,7 +5,6 @@ import com.mycompany.repository.AgreementRepository;
 import com.mycompany.repository.Customer;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,20 +20,12 @@ public class AgreementService {
     }
 
 
-    public List<Agreement> findAllAgreements(Customer customer) {
-        List<Agreement> agreements = new ArrayList<>();
-        if (customer.getAgreementId() == null) {
-            return agreements;
-        }
-        agreements = repository.findAgreementById(customer.getAgreementId());
-        return agreements;
-    }
-
-    public List<Agreement> save(List<Agreement> agreements) {
+    public List<Agreement> save(List<Agreement> agreements, Customer customer) {
         if (agreements == null) {
             return null;
         }
         for (Agreement agreement : agreements) {
+            agreement.setCustomer(customer);
             String id = UUID.randomUUID().toString();
             agreement.setId(id);
             agreement.setHref("https://host:port/tmf-api/customerManagement/v4/customer/" + id);
@@ -48,7 +39,7 @@ public class AgreementService {
     }
 
     public List<Agreement> update(List<Agreement> agreements) {
-        for (Agreement agreement : agreements){
+        for (Agreement agreement : agreements) {
             repository.save(agreement);
         }
         return agreements;
