@@ -70,7 +70,7 @@ public class ContactMediumDtoService {
                     .save(mediumCharacteristic, contactMedium));
 
 
-            contactMediumList.add(contactMedium);
+            contactMediumDto.setContactMedium(contactMedium);
         }
 
 

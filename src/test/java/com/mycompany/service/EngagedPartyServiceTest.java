@@ -41,7 +41,7 @@ class EngagedPartyServiceTest {
         Assert.assertNotNull(engagedParty2.getCustomer());
         Assert.assertNotNull(engagedParty2.getHref());
         Assert.assertEquals("new engagedParty", engagedParty2.getName());
-        Mockito.verify(engagedPartyRepository, Mockito.times(1)).save(engagedParty2);
+        Mockito.verify(engagedPartyRepository, Mockito.times(2)).save(engagedParty2);
     }
 
     @Test

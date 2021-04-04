@@ -21,7 +21,7 @@ public class ContactMediumService {
     }
 
 
-    public List<ContactMedium> save(List<ContactMedium> contactsMedium, Customer customer) {
+   /* public List<ContactMedium> save(List<ContactMedium> contactsMedium, Customer customer) {
         if (contactsMedium == null) {
             return contactsMedium;
         }
@@ -32,7 +32,7 @@ public class ContactMediumService {
             repository.save(contactMedium);
         }
         return contactsMedium;
-    }
+    }*/
 
     public ContactMedium saveOne(ContactMedium contactMedium, Customer customer) {
         contactMedium.setCustomer(customer);
@@ -51,10 +51,10 @@ public class ContactMediumService {
         repository.delete(contactMedium);
     }
 
-    public List<ContactMedium> update(List<ContactMedium> contactMediumList) {
+   /* public List<ContactMedium> update(List<ContactMedium> contactMediumList) {
         for (ContactMedium contactMedium : contactMediumList) {
             repository.save(contactMedium);
         }
         return contactMediumList;
-    }
+    }*/
 }
