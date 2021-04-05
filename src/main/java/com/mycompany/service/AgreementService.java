@@ -3,12 +3,14 @@ package com.mycompany.service;
 import com.mycompany.repository.Agreement;
 import com.mycompany.repository.AgreementRepository;
 import com.mycompany.repository.Customer;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class AgreementService {
 
     final
@@ -21,6 +23,7 @@ public class AgreementService {
 
 
     public List<Agreement> save(List<Agreement> agreements, Customer customer) {
+        log.info("save");
         if (agreements == null) {
             return null;
         }
@@ -35,10 +38,12 @@ public class AgreementService {
     }
 
     public void delete(Agreement agreement) {
+        log.info("delete");
         repository.delete(agreement);
     }
 
     public List<Agreement> update(List<Agreement> agreements) {
+        log.info("update");
         for (Agreement agreement : agreements) {
             repository.save(agreement);
         }

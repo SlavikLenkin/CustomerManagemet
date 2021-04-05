@@ -4,12 +4,14 @@ package com.mycompany.service;
 import com.mycompany.repository.Customer;
 import com.mycompany.repository.RelatedParty;
 import com.mycompany.repository.RelatedPartyRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class RelatedPartyService {
 
     final
@@ -19,15 +21,9 @@ public class RelatedPartyService {
         this.repository = repository;
     }
 
-//    public List<RelatedParty> findAllRelatedParties(Customer customer) {
-//        List<RelatedParty> relatedParties = new ArrayList<>();
-//        if (customer.getRelatedPartyId() == null)
-//            return relatedParties;
-//        relatedParties = repository.findRelatedPartyById(customer.getRelatedPartyId());
-//        return relatedParties;
-//    }
 
     public List<RelatedParty> save(List<RelatedParty> relatedParties, Customer customer) {
+        log.info("save");
         if (relatedParties == null) {
             return null;
         }
@@ -42,6 +38,7 @@ public class RelatedPartyService {
     }
 
     public List<RelatedParty> update(List<RelatedParty> relatedParties) {
+        log.info("update");
         for (RelatedParty relatedParty : relatedParties) {
             repository.save(relatedParty);
         }
@@ -49,6 +46,7 @@ public class RelatedPartyService {
     }
 
     public void delete(RelatedParty relatedParty) {
+        log.info("delete");
         repository.delete(relatedParty);
     }
 

@@ -3,12 +3,14 @@ package com.mycompany.service;
 import com.mycompany.repository.Customer;
 import com.mycompany.repository.PaymentMethod;
 import com.mycompany.repository.PaymentMethodRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class PaymentMethodService {
 
     final
@@ -18,15 +20,9 @@ public class PaymentMethodService {
         this.repository = repository;
     }
 
-//    public List<PaymentMethod> findAllPaymentMethods(Customer customer) {
-//        List<PaymentMethod> paymentMethods = new ArrayList<>();
-//        if (customer.getPayMethodId() == null)
-//            return paymentMethods;
-//        paymentMethods = repository.findPaymentMethodById(customer.getPayMethodId());
-//        return paymentMethods;
-//    }
 
     public List<PaymentMethod> save(List<PaymentMethod> paymentMethods, Customer customer) {
+        log.info("save");
         if (paymentMethods == null) {
             return null;
         }
@@ -41,10 +37,12 @@ public class PaymentMethodService {
     }
 
     public void delete(PaymentMethod paymentMethod) {
+        log.info("delete");
         repository.delete(paymentMethod);
     }
 
     public List<PaymentMethod> update(List<PaymentMethod> paymentMethods) {
+        log.info("update");
         for (PaymentMethod paymentMethod : paymentMethods) {
             repository.save(paymentMethod);
         }

@@ -37,14 +37,14 @@ public class CustomerController implements ApiPath {
     @ApiOperation(value = "getAll")
     @GetMapping(PATH_CUSTOMER)
     public List<CustomerDto> getAll() {
-        log.info("Get all customer");
+        log.info("getAll");
         return customerDtoService.getAllFullCustomer();
     }
 
     @ApiOperation(value = "getCustomerById")
     @GetMapping(PATH_CUSTOMER_ID)
     public ResponseEntity<CustomerDto> getCustomerById(@PathVariable(value = ID) String id) {
-        log.info("Get customer by id");
+        log.info("getCustomerById");
         CustomerDto customerDto = customerDtoService.getFullCustomerById(id);
         if (customerDto == null)
             return new ResponseEntity(HttpStatus.NOT_FOUND);
@@ -54,7 +54,7 @@ public class CustomerController implements ApiPath {
     @ApiOperation(value = "createCustomer")
     @PostMapping(PATH_CUSTOMER)
     public CustomerDto createCustomer(@Valid @RequestBody CustomerDto customerDto) {
-        log.info("Create customer");
+        log.info("createCustomer");
         return customerDtoService.save(customerDto);
     }
 
@@ -62,7 +62,7 @@ public class CustomerController implements ApiPath {
     @RequestMapping(value = PATH_CUSTOMER_ID, method = RequestMethod.PATCH)
     public ResponseEntity<CustomerDto> patchCustomer(@PathVariable(value = ID) String id,
                                                      @RequestBody CustomerDto customerDtoUpdate) {
-        log.info("Patch customer by id");
+        log.info("patchCustomer", id);
         CustomerDto customerDto = customerDtoService.updateFullCustomerById(id, customerDtoUpdate);
         return ResponseEntity.ok().body(customerDto);
     }
@@ -70,7 +70,7 @@ public class CustomerController implements ApiPath {
     @ApiOperation(value = "deleteCustomer")
     @DeleteMapping(PATH_CUSTOMER_ID)
     public ResponseEntity deleteCustomer(@PathVariable(value = ID) String id) {
-        log.info("Delete customer by id");
+        log.info("deleteCustomer");
         CustomerDto customerDto = customerDtoService.getFullCustomerById(id);
         if (customerDto == null)
             return new ResponseEntity(HttpStatus.NOT_FOUND);

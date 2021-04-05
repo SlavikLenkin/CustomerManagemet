@@ -4,12 +4,14 @@ import com.mycompany.model.ContactMediumDto;
 import com.mycompany.model.CustomerDto;
 import com.mycompany.repository.*;
 import com.mycompany.transfomer.CustomerTransformer;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class CustomerDtoService {
 
 
@@ -55,7 +57,7 @@ public class CustomerDtoService {
 
 
     private CustomerDto getFullCustomer(Customer customer) {
-
+        log.info("getFullCustomer");
         CustomerDto customerDto = new CustomerDto();
         customerDto.setEngagedParty(customer.getEngagedParty());
         customerDto.setAccounts(customer.getAccounts());
@@ -73,6 +75,7 @@ public class CustomerDtoService {
     }
 
     public List<CustomerDto> getAllFullCustomer() {
+        log.info("getAllFullCustomer");
         List<CustomerDto> allCustomerDto = new ArrayList<>();
         List<Customer> customers = customerService.findAllCustomers();
         for (Customer customer : customers) {
@@ -82,12 +85,14 @@ public class CustomerDtoService {
     }
 
     public CustomerDto getFullCustomerById(String id) {
+        log.info("getFullCustomerById");
         Customer customer = customerService.findCustomerById(id);
         return getFullCustomer(customer);
     }
 
 
     public CustomerDto updateFullCustomerById(String id, CustomerDto customerDtoUpdate) {
+        log.info("updateFullCustomerById");
         CustomerDto customerDto = getFullCustomerById(id);
 
         Customer customerUpdate = customerTransformer.transform(customerDtoUpdate);
@@ -325,7 +330,7 @@ public class CustomerDtoService {
     }
 
     public CustomerDto save(CustomerDto customerDto) {
-
+        log.info("save");
         Customer customer = customerTransformer.transform(customerDto);
         customerDto.setCustomer(customerService.save(customer));
 
@@ -344,6 +349,7 @@ public class CustomerDtoService {
 
 
     public void delete(CustomerDto customerDto) {
+        log.info("delete");
         customerService.delete(customerTransformer.transform(customerDto));
     }
 }

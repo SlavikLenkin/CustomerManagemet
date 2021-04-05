@@ -3,12 +3,14 @@ package com.mycompany.service;
 import com.mycompany.repository.CreditProfile;
 import com.mycompany.repository.CreditProfileRepository;
 import com.mycompany.repository.Customer;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class CreditProfileService {
 
     private final CreditProfileRepository repository;
@@ -19,6 +21,7 @@ public class CreditProfileService {
 
 
     public List<CreditProfile> save(List<CreditProfile> creditProfiles, Customer customer) {
+        log.info("save");
         if (creditProfiles == null) {
             return null;
         }
@@ -32,10 +35,12 @@ public class CreditProfileService {
     }
 
     public void delete(CreditProfile creditProfile) {
+        log.info("delete");
         repository.delete(creditProfile);
     }
 
     public List<CreditProfile> update(List<CreditProfile> creditProfiles) {
+        log.info("update");
         for (CreditProfile creditProfile : creditProfiles) {
             repository.save(creditProfile);
         }

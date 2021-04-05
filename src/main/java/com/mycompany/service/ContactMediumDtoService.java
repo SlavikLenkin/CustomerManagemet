@@ -5,12 +5,14 @@ import com.mycompany.repository.ContactMedium;
 import com.mycompany.repository.Customer;
 import com.mycompany.repository.MediumCharacteristic;
 import com.mycompany.transfomer.ContactMediumTransformer;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class ContactMediumDtoService {
 
     private final ContactMediumService contactMediumService;
@@ -27,10 +29,12 @@ public class ContactMediumDtoService {
     }
 
     private void setData(ContactMediumDto contactMediumDto) {
+        log.info("setData");
         mediumCharacteristic = contactMediumDto.getMediumCharacteristic();
     }
 
     public List<ContactMediumDto> getContactMediumDto(List<ContactMedium> contactMediumList) {
+        log.info("getContactMediumDto");
         List<ContactMediumDto> contactMediumDtoList = new ArrayList<>();
         int i = 0;
         for (ContactMedium contactMedium : contactMediumList) {
@@ -47,8 +51,7 @@ public class ContactMediumDtoService {
 
 
     public List<ContactMediumDto> save(List<ContactMediumDto> contactsMediumDto, Customer customer) {
-
-
+        log.info("save");
         List<ContactMedium> contactMediumList = new ArrayList<>();
         if (contactsMediumDto == null) {
             return null;
@@ -79,14 +82,14 @@ public class ContactMediumDtoService {
     }
 
     public void delete(ContactMediumDto contactMediumDto) {
+        log.info("delete");
         mediumCharacteristicService.delete(contactMediumDto.getMediumCharacteristic());
         contactMediumService.delete(transformer.transform(contactMediumDto));
     }
 
 
     public List<ContactMediumDto> update(List<ContactMediumDto> contactMediumDtoList, Customer customer) {
-
-
+        log.info("update");
         List<ContactMedium> contactMediumList = new ArrayList<>();
         if (contactMediumList == null) {
             return null;

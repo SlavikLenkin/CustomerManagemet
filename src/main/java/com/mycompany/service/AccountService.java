@@ -3,12 +3,14 @@ package com.mycompany.service;
 import com.mycompany.repository.Account;
 import com.mycompany.repository.AccountRepository;
 import com.mycompany.repository.Customer;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class AccountService {
 
     final
@@ -20,6 +22,7 @@ public class AccountService {
 
 
     public List<Account> save(List<Account> accounts, Customer customer) {
+        log.info("save");
         if (accounts == null) {
             return null;
         }
@@ -34,6 +37,7 @@ public class AccountService {
     }
 
     public List<Account> update(List<Account> accounts) {
+        log.info("update");
         for (Account account : accounts) {
             repository.save(account);
         }
@@ -41,8 +45,8 @@ public class AccountService {
     }
 
     public void delete(Account account) {
+        log.info("delete");
         repository.delete(account);
     }
-
 
 }
