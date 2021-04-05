@@ -19,9 +19,8 @@ public class CreditProfileService {
         this.repository = repository;
     }
 
-
     public List<CreditProfile> save(List<CreditProfile> creditProfiles, Customer customer) {
-        log.info("save");
+        log.debug("save");
         if (creditProfiles == null) {
             return null;
         }
@@ -35,12 +34,12 @@ public class CreditProfileService {
     }
 
     public void delete(CreditProfile creditProfile) {
-        log.info("delete");
+        log.debug("delete");
         repository.delete(creditProfile);
     }
 
     public List<CreditProfile> update(List<CreditProfile> creditProfiles) {
-        log.info("update");
+        log.debug("update");
         for (CreditProfile creditProfile : creditProfiles) {
             repository.save(creditProfile);
         }

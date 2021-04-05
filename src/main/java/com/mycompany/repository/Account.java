@@ -9,7 +9,6 @@ import java.io.Serializable;
 @Table(name = "account")
 public class Account implements Serializable {
 
-
     private String description;
 
     private String href;

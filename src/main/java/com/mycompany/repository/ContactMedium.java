@@ -8,7 +8,6 @@ import javax.persistence.*;
 @Table(name = "contact_medium")
 public class ContactMedium {
 
-
     @Id
     @Column(name = "id")
     private String id;
@@ -26,7 +25,6 @@ public class ContactMedium {
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
-
 
     @OneToOne(mappedBy = "contactMedium")
     private MediumCharacteristic mediumCharacteristic;
@@ -81,7 +79,6 @@ public class ContactMedium {
     public void setValidFor(ValidFor validFor) {
         this.validFor = validFor;
     }
-
 
     @Override
     public String toString() {

@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Table(name = "characteristic")
 public class Characteristic {
 
-
     @Id
     @Column(name = "id")
     private String id;

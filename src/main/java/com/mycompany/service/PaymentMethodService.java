@@ -20,9 +20,8 @@ public class PaymentMethodService {
         this.repository = repository;
     }
 
-
     public List<PaymentMethod> save(List<PaymentMethod> paymentMethods, Customer customer) {
-        log.info("save");
+        log.debug("save");
         if (paymentMethods == null) {
             return null;
         }
@@ -37,12 +36,12 @@ public class PaymentMethodService {
     }
 
     public void delete(PaymentMethod paymentMethod) {
-        log.info("delete");
+        log.debug("delete");
         repository.delete(paymentMethod);
     }
 
     public List<PaymentMethod> update(List<PaymentMethod> paymentMethods) {
-        log.info("update");
+        log.debug("update");
         for (PaymentMethod paymentMethod : paymentMethods) {
             repository.save(paymentMethod);
         }

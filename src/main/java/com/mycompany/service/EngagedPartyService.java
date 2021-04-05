@@ -14,20 +14,18 @@ public class EngagedPartyService {
 
     private final EngagedPartyRepository repository;
 
-
     public EngagedPartyService(EngagedPartyRepository repository) {
         this.repository = repository;
     }
 
-
     public EngagedParty update(EngagedParty engagedParty) {
-        log.info("update");
+        log.debug("update");
         repository.save(engagedParty);
         return engagedParty;
     }
 
     public EngagedParty save(EngagedParty engagedParty, Customer customer) {
-        log.info("save");
+        log.debug("save");
         if (engagedParty == null) {
             return null;
         }
@@ -40,7 +38,7 @@ public class EngagedPartyService {
     }
 
     public void delete(EngagedParty engagedParty) {
-        log.info("delete");
+        log.debug("delete");
         repository.delete(engagedParty);
     }
 

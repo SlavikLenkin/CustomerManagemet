@@ -18,7 +18,6 @@ import java.util.List;
 )
 public class Customer implements Serializable {
 
-
     @Column(name = "href")
     private String href;
 
@@ -125,7 +124,6 @@ public class Customer implements Serializable {
         this.accounts = accounts;
     }
 
-
     public String getHref() {
         return href;
     }
@@ -173,7 +171,6 @@ public class Customer implements Serializable {
     public void setValidFor(ValidFor validFor) {
         this.validFor = validFor;
     }
-
 
     @Override
     public String toString() {

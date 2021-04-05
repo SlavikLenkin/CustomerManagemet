@@ -14,7 +14,6 @@ import java.util.List;
 @Slf4j
 public class CustomerDtoService {
 
-
     private final CustomerService customerService;
     private final AccountService accountService;
     private final EngagedPartyService engagedPartyService;
@@ -25,9 +24,6 @@ public class CustomerDtoService {
     private final ContactMediumDtoService contactMediumDtoService;
     private final CreditProfileService creditProfileService;
     private final CustomerTransformer customerTransformer;
-
-
-    ////// Можно ли так????
     private EngagedParty engagedParty;
     private List<Account> accounts;
     private List<RelatedParty> relatedParties;
@@ -55,9 +51,8 @@ public class CustomerDtoService {
 
     }
 
-
     private CustomerDto getFullCustomer(Customer customer) {
-        log.info("getFullCustomer");
+        log.debug("getFullCustomer");
         CustomerDto customerDto = new CustomerDto();
         customerDto.setEngagedParty(customer.getEngagedParty());
         customerDto.setAccounts(customer.getAccounts());
@@ -75,7 +70,7 @@ public class CustomerDtoService {
     }
 
     public List<CustomerDto> getAllFullCustomer() {
-        log.info("getAllFullCustomer");
+        log.debug("getAllFullCustomer");
         List<CustomerDto> allCustomerDto = new ArrayList<>();
         List<Customer> customers = customerService.findAllCustomers();
         for (Customer customer : customers) {
@@ -85,19 +80,21 @@ public class CustomerDtoService {
     }
 
     public CustomerDto getFullCustomerById(String id) {
-        log.info("getFullCustomerById");
+        log.debug("getFullCustomerById");
         Customer customer = customerService.findCustomerById(id);
+        if (customer == null)
+            return null;
         return getFullCustomer(customer);
     }
 
-
     public CustomerDto updateFullCustomerById(String id, CustomerDto customerDtoUpdate) {
-        log.info("updateFullCustomerById");
+        log.debug("updateFullCustomerById");
         CustomerDto customerDto = getFullCustomerById(id);
-
+        if (customerDto == null) {
+            return null;
+        }
         Customer customerUpdate = customerTransformer.transform(customerDtoUpdate);
         Customer customer = customerTransformer.transform(customerDto);
-
 
         if (customerUpdate.getName() != null) {
             customer.setName(customerUpdate.getName());
@@ -115,7 +112,6 @@ public class CustomerDtoService {
             customer.setValidFor(customerUpdate.getValidFor());
         }
 
-
         EngagedParty engagedPartyUpdate = customerDtoUpdate.getEngagedParty();
         engagedParty = customerDto.getEngagedParty();
 
@@ -126,11 +122,8 @@ public class CustomerDtoService {
         }
 
         customerDto.setEngagedParty(engagedPartyService.update(engagedParty));
-
-
         List<Account> accountsUpdate = customerDtoUpdate.getAccounts();
         accounts = customerDto.getAccounts();
-
 
         if (accountsUpdate != null) {
             for (Account accountUpdate : accountsUpdate) {
@@ -148,9 +141,7 @@ public class CustomerDtoService {
 
             }
             customerDto.setAccounts(accountService.update(accounts));
-
         }
-
 
         List<Agreement> agreementsUpdate = customerDtoUpdate.getAgreements();
         agreements = customerDto.getAgreements();
@@ -168,7 +159,6 @@ public class CustomerDtoService {
             }
             customerDto.setAgreements(agreementService.update(agreements));
         }
-
 
         List<Characteristic> characteristicsUpdate = customerDtoUpdate.getCharacteristics();
         characteristics = customerDto.getCharacteristics();
@@ -216,7 +206,6 @@ public class CustomerDtoService {
                 }
 
             }
-
             customerDto.setCreditProfiles(creditProfileService.update(creditProfiles));
         }
 
@@ -256,7 +245,6 @@ public class CustomerDtoService {
             }
             customerDto.setRelatedParties(relatedPartyService.update(relatedParties));
         }
-
 
         List<ContactMediumDto> contactMediumDtoListUpdate = customerDtoUpdate.getContactMediumDtoList();
         contactMediumDtoList = customerDto.getContactMediumDtoList();
@@ -322,18 +310,14 @@ public class CustomerDtoService {
             customerDto.setContactMediumDtoList(contactMediumDtoService.update(contactMediumDtoList, customerTransformer
                     .transform(customerDto)));
         }
-
-
         customerDto.setCustomer(customerService.update(customer));
-
         return customerDto;
     }
 
     public CustomerDto save(CustomerDto customerDto) {
-        log.info("save");
+        log.debug("save");
         Customer customer = customerTransformer.transform(customerDto);
         customerDto.setCustomer(customerService.save(customer));
-
         customerDto.setEngagedParty(engagedPartyService.save(customerDto.getEngagedParty(), customer));
         customerDto.setAccounts(accountService.save(customerDto.getAccounts(), customer));
         customerDto.setAgreements(agreementService.save(customerDto.getAgreements(), customer));
@@ -342,14 +326,11 @@ public class CustomerDtoService {
         customerDto.setPaymentMethods(paymentMethodService.save(customerDto.getPaymentMethods(), customer));
         customerDto.setRelatedParties(relatedPartyService.save(customerDto.getRelatedParties(), customer));
         customerDto.setContactMediumDtoList(contactMediumDtoService.save(customerDto.getContactMediumDtoList(), customer));
-
-
         return customerDto;
     }
 
-
     public void delete(CustomerDto customerDto) {
-        log.info("delete");
+        log.debug("delete");
         customerService.delete(customerTransformer.transform(customerDto));
     }
 }

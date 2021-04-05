@@ -17,13 +17,12 @@ public class CharacteristicService {
     final
     CharacteristicRepository repository;
 
-
     public CharacteristicService(CharacteristicRepository repository) {
         this.repository = repository;
     }
 
     public List<Characteristic> save(List<Characteristic> characteristics, Customer customer) {
-        log.info("save");
+        log.debug("save");
         if (characteristics == null) {
             return characteristics;
         }
@@ -37,12 +36,12 @@ public class CharacteristicService {
     }
 
     public void delete(Characteristic characteristic) {
-        log.info("delete");
+        log.debug("delete");
         repository.delete(characteristic);
     }
 
     public List<Characteristic> update(List<Characteristic> characteristics) {
-        log.info("update");
+        log.debug("update");
         for (Characteristic characteristic : characteristics) {
             repository.save(characteristic);
         }

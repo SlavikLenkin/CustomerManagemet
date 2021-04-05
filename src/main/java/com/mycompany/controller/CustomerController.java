@@ -6,6 +6,7 @@ import com.mycompany.service.CustomerDtoService;
 import com.mycompany.service.CustomerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import jdk.nashorn.internal.runtime.Debug;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,6 @@ import java.util.List;
 @Slf4j
 public class CustomerController implements ApiPath {
 
-
     final
     CustomerDtoService customerDtoService;
 
@@ -33,18 +33,18 @@ public class CustomerController implements ApiPath {
         this.customerService = customerService;
     }
 
-
     @ApiOperation(value = "getAll")
     @GetMapping(PATH_CUSTOMER)
     public List<CustomerDto> getAll() {
-        log.info("getAll");
+        log.debug("getAll");
+        log.isDebugEnabled();
         return customerDtoService.getAllFullCustomer();
     }
 
     @ApiOperation(value = "getCustomerById")
     @GetMapping(PATH_CUSTOMER_ID)
     public ResponseEntity<CustomerDto> getCustomerById(@PathVariable(value = ID) String id) {
-        log.info("getCustomerById");
+        log.debug("getCustomerById {}",id);
         CustomerDto customerDto = customerDtoService.getFullCustomerById(id);
         if (customerDto == null)
             return new ResponseEntity(HttpStatus.NOT_FOUND);
@@ -54,7 +54,7 @@ public class CustomerController implements ApiPath {
     @ApiOperation(value = "createCustomer")
     @PostMapping(PATH_CUSTOMER)
     public CustomerDto createCustomer(@Valid @RequestBody CustomerDto customerDto) {
-        log.info("createCustomer");
+        log.debug("createCustomer");
         return customerDtoService.save(customerDto);
     }
 
@@ -62,15 +62,17 @@ public class CustomerController implements ApiPath {
     @RequestMapping(value = PATH_CUSTOMER_ID, method = RequestMethod.PATCH)
     public ResponseEntity<CustomerDto> patchCustomer(@PathVariable(value = ID) String id,
                                                      @RequestBody CustomerDto customerDtoUpdate) {
-        log.info("patchCustomer", id);
+        log.debug("patchCustomer {}, {}", id ,customerDtoUpdate.toString());
         CustomerDto customerDto = customerDtoService.updateFullCustomerById(id, customerDtoUpdate);
+        if (customerDto == null)
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         return ResponseEntity.ok().body(customerDto);
     }
 
     @ApiOperation(value = "deleteCustomer")
     @DeleteMapping(PATH_CUSTOMER_ID)
     public ResponseEntity deleteCustomer(@PathVariable(value = ID) String id) {
-        log.info("deleteCustomer");
+        log.debug("deleteCustomer {}",id);
         CustomerDto customerDto = customerDtoService.getFullCustomerById(id);
         if (customerDto == null)
             return new ResponseEntity(HttpStatus.NOT_FOUND);

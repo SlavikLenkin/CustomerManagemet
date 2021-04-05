@@ -16,14 +16,12 @@ public class AgreementService {
     final
     AgreementRepository repository;
 
-
     public AgreementService(AgreementRepository repository) {
         this.repository = repository;
     }
 
-
     public List<Agreement> save(List<Agreement> agreements, Customer customer) {
-        log.info("save");
+        log.debug("save");
         if (agreements == null) {
             return null;
         }
@@ -38,12 +36,12 @@ public class AgreementService {
     }
 
     public void delete(Agreement agreement) {
-        log.info("delete");
+        log.debug("delete");
         repository.delete(agreement);
     }
 
     public List<Agreement> update(List<Agreement> agreements) {
-        log.info("update");
+        log.debug("update");
         for (Agreement agreement : agreements) {
             repository.save(agreement);
         }

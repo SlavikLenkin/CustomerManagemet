@@ -20,9 +20,8 @@ public class AccountService {
         this.repository = repository;
     }
 
-
     public List<Account> save(List<Account> accounts, Customer customer) {
-        log.info("save");
+        log.debug("save");
         if (accounts == null) {
             return null;
         }
@@ -37,7 +36,7 @@ public class AccountService {
     }
 
     public List<Account> update(List<Account> accounts) {
-        log.info("update");
+        log.debug("update");
         for (Account account : accounts) {
             repository.save(account);
         }
@@ -45,7 +44,7 @@ public class AccountService {
     }
 
     public void delete(Account account) {
-        log.info("delete");
+        log.debug("delete");
         repository.delete(account);
     }
 

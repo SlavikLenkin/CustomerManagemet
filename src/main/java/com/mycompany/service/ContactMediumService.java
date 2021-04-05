@@ -16,14 +16,12 @@ public class ContactMediumService {
     final
     ContactMediumRepository repository;
 
-
     public ContactMediumService(ContactMediumRepository repository) {
         this.repository = repository;
     }
 
-
     public ContactMedium saveOne(ContactMedium contactMedium, Customer customer) {
-        log.info("saveOne");
+        log.debug("saveOne");
         contactMedium.setCustomer(customer);
         String id = UUID.randomUUID().toString();
         contactMedium.setId(id);
@@ -32,13 +30,13 @@ public class ContactMediumService {
     }
 
     public ContactMedium updateOne(ContactMedium contactMedium) {
-        log.info("updateOne");
+        log.debug("updateOne");
         repository.save(contactMedium);
         return contactMedium;
     }
 
     public void delete(ContactMedium contactMedium) {
-        log.info("delete");
+        log.debug("delete");
         repository.delete(contactMedium);
     }
 

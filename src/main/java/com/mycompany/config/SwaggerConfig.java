@@ -22,7 +22,6 @@ public class SwaggerConfig {
         return new ApiKey("JWT", "Authorization", "header");
     }
 
-
     private SecurityContext securityContext() {
         return SecurityContext.builder().securityReferences(defaultAuth()).build();
     }

@@ -15,6 +15,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.Mockito.when;
+
 @RunWith(MockitoJUnitRunner.class)
 @SpringBootTest
 class AccountServiceTest {
@@ -23,6 +25,8 @@ class AccountServiceTest {
     AccountRepository accountRepository;
     @Autowired
     private AccountService accountService;
+
+
 
     @Test
     void save() {
@@ -34,10 +38,10 @@ class AccountServiceTest {
 
         accounts.add(account);
 
-        List<Account> accounts1 = accountService.save(accounts, customer);
+        List<Account> accountsTest = accountService.save(accounts, customer);
 
 
-        for (Account accountI : accounts1) {
+        for (Account accountI : accountsTest) {
             Assert.assertNotNull(accountI.getId());
             Assert.assertNotNull(accountI.getHref());
             Assert.assertNotNull(accountI.getName());
@@ -47,7 +51,7 @@ class AccountServiceTest {
 
 
         for (Account accountI : accounts) {
-            Mockito.verify(accountRepository, Mockito.times(1)).save(accountI);
+            Mockito.verify(accountRepository).save(accountI);
         }
 
 
@@ -61,8 +65,10 @@ class AccountServiceTest {
         account.setName("account");
         account.setCustomer(customer);
 
-        accounts.add(account);
+       // when(accountRepository.save(account)).then(a)
 
+        accounts.add(account);
+        // TODO
         List<Account> accounts1 = accountService.save(accounts, customer);
 
 

@@ -21,9 +21,8 @@ public class RelatedPartyService {
         this.repository = repository;
     }
 
-
     public List<RelatedParty> save(List<RelatedParty> relatedParties, Customer customer) {
-        log.info("save");
+        log.debug("save");
         if (relatedParties == null) {
             return null;
         }
@@ -38,7 +37,7 @@ public class RelatedPartyService {
     }
 
     public List<RelatedParty> update(List<RelatedParty> relatedParties) {
-        log.info("update");
+        log.debug("update");
         for (RelatedParty relatedParty : relatedParties) {
             repository.save(relatedParty);
         }
@@ -46,8 +45,7 @@ public class RelatedPartyService {
     }
 
     public void delete(RelatedParty relatedParty) {
-        log.info("delete");
+        log.debug("delete");
         repository.delete(relatedParty);
     }
-
 }

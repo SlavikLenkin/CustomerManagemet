@@ -18,23 +18,23 @@ public class ContactMediumDtoService {
     private final ContactMediumService contactMediumService;
     private final MediumCharacteristicService mediumCharacteristicService;
     private final ContactMediumTransformer transformer;
-
     private MediumCharacteristic mediumCharacteristic;
 
-
-    public ContactMediumDtoService(ContactMediumService contactMediumService, MediumCharacteristicService mediumCharacteristicService, ContactMediumTransformer transformer) {
+    public ContactMediumDtoService(ContactMediumService contactMediumService
+            , MediumCharacteristicService mediumCharacteristicService
+            , ContactMediumTransformer transformer) {
         this.contactMediumService = contactMediumService;
         this.mediumCharacteristicService = mediumCharacteristicService;
         this.transformer = transformer;
     }
 
     private void setData(ContactMediumDto contactMediumDto) {
-        log.info("setData");
+        log.debug("setData");
         mediumCharacteristic = contactMediumDto.getMediumCharacteristic();
     }
 
     public List<ContactMediumDto> getContactMediumDto(List<ContactMedium> contactMediumList) {
-        log.info("getContactMediumDto");
+        log.debug("getContactMediumDto");
         List<ContactMediumDto> contactMediumDtoList = new ArrayList<>();
         int i = 0;
         for (ContactMedium contactMedium : contactMediumList) {
@@ -45,13 +45,11 @@ public class ContactMediumDtoService {
 
         }
 
-
         return contactMediumDtoList;
     }
 
-
     public List<ContactMediumDto> save(List<ContactMediumDto> contactsMediumDto, Customer customer) {
-        log.info("save");
+        log.debug("save");
         List<ContactMedium> contactMediumList = new ArrayList<>();
         if (contactsMediumDto == null) {
             return null;
@@ -82,14 +80,13 @@ public class ContactMediumDtoService {
     }
 
     public void delete(ContactMediumDto contactMediumDto) {
-        log.info("delete");
+        log.debug("delete");
         mediumCharacteristicService.delete(contactMediumDto.getMediumCharacteristic());
         contactMediumService.delete(transformer.transform(contactMediumDto));
     }
 
-
     public List<ContactMediumDto> update(List<ContactMediumDto> contactMediumDtoList, Customer customer) {
-        log.info("update");
+        log.debug("update");
         List<ContactMedium> contactMediumList = new ArrayList<>();
         if (contactMediumList == null) {
             return null;
@@ -113,7 +110,5 @@ public class ContactMediumDtoService {
         }
 
         return contactMediumDtoList;
-
-
     }
 }

@@ -15,14 +15,12 @@ public class MediumCharacteristicService {
     final
     MediumCharacteristicRepository repository;
 
-
     public MediumCharacteristicService(MediumCharacteristicRepository repository) {
         this.repository = repository;
     }
 
-
     public MediumCharacteristic save(MediumCharacteristic mediumCharacteristic, ContactMedium contactMedium) {
-        log.info("save");
+        log.debug("save");
         if (mediumCharacteristic == null) {
             return null;
         }
@@ -34,14 +32,14 @@ public class MediumCharacteristicService {
     }
 
     public void delete(MediumCharacteristic mediumCharacteristic) {
-        log.info("delete");
+        log.debug("delete");
         if (mediumCharacteristic != null) {
             repository.delete(mediumCharacteristic);
         }
     }
 
     public MediumCharacteristic update(MediumCharacteristic mediumCharacteristic) {
-        log.info("update");
+        log.debug("update");
         repository.save(mediumCharacteristic);
         return mediumCharacteristic;
     }
