@@ -1,14 +1,14 @@
 package com.mycompany.model;
 
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mycompany.repository.*;
 
 import java.util.List;
 
-//@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CustomerDto {
-
 
     private String href;
 
@@ -44,7 +44,6 @@ public class CustomerDto {
 
     @JsonProperty(value = "contactMedium")
     private List<ContactMediumDto> contactMediumDtoList;
-
 
     public void setCustomer(Customer customer) {
         this.href = customer.getHref();
@@ -112,7 +111,6 @@ public class CustomerDto {
         this.agreements = agreements;
     }
 
-
     public List<Account> getAccounts() {
         return accounts;
     }
@@ -169,4 +167,23 @@ public class CustomerDto {
         this.validFor = validFor;
     }
 
+    @Override
+    public String toString() {
+        return "CustomerDto{" +
+                "href='" + href + '\'' +
+                ", id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", status='" + status + '\'' +
+                ", statusReason='" + statusReason + '\'' +
+                ", validFor=" + validFor +
+                ", engagedParty=" + engagedParty +
+                ", accounts=" + accounts +
+                ", agreements=" + agreements +
+                ", characteristics=" + characteristics +
+                ", creditProfiles=" + creditProfiles +
+                ", paymentMethods=" + paymentMethods +
+                ", relatedParties=" + relatedParties +
+                ", contactMediumDtoList=" + contactMediumDtoList +
+                '}';
+    }
 }

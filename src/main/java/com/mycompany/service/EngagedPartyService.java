@@ -3,31 +3,29 @@ package com.mycompany.service;
 import com.mycompany.repository.Customer;
 import com.mycompany.repository.EngagedParty;
 import com.mycompany.repository.EngagedPartyRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class EngagedPartyService {
 
     private final EngagedPartyRepository repository;
-
 
     public EngagedPartyService(EngagedPartyRepository repository) {
         this.repository = repository;
     }
 
-    public EngagedParty findEngagedPartyById(String id) {
-        return repository.findEngagedPartyById(id);
-    }
-
-
     public EngagedParty update(EngagedParty engagedParty) {
+        log.debug("update");
         repository.save(engagedParty);
         return engagedParty;
     }
 
     public EngagedParty save(EngagedParty engagedParty, Customer customer) {
+        log.debug("save");
         if (engagedParty == null) {
             return null;
         }
@@ -40,6 +38,7 @@ public class EngagedPartyService {
     }
 
     public void delete(EngagedParty engagedParty) {
+        log.debug("delete");
         repository.delete(engagedParty);
     }
 

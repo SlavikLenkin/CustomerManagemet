@@ -3,32 +3,24 @@ package com.mycompany.service;
 import com.mycompany.repository.ContactMedium;
 import com.mycompany.repository.MediumCharacteristic;
 import com.mycompany.repository.MediumCharacteristicRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class MediumCharacteristicService {
 
     final
     MediumCharacteristicRepository repository;
 
-
     public MediumCharacteristicService(MediumCharacteristicRepository repository) {
         this.repository = repository;
     }
 
-
-  /*  public MediumCharacteristic findMediumCharacteristic(ContactMedium contactMedium) {
-        MediumCharacteristic mediumCharacteristic;
-        if (contactMedium.getMediumCharacteristicId() == null) {
-            return null;
-        }
-        mediumCharacteristic = repository.findMediumCharacteristicById(contactMedium.getMediumCharacteristicId());
-        return mediumCharacteristic;
-    }*/
-
     public MediumCharacteristic save(MediumCharacteristic mediumCharacteristic, ContactMedium contactMedium) {
+        log.debug("save");
         if (mediumCharacteristic == null) {
             return null;
         }
@@ -40,12 +32,14 @@ public class MediumCharacteristicService {
     }
 
     public void delete(MediumCharacteristic mediumCharacteristic) {
+        log.debug("delete");
         if (mediumCharacteristic != null) {
             repository.delete(mediumCharacteristic);
         }
     }
 
     public MediumCharacteristic update(MediumCharacteristic mediumCharacteristic) {
+        log.debug("update");
         repository.save(mediumCharacteristic);
         return mediumCharacteristic;
     }

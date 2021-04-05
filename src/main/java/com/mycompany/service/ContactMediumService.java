@@ -4,37 +4,24 @@ package com.mycompany.service;
 import com.mycompany.repository.ContactMedium;
 import com.mycompany.repository.ContactMediumRepository;
 import com.mycompany.repository.Customer;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class ContactMediumService {
 
     final
     ContactMediumRepository repository;
 
-
     public ContactMediumService(ContactMediumRepository repository) {
         this.repository = repository;
     }
 
-
-    public List<ContactMedium> save(List<ContactMedium> contactsMedium, Customer customer) {
-        if (contactsMedium == null) {
-            return contactsMedium;
-        }
-        for (ContactMedium contactMedium : contactsMedium) {
-            contactMedium.setCustomer(customer);
-            String id = UUID.randomUUID().toString();
-            contactMedium.setId(id);
-            repository.save(contactMedium);
-        }
-        return contactsMedium;
-    }
-
     public ContactMedium saveOne(ContactMedium contactMedium, Customer customer) {
+        log.debug("saveOne");
         contactMedium.setCustomer(customer);
         String id = UUID.randomUUID().toString();
         contactMedium.setId(id);
@@ -43,18 +30,14 @@ public class ContactMediumService {
     }
 
     public ContactMedium updateOne(ContactMedium contactMedium) {
+        log.debug("updateOne");
         repository.save(contactMedium);
         return contactMedium;
     }
 
     public void delete(ContactMedium contactMedium) {
+        log.debug("delete");
         repository.delete(contactMedium);
     }
 
-    public List<ContactMedium> update(List<ContactMedium> contactMediumList) {
-        for (ContactMedium contactMedium : contactMediumList) {
-            repository.save(contactMedium);
-        }
-        return contactMediumList;
-    }
 }

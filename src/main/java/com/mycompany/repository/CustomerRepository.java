@@ -24,7 +24,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
             " end_date_time= :#{#customer.validFor.endDateTime}" +
             "\tWHERE id = :#{#customer.id}";
 
-
     @Transactional
     @Modifying
     @Query(value = queryUpdateCustomer, nativeQuery = true)

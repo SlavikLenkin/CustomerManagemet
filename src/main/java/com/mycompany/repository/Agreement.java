@@ -8,7 +8,6 @@ import javax.persistence.*;
 @Table(name = "agreement")
 public class Agreement {
 
-
     @Column(name = "href")
     private String href;
 

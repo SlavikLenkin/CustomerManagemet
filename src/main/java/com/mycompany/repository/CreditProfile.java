@@ -12,7 +12,6 @@ import java.util.Date;
 @Data
 public class CreditProfile implements Serializable {
 
-
     @Id
     @Column(name = "id")
     private String id;

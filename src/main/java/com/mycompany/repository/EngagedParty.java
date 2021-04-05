@@ -11,11 +11,9 @@ import java.io.Serializable;
 @Table(name = "engaged_party")
 public class EngagedParty implements Serializable {
 
-
     @JsonProperty(value = "@referredType")
     @Transient
     private final String type = "Organization";
-
 
     private String href;
 
