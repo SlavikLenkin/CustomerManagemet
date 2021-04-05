@@ -31,7 +31,6 @@ class RelatedPartyServiceTest {
         List<RelatedParty> relatedPartyList = new ArrayList<>();
         RelatedParty relatedParty = new RelatedParty();
         relatedParty.setName("relatedParty");
-
         relatedPartyList.add(relatedParty);
 
         List<RelatedParty> relatedPartyList1 = relatedPartyService.save(relatedPartyList, customer);
@@ -40,9 +39,8 @@ class RelatedPartyServiceTest {
             Assert.assertNotNull(relatedPartyI.getId());
             Assert.assertNotNull(relatedPartyI.getCustomer());
             Assert.assertEquals("relatedParty", relatedPartyI.getName());
-            Mockito.verify(relatedPartyRepository, Mockito.times(1)).save(relatedPartyI);
+            Mockito.verify(relatedPartyRepository).save(relatedPartyI);
         }
-
     }
 
     @Test
@@ -51,27 +49,25 @@ class RelatedPartyServiceTest {
         List<RelatedParty> relatedPartyList = new ArrayList<>();
         RelatedParty relatedParty = new RelatedParty();
         relatedParty.setName("relatedParty");
+        relatedParty.setCustomer(customer);
+        relatedParty.setHref("href");
+        relatedParty.setId("id");
 
         relatedPartyList.add(relatedParty);
-
-        List<RelatedParty> relatedPartyList1 = relatedPartyService.save(relatedPartyList, customer);
 
         List<RelatedParty> relatedPartyListUpdate = new ArrayList<>();
         RelatedParty relatedPartyUpdate = new RelatedParty();
         relatedPartyUpdate.setName("new relatedParty");
-
         relatedPartyListUpdate.add(relatedPartyUpdate);
-        relatedPartyList1.get(0).setName(relatedPartyListUpdate.get(0).getName());
+        relatedPartyList.get(0).setName(relatedPartyListUpdate.get(0).getName());
 
-        List<RelatedParty> relatedPartyList2 = relatedPartyService.update(relatedPartyList1);
+        List<RelatedParty> relatedPartyList2 = relatedPartyService.update(relatedPartyList);
 
         for (RelatedParty relatedPartyI : relatedPartyList2) {
             Assert.assertNotNull(relatedPartyI.getId());
             Assert.assertNotNull(relatedPartyI.getCustomer());
             Assert.assertEquals("new relatedParty", relatedPartyI.getName());
-            Mockito.verify(relatedPartyRepository, Mockito.times(2)).save(relatedPartyI);
+            Mockito.verify(relatedPartyRepository).save(relatedPartyI);
         }
-
-
     }
 }

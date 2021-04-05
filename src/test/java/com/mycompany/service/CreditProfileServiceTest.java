@@ -41,7 +41,7 @@ class CreditProfileServiceTest {
             Assert.assertNotNull(creditProfileI.getCustomer());
             Assert.assertNotNull(creditProfileI.getCreditScore());
             Assert.assertEquals(6, creditProfile.getCreditScore());
-            Mockito.verify(creditProfileRepository, Mockito.times(1)).save(creditProfileI);
+            Mockito.verify(creditProfileRepository).save(creditProfileI);
         }
 
     }
@@ -52,28 +52,25 @@ class CreditProfileServiceTest {
         List<CreditProfile> creditProfiles = new ArrayList<>();
         CreditProfile creditProfile = new CreditProfile();
         creditProfile.setCreditScore(6);
+        creditProfile.setId("id");
+        creditProfile.setCustomer(customer);
 
         creditProfiles.add(creditProfile);
-
-        List<CreditProfile> creditProfiles1 = creditProfileService.save(creditProfiles, customer);
 
         List<CreditProfile> creditProfilesUpdate = new ArrayList<>();
         CreditProfile creditProfileUpdate = new CreditProfile();
         creditProfileUpdate.setCreditScore(7);
-
         creditProfilesUpdate.add(creditProfileUpdate);
-        creditProfiles1.get(0).setCreditScore(creditProfilesUpdate.get(0).getCreditScore());
+        creditProfiles.get(0).setCreditScore(creditProfilesUpdate.get(0).getCreditScore());
 
-        List<CreditProfile> creditProfiles2 = creditProfileService.update(creditProfiles1);
+        List<CreditProfile> creditProfiles2 = creditProfileService.update(creditProfiles);
 
         for (CreditProfile creditProfileI : creditProfiles2) {
             Assert.assertNotNull(creditProfileI.getId());
             Assert.assertNotNull(creditProfileI.getCustomer());
             Assert.assertNotNull(creditProfileI.getCreditScore());
             Assert.assertEquals(7, creditProfile.getCreditScore());
-            Mockito.verify(creditProfileRepository, Mockito.times(2)).save(creditProfileI);
+            Mockito.verify(creditProfileRepository).save(creditProfileI);
         }
-
-
     }
 }

@@ -22,7 +22,6 @@ class ContactMediumServiceTest {
     @Autowired
     private ContactMediumService contactMediumService;
 
-
     @Test
     void saveOne() {
         Customer customer = new Customer();
@@ -36,30 +35,27 @@ class ContactMediumServiceTest {
         Assert.assertNotNull(contactMedium1.getCustomer());
         Assert.assertNotNull(contactMedium1.getMediumType());
         Assert.assertEquals("type", contactMedium1.getMediumType());
-        Mockito.verify(contactMediumRepository, Mockito.times(1)).save(contactMedium1);
-
+        Mockito.verify(contactMediumRepository).save(contactMedium1);
     }
 
     @Test
     void updateOne() {
         Customer customer = new Customer();
         ContactMedium contactMedium = new ContactMedium();
+        contactMedium.setId("id");
         contactMedium.setMediumType("type");
         contactMedium.setCustomer(customer);
 
-        ContactMedium contactMedium1 = contactMediumService.saveOne(contactMedium, customer);
-
         ContactMedium contactMediumUpdate = new ContactMedium();
         contactMediumUpdate.setMediumType("new type");
-        contactMedium1.setMediumType(contactMediumUpdate.getMediumType());
+        contactMedium.setMediumType(contactMediumUpdate.getMediumType());
 
-        ContactMedium contactMedium2 = contactMediumService.updateOne(contactMedium1);
+        ContactMedium contactMedium2 = contactMediumService.updateOne(contactMedium);
 
-        Assert.assertNotNull(contactMedium1.getId());
-        Assert.assertNotNull(contactMedium1.getCustomer());
-        Assert.assertNotNull(contactMedium1.getMediumType());
-        Assert.assertEquals("new type", contactMedium1.getMediumType());
-        Mockito.verify(contactMediumRepository, Mockito.times(2)).save(contactMedium2);
-
+        Assert.assertNotNull(contactMedium2.getId());
+        Assert.assertNotNull(contactMedium2.getCustomer());
+        Assert.assertNotNull(contactMedium2.getMediumType());
+        Assert.assertEquals("new type", contactMedium2.getMediumType());
+        Mockito.verify(contactMediumRepository).save(contactMedium2);
     }
 }

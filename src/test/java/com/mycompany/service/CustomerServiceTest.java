@@ -21,7 +21,6 @@ class CustomerServiceTest {
     @MockBean
     CustomerRepository customerRepository;
 
-
     @Test
     void save() {
         Customer customer = new Customer();
@@ -40,16 +39,15 @@ class CustomerServiceTest {
         Assert.assertNull(customer1.getValidFor());
         Assert.assertEquals(customer, customer1);
         Assert.assertNotEquals(customer2, customer1);
-
-
-        Mockito.verify(customerRepository, Mockito.times(1)).save(customer);
+        Mockito.verify(customerRepository).save(customer);
     }
 
     @Test
     void update() {
         Customer customer = new Customer();
         customer.setName("customer");
-        customer = customerService.save(customer);
+        customer.setId("id");
+        customer.setHref("href");
 
         Customer customerUpdate = new Customer();
         customerUpdate.setName("new customer");
@@ -67,8 +65,6 @@ class CustomerServiceTest {
         Assert.assertEquals(customer, customer1);
         Assert.assertEquals("new customer", customer1.getName());
 
-
-        Mockito.verify(customerRepository, Mockito.times(1)).updateCustomerById(customer);
-        Mockito.verify(customerRepository, Mockito.times(1)).save(customer);
+        Mockito.verify(customerRepository).updateCustomerById(customer);
     }
 }

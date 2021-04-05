@@ -39,11 +39,8 @@ class PaymentMethodServiceTest {
             Assert.assertNotNull(paymentMethodI.getId());
             Assert.assertNotNull(paymentMethodI.getCustomer());
             Assert.assertEquals("paymentMethod", paymentMethodI.getName());
-            Mockito.verify(paymentMethodRepository, Mockito.times(1)).save(paymentMethodI);
-
+            Mockito.verify(paymentMethodRepository).save(paymentMethodI);
         }
-
-
     }
 
     @Test
@@ -53,8 +50,9 @@ class PaymentMethodServiceTest {
         PaymentMethod paymentMethod = new PaymentMethod();
         paymentMethod.setName("paymentMethod");
         paymentMethods.add(paymentMethod);
-
-        List<PaymentMethod> paymentMethods1 = paymentMethodService.save(paymentMethods, customer);
+        paymentMethod.setCustomer(customer);
+        paymentMethod.setId("id");
+        paymentMethod.setHref("href");
 
         List<PaymentMethod> paymentMethodsUpdate = new ArrayList<>();
         PaymentMethod paymentMethodUpdate = new PaymentMethod();
@@ -62,17 +60,15 @@ class PaymentMethodServiceTest {
 
         paymentMethodsUpdate.add(paymentMethodUpdate);
 
-        paymentMethods1.get(0).setName(paymentMethodsUpdate.get(0).getName());
+        paymentMethods.get(0).setName(paymentMethodsUpdate.get(0).getName());
 
-        List<PaymentMethod> paymentMethods2 = paymentMethodService.update(paymentMethods1);
+        List<PaymentMethod> paymentMethods2 = paymentMethodService.update(paymentMethods);
 
         for (PaymentMethod paymentMethodI : paymentMethods2) {
             Assert.assertNotNull(paymentMethodI.getId());
             Assert.assertNotNull(paymentMethodI.getCustomer());
             Assert.assertEquals("new paymentMethod", paymentMethodI.getName());
-            Mockito.verify(paymentMethodRepository, Mockito.times(2)).save(paymentMethodI);
+            Mockito.verify(paymentMethodRepository).save(paymentMethodI);
         }
-
-
     }
 }

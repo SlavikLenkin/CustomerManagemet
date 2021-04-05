@@ -34,10 +34,9 @@ class AccountServiceTest {
 
         accounts.add(account);
 
-        List<Account> accounts1 = accountService.save(accounts, customer);
+        List<Account> accountsTest = accountService.save(accounts, customer);
 
-
-        for (Account accountI : accounts1) {
+        for (Account accountI : accountsTest) {
             Assert.assertNotNull(accountI.getId());
             Assert.assertNotNull(accountI.getHref());
             Assert.assertNotNull(accountI.getName());
@@ -45,12 +44,9 @@ class AccountServiceTest {
             Assert.assertEquals("account", accountI.getName());
         }
 
-
         for (Account accountI : accounts) {
-            Mockito.verify(accountRepository, Mockito.times(1)).save(accountI);
+            Mockito.verify(accountRepository).save(accountI);
         }
-
-
     }
 
     @Test
@@ -58,25 +54,19 @@ class AccountServiceTest {
         Customer customer = new Customer();
         List<Account> accounts = new ArrayList<>();
         Account account = new Account();
+        account.setId("id");
+        account.setHref("href");
         account.setName("account");
         account.setCustomer(customer);
-
         accounts.add(account);
-
-        List<Account> accounts1 = accountService.save(accounts, customer);
-
 
         List<Account> accountsUpdate = new ArrayList<>();
         Account accountUpdate = new Account();
         accountUpdate.setName("new account");
-
-
         accountsUpdate.add(accountUpdate);
+        accounts.get(0).setName(accountsUpdate.get(0).getName());
 
-        accounts1.get(0).setName(accountsUpdate.get(0).getName());
-
-        List<Account> accounts2 = accountService.update(accounts1);
-
+        List<Account> accounts2 = accountService.update(accounts);
 
         for (Account accountI : accounts2) {
             Assert.assertNotNull(accountI.getId());
@@ -84,8 +74,7 @@ class AccountServiceTest {
             Assert.assertNotNull(accountI.getName());
             Assert.assertNull(accountI.getDescription());
             Assert.assertEquals("new account", accountI.getName());
-            Mockito.verify(accountRepository, Mockito.times(2)).save(accountI);
+            Mockito.verify(accountRepository).save(accountI);
         }
-
     }
 }
