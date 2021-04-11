@@ -13,8 +13,7 @@ import java.util.UUID;
 @Slf4j
 public class AccountService {
 
-    final
-    AccountRepository repository;
+    final AccountRepository repository;
 
     public AccountService(AccountRepository repository) {
         this.repository = repository;
@@ -47,5 +46,4 @@ public class AccountService {
         log.debug("delete");
         repository.delete(account);
     }
-
 }

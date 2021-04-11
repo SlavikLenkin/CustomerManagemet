@@ -12,8 +12,7 @@ import java.util.UUID;
 @Slf4j
 public class MediumCharacteristicService {
 
-    final
-    MediumCharacteristicRepository repository;
+    final MediumCharacteristicRepository repository;
 
     public MediumCharacteristicService(MediumCharacteristicRepository repository) {
         this.repository = repository;

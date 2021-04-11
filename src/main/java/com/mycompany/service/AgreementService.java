@@ -13,8 +13,7 @@ import java.util.UUID;
 @Slf4j
 public class AgreementService {
 
-    final
-    AgreementRepository repository;
+    final AgreementRepository repository;
 
     public AgreementService(AgreementRepository repository) {
         this.repository = repository;

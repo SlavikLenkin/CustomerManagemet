@@ -4,6 +4,9 @@ import com.mycompany.model.ContactMediumDto;
 import com.mycompany.repository.ContactMedium;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class ContactMediumTransformer {
 
@@ -14,5 +17,18 @@ public class ContactMediumTransformer {
         target.setPreferred(contactMediumDto.isPreferred());
         target.setValidFor(contactMediumDto.getValidFor());
         return target;
+    }
+
+    public List<ContactMediumDto> getContactMediumDto(List<ContactMedium> contactMediumList) {
+        List<ContactMediumDto> contactMediumDtoList = new ArrayList<>();
+        int i = 0;
+        for (ContactMedium contactMedium : contactMediumList) {
+            ContactMediumDto contactMediumDto = new ContactMediumDto();
+            contactMediumDto.setContactMedium(contactMedium);
+            contactMediumDto.setMediumCharacteristic(contactMedium.getMediumCharacteristic());
+            contactMediumDtoList.add(contactMediumDto);
+
+        }
+        return contactMediumDtoList;
     }
 }

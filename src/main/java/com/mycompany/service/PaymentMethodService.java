@@ -13,8 +13,7 @@ import java.util.UUID;
 @Slf4j
 public class PaymentMethodService {
 
-    final
-    PaymentMethodRepository repository;
+    final PaymentMethodRepository repository;
 
     public PaymentMethodService(PaymentMethodRepository repository) {
         this.repository = repository;

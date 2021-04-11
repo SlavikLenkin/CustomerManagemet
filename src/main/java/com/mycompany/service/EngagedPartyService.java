@@ -41,6 +41,4 @@ public class EngagedPartyService {
         log.debug("delete");
         repository.delete(engagedParty);
     }
-
-
 }

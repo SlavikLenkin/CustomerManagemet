@@ -14,8 +14,7 @@ import java.util.UUID;
 @Slf4j
 public class RelatedPartyService {
 
-    final
-    RelatedPartyRepository repository;
+    final RelatedPartyRepository repository;
 
     public RelatedPartyService(RelatedPartyRepository repository) {
         this.repository = repository;

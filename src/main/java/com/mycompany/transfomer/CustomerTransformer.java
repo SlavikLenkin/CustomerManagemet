@@ -7,6 +7,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomerTransformer {
 
+    final
+    ContactMediumTransformer contactMediumTransformer;
+
+    public CustomerTransformer(ContactMediumTransformer contactMediumTransformer) {
+        this.contactMediumTransformer = contactMediumTransformer;
+    }
+
     public Customer transform(CustomerDto customerDto) {
         Customer target = new Customer();
         target.setHref(customerDto.getHref());
@@ -18,5 +25,17 @@ public class CustomerTransformer {
         return target;
     }
 
-
+    public CustomerDto getFullCustomer(Customer customer) {
+        CustomerDto customerDto = new CustomerDto();
+        customerDto.setEngagedParty(customer.getEngagedParty());
+        customerDto.setAccounts(customer.getAccounts());
+        customerDto.setAgreements(customer.getAgreements());
+        customerDto.setCharacteristics(customer.getCharacteristics());
+        customerDto.setCreditProfiles(customer.getCreditProfiles());
+        customerDto.setPaymentMethods(customer.getPaymentMethods());
+        customerDto.setRelatedParties(customer.getRelatedParties());
+        customerDto.setContactMediumDtoList(contactMediumTransformer.getContactMediumDto(customer.getContactMediumList()));
+        customerDto.setCustomer(customer);
+        return customerDto;
+    }
 }
