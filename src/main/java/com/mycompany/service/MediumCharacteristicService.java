@@ -1,8 +1,10 @@
 package com.mycompany.service;
 
+import com.mycompany.model.MediumCharacteristicDto;
 import com.mycompany.repository.ContactMedium;
 import com.mycompany.repository.MediumCharacteristic;
 import com.mycompany.repository.MediumCharacteristicRepository;
+import com.mycompany.transfomer.MediumCharacteristicTransformer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -12,35 +14,36 @@ import java.util.UUID;
 @Slf4j
 public class MediumCharacteristicService {
 
-    final
-    MediumCharacteristicRepository repository;
+    final MediumCharacteristicRepository repository;
+    final MediumCharacteristicTransformer mediumCharacteristicTransformer;
 
-    public MediumCharacteristicService(MediumCharacteristicRepository repository) {
+    public MediumCharacteristicService(MediumCharacteristicRepository repository, MediumCharacteristicTransformer mediumCharacteristicTransformer) {
         this.repository = repository;
+        this.mediumCharacteristicTransformer = mediumCharacteristicTransformer;
     }
 
-    public MediumCharacteristic save(MediumCharacteristic mediumCharacteristic, ContactMedium contactMedium) {
+    public MediumCharacteristicDto save(MediumCharacteristicDto mediumCharacteristicDto, ContactMedium contactMedium) {
         log.debug("save");
-        if (mediumCharacteristic == null) {
+        if (mediumCharacteristicDto == null) {
             return null;
         }
+        MediumCharacteristic mediumCharacteristic = mediumCharacteristicTransformer.transform(mediumCharacteristicDto);
         mediumCharacteristic.setContactMedium(contactMedium);
         String id = UUID.randomUUID().toString();
         mediumCharacteristic.setId(id);
-        repository.save(mediumCharacteristic);
-        return mediumCharacteristic;
+        return mediumCharacteristicTransformer.transform(repository.save(mediumCharacteristic));
     }
 
-    public void delete(MediumCharacteristic mediumCharacteristic) {
+    public void delete(MediumCharacteristicDto mediumCharacteristicDto) {
         log.debug("delete");
-        if (mediumCharacteristic != null) {
-            repository.delete(mediumCharacteristic);
+        if (mediumCharacteristicDto != null) {
+            repository.delete(mediumCharacteristicTransformer.transform(mediumCharacteristicDto));
         }
     }
 
-    public MediumCharacteristic update(MediumCharacteristic mediumCharacteristic) {
+    public MediumCharacteristicDto update(MediumCharacteristicDto mediumCharacteristicDto) {
         log.debug("update");
-        repository.save(mediumCharacteristic);
-        return mediumCharacteristic;
+        repository.save(mediumCharacteristicTransformer.transform(mediumCharacteristicDto));
+        return mediumCharacteristicDto;
     }
 }

@@ -1,8 +1,10 @@
 package com.mycompany.service;
 
+import com.mycompany.model.EngagedPartyDto;
 import com.mycompany.repository.Customer;
 import com.mycompany.repository.EngagedParty;
 import com.mycompany.repository.EngagedPartyRepository;
+import com.mycompany.transfomer.EngagedPartyTransformer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -13,34 +15,34 @@ import java.util.UUID;
 public class EngagedPartyService {
 
     private final EngagedPartyRepository repository;
+    private final EngagedPartyTransformer engagedPartyTransformer;
 
-    public EngagedPartyService(EngagedPartyRepository repository) {
+    public EngagedPartyService(EngagedPartyRepository repository, EngagedPartyTransformer engagedPartyTransformer) {
         this.repository = repository;
+        this.engagedPartyTransformer = engagedPartyTransformer;
     }
 
-    public EngagedParty update(EngagedParty engagedParty) {
+    public EngagedPartyDto update(EngagedPartyDto engagedPartyDto) {
         log.debug("update");
-        repository.save(engagedParty);
-        return engagedParty;
+        repository.save(engagedPartyTransformer.transform(engagedPartyDto));
+        return engagedPartyDto;
     }
 
-    public EngagedParty save(EngagedParty engagedParty, Customer customer) {
+    public EngagedPartyDto save(EngagedPartyDto engagedPartyDto, Customer customer) {
         log.debug("save");
-        if (engagedParty == null) {
+        if (engagedPartyDto == null) {
             return null;
         }
+        EngagedParty engagedParty = engagedPartyTransformer.transform(engagedPartyDto);
         engagedParty.setCustomer(customer);
         String id = UUID.randomUUID().toString();
         engagedParty.setId(id);
-        engagedParty.setHref("https://host:port/tmf-api/customerManagement/v4/customer/" + id);
-        repository.save(engagedParty);
-        return engagedParty;
+        engagedParty.setHref("https://host:port/tmf-api/customerManagement/v4/engagedParty/" + id);
+        return engagedPartyTransformer.transform(repository.save(engagedParty));
     }
 
-    public void delete(EngagedParty engagedParty) {
+    public void delete(EngagedPartyDto engagedPartyDto) {
         log.debug("delete");
-        repository.delete(engagedParty);
+        repository.delete(engagedPartyTransformer.transform(engagedPartyDto));
     }
-
-
 }

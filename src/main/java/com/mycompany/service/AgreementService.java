@@ -1,8 +1,10 @@
 package com.mycompany.service;
 
+import com.mycompany.model.AgreementDto;
 import com.mycompany.repository.Agreement;
 import com.mycompany.repository.AgreementRepository;
 import com.mycompany.repository.Customer;
+import com.mycompany.transfomer.AgreementTransformer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -13,26 +15,31 @@ import java.util.UUID;
 @Slf4j
 public class AgreementService {
 
-    final
-    AgreementRepository repository;
+    final AgreementRepository repository;
+    final AgreementTransformer agreementTransformer;
 
-    public AgreementService(AgreementRepository repository) {
+    public AgreementService(AgreementRepository repository, AgreementTransformer agreementTransformer) {
         this.repository = repository;
+        this.agreementTransformer = agreementTransformer;
     }
 
-    public List<Agreement> save(List<Agreement> agreements, Customer customer) {
+    public List<AgreementDto> save(List<AgreementDto> agreementsDto, Customer customer) {
         log.debug("save");
-        if (agreements == null) {
+        if (agreementsDto == null) {
             return null;
         }
-        for (Agreement agreement : agreements) {
+        int i = 0;
+        for (AgreementDto agreementDto : agreementsDto) {
+            Agreement agreement = agreementTransformer.transform(agreementDto);
             agreement.setCustomer(customer);
             String id = UUID.randomUUID().toString();
             agreement.setId(id);
-            agreement.setHref("https://host:port/tmf-api/customerManagement/v4/customer/" + id);
+            agreement.setHref("https://host:port/tmf-api/customerManagement/v4/agreement/" + id);
             repository.save(agreement);
+            agreementsDto.set(i, agreementTransformer.transform(agreement));
+            i++;
         }
-        return agreements;
+        return agreementsDto;
     }
 
     public void delete(Agreement agreement) {
@@ -40,10 +47,10 @@ public class AgreementService {
         repository.delete(agreement);
     }
 
-    public List<Agreement> update(List<Agreement> agreements) {
+    public List<AgreementDto> update(List<AgreementDto> agreements) {
         log.debug("update");
-        for (Agreement agreement : agreements) {
-            repository.save(agreement);
+        for (AgreementDto agreementDto : agreements) {
+            repository.save(agreementTransformer.transform(agreementDto));
         }
         return agreements;
     }

@@ -1,8 +1,10 @@
 package com.mycompany.service;
 
+import com.mycompany.model.AccountDto;
 import com.mycompany.repository.Account;
 import com.mycompany.repository.AccountRepository;
 import com.mycompany.repository.Customer;
+import com.mycompany.transfomer.AccountTransformer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -13,39 +15,43 @@ import java.util.UUID;
 @Slf4j
 public class AccountService {
 
-    final
-    AccountRepository repository;
+    final AccountRepository repository;
+    final AccountTransformer accountTransformer;
 
-    public AccountService(AccountRepository repository) {
+    public AccountService(AccountRepository repository, AccountTransformer accountTransformer) {
         this.repository = repository;
+        this.accountTransformer = accountTransformer;
     }
 
-    public List<Account> save(List<Account> accounts, Customer customer) {
+    public List<AccountDto> save(List<AccountDto> accountsDto, Customer customer) {
         log.debug("save");
-        if (accounts == null) {
+        if (accountsDto == null) {
             return null;
         }
-        for (Account account : accounts) {
+        int i = 0;
+        for (AccountDto accountDto : accountsDto) {
+            Account account = accountTransformer.transform(accountDto);
             account.setCustomer(customer);
             String id = UUID.randomUUID().toString();
             account.setId(id);
-            account.setHref("https://host:port/tmf-api/customerManagement/v4/customer/" + id);
+            account.setHref("https://host:port/tmf-api/customerManagement/v4/account/" + id);
             repository.save(account);
+            accountsDto.set(i, accountTransformer.transform(account));
+            i++;
         }
-        return accounts;
+        return accountsDto;
     }
 
-    public List<Account> update(List<Account> accounts) {
+    public List<AccountDto> update(List<AccountDto> accountsDto) {
         log.debug("update");
-        for (Account account : accounts) {
-            repository.save(account);
+        for (AccountDto accountDto : accountsDto) {
+            repository.save(accountTransformer.transform(accountDto));
         }
-        return accounts;
+        return accountsDto;
     }
 
-    public void delete(Account account) {
+    public void delete(AccountDto accountDto) {
         log.debug("delete");
-        repository.delete(account);
+        repository.delete(accountTransformer.transform(accountDto));
     }
-
 }
