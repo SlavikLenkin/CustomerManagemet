@@ -1,12 +1,13 @@
 package com.mycompany.service;
 
-import com.mycompany.model.ContactMediumDto;
-import com.mycompany.model.CustomerDto;
-import com.mycompany.repository.*;
+import com.mycompany.model.*;
+import com.mycompany.repository.Customer;
+import com.mycompany.repository.CustomerRepository;
 import com.mycompany.transfomer.CustomerTransformer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -26,11 +27,13 @@ public class CustomerService {
     private final CustomerTransformer customerTransformer;
     private final ContactMediumService contactMediumService;
 
+
     public CustomerService(CustomerRepository repository
             , AccountService accountService, EngagedPartyService engagedPartyService
             , RelatedPartyService relatedPartyService, PaymentMethodService paymentMethodService
             , CharacteristicService characteristicService, AgreementService agreementService
-            , CreditProfileService creditProfileService, CustomerTransformer customerTransformer, ContactMediumService contactMediumService) {
+            , CreditProfileService creditProfileService, CustomerTransformer customerTransformer
+            , ContactMediumService contactMediumService) {
 
         this.repository = repository;
         this.accountService = accountService;
@@ -44,26 +47,30 @@ public class CustomerService {
         this.contactMediumService = contactMediumService;
     }
 
+    @Transactional
     public List<CustomerDto> findAllCustomers() {
         log.debug("getAllFullCustomer");
         List<CustomerDto> allCustomerDto = new ArrayList<>();
         List<Customer> customers = repository.findAll();
         for (Customer customer : customers) {
-            allCustomerDto.add(customerTransformer.getFullCustomer(customer));
+            allCustomerDto.add(customerTransformer.transform(customer));
         }
         return allCustomerDto;
     }
 
+    @Transactional
     public CustomerDto findCustomerById(String id) {
         log.debug("findCustomerById");
-        return customerTransformer.getFullCustomer(repository.findCustomerById(id));
+        return customerTransformer.transform(repository.findCustomerById(id));
     }
 
+    @Transactional
     public void delete(CustomerDto customerDto) {
         log.debug("delete");
         repository.delete(customerTransformer.transform(customerDto));
     }
 
+    @Transactional
     public CustomerDto save(CustomerDto customerDto) {
         log.debug("save");
         Customer customer = customerTransformer.transform(customerDto);
@@ -83,6 +90,7 @@ public class CustomerService {
         return customerDto;
     }
 
+    @Transactional
     public CustomerDto update(String id, CustomerDto customerDtoUpdate) {
         log.debug("update");
         CustomerDto customerDto = findCustomerById(id);
@@ -108,8 +116,8 @@ public class CustomerService {
             customer.setValidFor(customerUpdate.getValidFor());
         }
 
-        EngagedParty engagedPartyUpdate = customerDtoUpdate.getEngagedParty();
-        EngagedParty engagedParty = customerDto.getEngagedParty();
+        EngagedPartyDto engagedPartyUpdate = customerDtoUpdate.getEngagedParty();
+        EngagedPartyDto engagedParty = customerDto.getEngagedParty();
 
         if (engagedPartyUpdate != null) {
             if (engagedPartyUpdate.getName() != null) {
@@ -118,13 +126,13 @@ public class CustomerService {
         }
 
         customerDto.setEngagedParty(engagedPartyService.update(engagedParty));
-        List<Account> accountsUpdate = customerDtoUpdate.getAccounts();
-        List<Account> accounts = customerDto.getAccounts();
+        List<AccountDto> accountsUpdate = customerDtoUpdate.getAccounts();
+        List<AccountDto> accounts = customerDto.getAccounts();
 
         if (accountsUpdate != null) {
-            for (Account accountUpdate : accountsUpdate) {
+            for (AccountDto accountUpdate : accountsUpdate) {
                 if (accountUpdate != null)
-                    for (Account account : accounts) {
+                    for (AccountDto account : accounts) {
                         if (account.getId().equals(accountUpdate.getId())) {
                             if (accountUpdate.getName() != null) {
                                 account.setName(accountUpdate.getName());
@@ -139,12 +147,12 @@ public class CustomerService {
             customerDto.setAccounts(accountService.update(accounts));
         }
 
-        List<Agreement> agreementsUpdate = customerDtoUpdate.getAgreements();
-        List<Agreement> agreements = customerDto.getAgreements();
+        List<AgreementDto> agreementsUpdate = customerDtoUpdate.getAgreements();
+        List<AgreementDto> agreements = customerDto.getAgreements();
 
         if (agreementsUpdate != null) {
-            for (Agreement agreementUpdate : agreementsUpdate) {
-                for (Agreement agreement : agreements) {
+            for (AgreementDto agreementUpdate : agreementsUpdate) {
+                for (AgreementDto agreement : agreements) {
                     if (agreement.getId().equals(agreementUpdate.getId())) {
                         if (agreementUpdate.getName() != null) {
                             agreement.setName(agreementUpdate.getName());
@@ -156,12 +164,12 @@ public class CustomerService {
             customerDto.setAgreements(agreementService.update(agreements));
         }
 
-        List<Characteristic> characteristicsUpdate = customerDtoUpdate.getCharacteristics();
-        List<Characteristic> characteristics = customerDto.getCharacteristics();
+        List<CharacteristicDto> characteristicsUpdate = customerDtoUpdate.getCharacteristics();
+        List<CharacteristicDto> characteristics = customerDto.getCharacteristics();
 
         if (characteristicsUpdate != null) {
-            for (Characteristic characteristicUpdate : characteristicsUpdate) {
-                for (Characteristic characteristic : characteristics) {
+            for (CharacteristicDto characteristicUpdate : characteristicsUpdate) {
+                for (CharacteristicDto characteristic : characteristics) {
                     if (characteristic.getId().equals(characteristicUpdate.getId())) {
                         if (characteristicUpdate.getName() != null) {
                             characteristic.setName(characteristicUpdate.getName());
@@ -179,12 +187,12 @@ public class CustomerService {
             customerDto.setCharacteristics(characteristicService.update(characteristics));
         }
 
-        List<CreditProfile> creditProfilesUpdate = customerDtoUpdate.getCreditProfiles();
-        List<CreditProfile> creditProfiles = customerDto.getCreditProfiles();
+        List<CreditProfileDto> creditProfilesUpdate = customerDtoUpdate.getCreditProfiles();
+        List<CreditProfileDto> creditProfiles = customerDto.getCreditProfiles();
 
         if (creditProfilesUpdate != null) {
-            for (CreditProfile creditProfileUpdate : creditProfilesUpdate) {
-                for (CreditProfile creditProfile : creditProfiles) {
+            for (CreditProfileDto creditProfileUpdate : creditProfilesUpdate) {
+                for (CreditProfileDto creditProfile : creditProfiles) {
                     if (creditProfile.getId().equals(creditProfileUpdate.getId())) {
                         if (creditProfileUpdate.getCreditProfileDate() != null) {
                             creditProfile.setCreditProfileDate(creditProfileUpdate.getCreditProfileDate());
@@ -205,12 +213,12 @@ public class CustomerService {
             customerDto.setCreditProfiles(creditProfileService.update(creditProfiles));
         }
 
-        List<PaymentMethod> paymentMethodsUpdate = customerDtoUpdate.getPaymentMethods();
-        List<PaymentMethod> paymentMethods = customerDto.getPaymentMethods();
+        List<PaymentMethodDto> paymentMethodsUpdate = customerDtoUpdate.getPaymentMethods();
+        List<PaymentMethodDto> paymentMethods = customerDto.getPaymentMethods();
 
         if (paymentMethodsUpdate != null) {
-            for (PaymentMethod paymentMethodUpdate : paymentMethodsUpdate) {
-                for (PaymentMethod paymentMethod : paymentMethods) {
+            for (PaymentMethodDto paymentMethodUpdate : paymentMethodsUpdate) {
+                for (PaymentMethodDto paymentMethod : paymentMethods) {
                     if (paymentMethod.getId().equals(paymentMethodUpdate.getId())) {
                         if (paymentMethodUpdate.getName() != null) {
                             paymentMethod.setName(paymentMethodUpdate.getName());
@@ -222,12 +230,12 @@ public class CustomerService {
             customerDto.setPaymentMethods(paymentMethodService.update(paymentMethods));
         }
 
-        List<RelatedParty> relatedPartiesUpdate = customerDtoUpdate.getRelatedParties();
-        List<RelatedParty> relatedParties = customerDto.getRelatedParties();
+        List<RelatedPartyDto> relatedPartiesUpdate = customerDtoUpdate.getRelatedParties();
+        List<RelatedPartyDto> relatedParties = customerDto.getRelatedParties();
 
         if (relatedPartiesUpdate != null) {
-            for (RelatedParty relatedPartyUpdate : relatedPartiesUpdate) {
-                for (RelatedParty relatedParty : relatedParties) {
+            for (RelatedPartyDto relatedPartyUpdate : relatedPartiesUpdate) {
+                for (RelatedPartyDto relatedParty : relatedParties) {
                     if (relatedParty.getId().equals(relatedPartyUpdate.getId())) {
                         if (relatedPartyUpdate.getName() != null) {
                             relatedParty.setName(relatedPartyUpdate.getName());
@@ -259,9 +267,9 @@ public class CustomerService {
                             contactMediumDto.setValidFor(contactMediumDtoUpdate.getValidFor());
                         }
                         if (contactMediumDtoUpdate.getMediumCharacteristic() != null) {
-                            MediumCharacteristic mediumCharacteristicUpdate = contactMediumDtoUpdate
+                            MediumCharacteristicDto mediumCharacteristicUpdate = contactMediumDtoUpdate
                                     .getMediumCharacteristic();
-                            MediumCharacteristic mediumCharacteristic = contactMediumDto
+                            MediumCharacteristicDto mediumCharacteristic = contactMediumDto
                                     .getMediumCharacteristic();
                             if (mediumCharacteristicUpdate.getCity() != null) {
                                 mediumCharacteristic.setCity(mediumCharacteristicUpdate.getCity());

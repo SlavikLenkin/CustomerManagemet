@@ -2,11 +2,12 @@ package com.mycompany.service;
 
 
 import com.mycompany.model.ContactMediumDto;
+import com.mycompany.model.MediumCharacteristicDto;
 import com.mycompany.repository.ContactMedium;
 import com.mycompany.repository.ContactMediumRepository;
 import com.mycompany.repository.Customer;
-import com.mycompany.repository.MediumCharacteristic;
 import com.mycompany.transfomer.ContactMediumTransformer;
+import com.mycompany.transfomer.MediumCharacteristicTransformer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -21,23 +22,24 @@ public class ContactMediumService {
     final ContactMediumRepository repository;
     final ContactMediumTransformer contactMediumTransformer;
     final MediumCharacteristicService mediumCharacteristicService;
+    final MediumCharacteristicTransformer mediumCharacteristicTransformer;
 
-    public ContactMediumService(ContactMediumRepository repository, ContactMediumTransformer contactMediumTransformer, MediumCharacteristicService mediumCharacteristicService) {
+    public ContactMediumService(ContactMediumRepository repository, ContactMediumTransformer contactMediumTransformer, MediumCharacteristicService mediumCharacteristicService, MediumCharacteristicTransformer mediumCharacteristicTransformer) {
         this.repository = repository;
         this.contactMediumTransformer = contactMediumTransformer;
         this.mediumCharacteristicService = mediumCharacteristicService;
+        this.mediumCharacteristicTransformer = mediumCharacteristicTransformer;
     }
 
     public List<ContactMediumDto> save(List<ContactMediumDto> contactsMediumDto, Customer customer) {
-        log.debug("saveOne");
+        log.debug("save");
         if (contactsMediumDto == null) {
             return null;
         }
 
         for (ContactMediumDto contactMediumDto : contactsMediumDto) {
             contactMediumDto.setCustomer(customer);
-            MediumCharacteristic mediumCharacteristic;
-
+            MediumCharacteristicDto mediumCharacteristic;
 
             ContactMedium contactMedium = contactMediumTransformer.transform(contactMediumDto);
 
@@ -67,7 +69,7 @@ public class ContactMediumService {
         }
 
         for (ContactMediumDto contactMediumDto : contactMediumDtoList) {
-            MediumCharacteristic mediumCharacteristic;
+            MediumCharacteristicDto mediumCharacteristic;
 
             ContactMedium contactMedium = contactMediumTransformer.transform(contactMediumDto);
             contactMedium.setCustomer(customer);

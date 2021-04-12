@@ -1,9 +1,11 @@
 package com.mycompany.service;
 
 
+import com.mycompany.model.RelatedPartyDto;
 import com.mycompany.repository.Customer;
 import com.mycompany.repository.RelatedParty;
 import com.mycompany.repository.RelatedPartyRepository;
+import com.mycompany.transfomer.RelatedPartyTransformer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -15,36 +17,42 @@ import java.util.UUID;
 public class RelatedPartyService {
 
     final RelatedPartyRepository repository;
+    final RelatedPartyTransformer relatedPartyTransformer;
 
-    public RelatedPartyService(RelatedPartyRepository repository) {
+    public RelatedPartyService(RelatedPartyRepository repository, RelatedPartyTransformer relatedPartyTransformer) {
         this.repository = repository;
+        this.relatedPartyTransformer = relatedPartyTransformer;
     }
 
-    public List<RelatedParty> save(List<RelatedParty> relatedParties, Customer customer) {
+    public List<RelatedPartyDto> save(List<RelatedPartyDto> relatedPartiesDto, Customer customer) {
         log.debug("save");
-        if (relatedParties == null) {
+        if (relatedPartiesDto == null) {
             return null;
         }
-        for (RelatedParty relatedParty : relatedParties) {
+        int i = 0;
+        for (RelatedPartyDto relatedPartyDto : relatedPartiesDto) {
+            RelatedParty relatedParty = relatedPartyTransformer.transform(relatedPartyDto);
             relatedParty.setCustomer(customer);
             String id = UUID.randomUUID().toString();
             relatedParty.setId(id);
-            relatedParty.setHref("https://host:port/tmf-api/customerManagement/v4/customer/" + id);
+            relatedParty.setHref("https://host:port/tmf-api/customerManagement/v4/relatedParty/" + id);
             repository.save(relatedParty);
+            relatedPartiesDto.set(i, relatedPartyTransformer.transform(relatedParty));
+            i++;
         }
-        return relatedParties;
+        return relatedPartiesDto;
     }
 
-    public List<RelatedParty> update(List<RelatedParty> relatedParties) {
+    public List<RelatedPartyDto> update(List<RelatedPartyDto> relatedPartiesDto) {
         log.debug("update");
-        for (RelatedParty relatedParty : relatedParties) {
-            repository.save(relatedParty);
+        for (RelatedPartyDto relatedPartyDto : relatedPartiesDto) {
+            repository.save(relatedPartyTransformer.transform(relatedPartyDto));
         }
-        return relatedParties;
+        return relatedPartiesDto;
     }
 
-    public void delete(RelatedParty relatedParty) {
+    public void delete(RelatedPartyDto relatedPartyDto) {
         log.debug("delete");
-        repository.delete(relatedParty);
+        repository.delete(relatedPartyTransformer.transform(relatedPartyDto));
     }
 }

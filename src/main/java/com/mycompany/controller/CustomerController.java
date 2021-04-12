@@ -29,9 +29,13 @@ public class CustomerController implements ApiPath {
 
     @ApiOperation(value = "getAll")
     @GetMapping(PATH_CUSTOMER)
-    public List<CustomerDto> getAll() {
+    public ResponseEntity<List<CustomerDto>> getAll() {
         log.debug("getAll");
-        return customerService.findAllCustomers();
+        List<CustomerDto> customerDtoList = customerService.findAllCustomers();
+        if (customerDtoList == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok().body(customerDtoList);
     }
 
     @ApiOperation(value = "getCustomerById")
@@ -46,9 +50,12 @@ public class CustomerController implements ApiPath {
 
     @ApiOperation(value = "createCustomer")
     @PostMapping(PATH_CUSTOMER)
-    public CustomerDto createCustomer(@Valid @RequestBody CustomerDto customerDto) {
+    public ResponseEntity<CustomerDto> createCustomer(@Valid @RequestBody CustomerDto customerDto) {
         log.debug("createCustomer");
-        return customerService.save(customerDto);
+        if (customerDto == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok().body(customerService.save(customerDto));
     }
 
     @ApiOperation(value = "patchCustomer")
