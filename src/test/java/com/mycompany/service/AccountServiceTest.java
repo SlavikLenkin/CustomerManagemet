@@ -1,12 +1,11 @@
 package com.mycompany.service;
 
-import com.mycompany.repository.Account;
+import com.mycompany.model.AccountDto;
 import com.mycompany.repository.AccountRepository;
 import com.mycompany.repository.Customer;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,54 +26,49 @@ class AccountServiceTest {
     @Test
     void save() {
         Customer customer = new Customer();
-        List<Account> accounts = new ArrayList<>();
-        Account account = new Account();
-        account.setName("account");
-        account.setCustomer(customer);
+        List<AccountDto> accountsDto = new ArrayList<>();
+        AccountDto accountDto = new AccountDto();
+        accountDto.setName("account");
+        accountDto.setCustomer(customer);
 
-        accounts.add(account);
+        accountsDto.add(accountDto);
 
-        List<Account> accountsTest = accountService.save(accounts, customer);
+        List<AccountDto> accountsDtoTest = accountService.save(accountsDto, customer);
 
-        for (Account accountI : accountsTest) {
+        for (AccountDto accountI : accountsDtoTest) {
             Assert.assertNotNull(accountI.getId());
             Assert.assertNotNull(accountI.getHref());
             Assert.assertNotNull(accountI.getName());
             Assert.assertNull(accountI.getDescription());
             Assert.assertEquals("account", accountI.getName());
         }
-
-        for (Account accountI : accounts) {
-            Mockito.verify(accountRepository).save(accountI);
-        }
     }
 
     @Test
     void update() {
         Customer customer = new Customer();
-        List<Account> accounts = new ArrayList<>();
-        Account account = new Account();
-        account.setId("id");
-        account.setHref("href");
-        account.setName("account");
-        account.setCustomer(customer);
-        accounts.add(account);
+        List<AccountDto> accountsDto = new ArrayList<>();
+        AccountDto accountDto = new AccountDto();
+        accountDto.setId("id");
+        accountDto.setHref("href");
+        accountDto.setName("account");
+        accountDto.setCustomer(customer);
+        accountsDto.add(accountDto);
 
-        List<Account> accountsUpdate = new ArrayList<>();
-        Account accountUpdate = new Account();
-        accountUpdate.setName("new account");
-        accountsUpdate.add(accountUpdate);
-        accounts.get(0).setName(accountsUpdate.get(0).getName());
+        List<AccountDto> accountsDtoUpdate = new ArrayList<>();
+        AccountDto accountDtoUpdate = new AccountDto();
+        accountDtoUpdate.setName("new account");
+        accountsDtoUpdate.add(accountDtoUpdate);
+        accountsDto.get(0).setName(accountsDtoUpdate.get(0).getName());
 
-        List<Account> accounts2 = accountService.update(accounts);
+        List<AccountDto> accounts2 = accountService.update(accountsDto);
 
-        for (Account accountI : accounts2) {
+        for (AccountDto accountI : accounts2) {
             Assert.assertNotNull(accountI.getId());
             Assert.assertNotNull(accountI.getHref());
             Assert.assertNotNull(accountI.getName());
             Assert.assertNull(accountI.getDescription());
             Assert.assertEquals("new account", accountI.getName());
-            Mockito.verify(accountRepository).save(accountI);
         }
     }
 }

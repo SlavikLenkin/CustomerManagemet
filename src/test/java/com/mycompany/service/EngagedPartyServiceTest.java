@@ -1,12 +1,11 @@
 package com.mycompany.service;
 
+import com.mycompany.model.EngagedPartyDto;
 import com.mycompany.repository.Customer;
-import com.mycompany.repository.EngagedParty;
 import com.mycompany.repository.EngagedPartyRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,39 +24,36 @@ class EngagedPartyServiceTest {
     @Test
     void update() {
         Customer customer = new Customer();
-        EngagedParty engagedParty = new EngagedParty();
-        engagedParty.setName("engagedParty");
-        engagedParty.setCustomer(customer);
-        engagedParty.setId("id");
-        engagedParty.setHref("href");
+        EngagedPartyDto engagedPartyDto = new EngagedPartyDto();
+        engagedPartyDto.setName("engagedPartyDto");
+        engagedPartyDto.setCustomer(customer);
+        engagedPartyDto.setId("id");
+        engagedPartyDto.setHref("href");
 
-        EngagedParty engagedPartyUpdate = new EngagedParty();
-        engagedPartyUpdate.setName("new engagedParty");
+        EngagedPartyDto engagedPartyUpdate = new EngagedPartyDto();
+        engagedPartyUpdate.setName("new engagedPartyDto");
 
-        engagedParty.setName(engagedPartyUpdate.getName());
+        engagedPartyDto.setName(engagedPartyUpdate.getName());
 
-        EngagedParty engagedParty2 = engagedPartyService.update(engagedParty);
+        EngagedPartyDto engagedPartyTest = engagedPartyService.update(engagedPartyDto);
 
-        Assert.assertNotNull(engagedParty2.getId());
-        Assert.assertNotNull(engagedParty2.getCustomer());
-        Assert.assertNotNull(engagedParty2.getHref());
-        Assert.assertEquals("new engagedParty", engagedParty2.getName());
-        Mockito.verify(engagedPartyRepository).save(engagedParty2);
+        Assert.assertNotNull(engagedPartyTest.getId());
+        Assert.assertNotNull(engagedPartyTest.getCustomer());
+        Assert.assertNotNull(engagedPartyTest.getHref());
+        Assert.assertEquals("new engagedPartyDto", engagedPartyTest.getName());
     }
 
     @Test
     void save() {
         Customer customer = new Customer();
-        EngagedParty engagedParty = new EngagedParty();
-        engagedParty.setName("engagedParty");
+        EngagedPartyDto engagedPartyDto = new EngagedPartyDto();
+        engagedPartyDto.setName("engagedPartyDto");
 
-        EngagedParty engagedParty1 = engagedPartyService.save(engagedParty, customer);
-
-        Assert.assertNotNull(engagedParty1.getId());
-        Assert.assertNotNull(engagedParty1.getCustomer());
-        Assert.assertNotNull(engagedParty1.getHref());
-        Assert.assertEquals("engagedParty", engagedParty1.getName());
-        Mockito.verify(engagedPartyRepository).save(engagedParty1);
+        EngagedPartyDto engagedPartyTest = engagedPartyService.save(engagedPartyDto, customer);
+        Assert.assertNotNull(engagedPartyTest.getId());
+        Assert.assertNotNull(engagedPartyTest.getCustomer());
+        Assert.assertNotNull(engagedPartyTest.getHref());
+        Assert.assertEquals("engagedPartyDto", engagedPartyTest.getName());
     }
 
 }

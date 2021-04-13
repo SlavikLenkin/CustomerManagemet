@@ -1,12 +1,11 @@
 package com.mycompany.service;
 
+import com.mycompany.model.RelatedPartyDto;
 import com.mycompany.repository.Customer;
-import com.mycompany.repository.RelatedParty;
 import com.mycompany.repository.RelatedPartyRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,46 +27,44 @@ class RelatedPartyServiceTest {
     @Test
     void save() {
         Customer customer = new Customer();
-        List<RelatedParty> relatedPartyList = new ArrayList<>();
-        RelatedParty relatedParty = new RelatedParty();
-        relatedParty.setName("relatedParty");
-        relatedPartyList.add(relatedParty);
+        List<RelatedPartyDto> relatedPartyDtoList = new ArrayList<>();
+        RelatedPartyDto relatedPartyDto = new RelatedPartyDto();
+        relatedPartyDto.setName("relatedPartyDto");
+        relatedPartyDtoList.add(relatedPartyDto);
 
-        List<RelatedParty> relatedPartyList1 = relatedPartyService.save(relatedPartyList, customer);
+        List<RelatedPartyDto> relatedPartyDtoListTest = relatedPartyService.save(relatedPartyDtoList, customer);
 
-        for (RelatedParty relatedPartyI : relatedPartyList1) {
+        for (RelatedPartyDto relatedPartyI : relatedPartyDtoListTest) {
             Assert.assertNotNull(relatedPartyI.getId());
             Assert.assertNotNull(relatedPartyI.getCustomer());
-            Assert.assertEquals("relatedParty", relatedPartyI.getName());
-            Mockito.verify(relatedPartyRepository).save(relatedPartyI);
+            Assert.assertEquals("relatedPartyDto", relatedPartyI.getName());
         }
     }
 
     @Test
     void update() {
         Customer customer = new Customer();
-        List<RelatedParty> relatedPartyList = new ArrayList<>();
-        RelatedParty relatedParty = new RelatedParty();
-        relatedParty.setName("relatedParty");
-        relatedParty.setCustomer(customer);
-        relatedParty.setHref("href");
-        relatedParty.setId("id");
+        List<RelatedPartyDto> relatedPartyDtoList = new ArrayList<>();
+        RelatedPartyDto relatedPartyDto = new RelatedPartyDto();
+        relatedPartyDto.setName("relatedPartyDto");
+        relatedPartyDto.setCustomer(customer);
+        relatedPartyDto.setHref("href");
+        relatedPartyDto.setId("id");
 
-        relatedPartyList.add(relatedParty);
+        relatedPartyDtoList.add(relatedPartyDto);
 
-        List<RelatedParty> relatedPartyListUpdate = new ArrayList<>();
-        RelatedParty relatedPartyUpdate = new RelatedParty();
-        relatedPartyUpdate.setName("new relatedParty");
+        List<RelatedPartyDto> relatedPartyListUpdate = new ArrayList<>();
+        RelatedPartyDto relatedPartyUpdate = new RelatedPartyDto();
+        relatedPartyUpdate.setName("new relatedPartyDto");
         relatedPartyListUpdate.add(relatedPartyUpdate);
-        relatedPartyList.get(0).setName(relatedPartyListUpdate.get(0).getName());
+        relatedPartyDtoList.get(0).setName(relatedPartyListUpdate.get(0).getName());
 
-        List<RelatedParty> relatedPartyList2 = relatedPartyService.update(relatedPartyList);
+        List<RelatedPartyDto> relatedPartyDtoListTest = relatedPartyService.update(relatedPartyDtoList);
 
-        for (RelatedParty relatedPartyI : relatedPartyList2) {
+        for (RelatedPartyDto relatedPartyI : relatedPartyDtoListTest) {
             Assert.assertNotNull(relatedPartyI.getId());
             Assert.assertNotNull(relatedPartyI.getCustomer());
-            Assert.assertEquals("new relatedParty", relatedPartyI.getName());
-            Mockito.verify(relatedPartyRepository).save(relatedPartyI);
+            Assert.assertEquals("new relatedPartyDto", relatedPartyI.getName());
         }
     }
 }

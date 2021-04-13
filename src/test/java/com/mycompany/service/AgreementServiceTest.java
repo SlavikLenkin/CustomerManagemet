@@ -1,12 +1,11 @@
 package com.mycompany.service;
 
-import com.mycompany.repository.Agreement;
+import com.mycompany.model.AgreementDto;
 import com.mycompany.repository.AgreementRepository;
 import com.mycompany.repository.Customer;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,21 +27,20 @@ class AgreementServiceTest {
     @Test
     void save() {
         Customer customer = new Customer();
-        List<Agreement> agreements = new ArrayList<>();
-        Agreement agreement = new Agreement();
-        agreement.setName("agreement");
-        agreement.setCustomer(customer);
+        List<AgreementDto> agreementsDto = new ArrayList<>();
+        AgreementDto agreementDto = new AgreementDto();
+        agreementDto.setName("agreement");
+        agreementDto.setCustomer(customer);
 
-        agreements.add(agreement);
+        agreementsDto.add(agreementDto);
 
-        List<Agreement> agreements1 = agreementService.save(agreements, customer);
+        List<AgreementDto> agreementsDtoTest = agreementService.save(agreementsDto, customer);
 
-        for (Agreement agreementI : agreements1) {
+        for (AgreementDto agreementI : agreementsDtoTest) {
             Assert.assertNotNull(agreementI.getId());
             Assert.assertNotNull(agreementI.getHref());
             Assert.assertNotNull(agreementI.getName());
             Assert.assertEquals("agreement", agreementI.getName());
-            Mockito.verify(agreementRepository).save(agreementI);
         }
 
     }
@@ -50,28 +48,27 @@ class AgreementServiceTest {
     @Test
     void update() {
         Customer customer = new Customer();
-        List<Agreement> agreements = new ArrayList<>();
-        Agreement agreement = new Agreement();
-        agreement.setName("agreement");
-        agreement.setId("id");
-        agreement.setHref("href");
-        agreement.setCustomer(customer);
-        agreements.add(agreement);
+        List<AgreementDto> agreementsDto = new ArrayList<>();
+        AgreementDto agreementDto = new AgreementDto();
+        agreementDto.setName("agreement");
+        agreementDto.setId("id");
+        agreementDto.setHref("href");
+        agreementDto.setCustomer(customer);
+        agreementsDto.add(agreementDto);
 
-        List<Agreement> agreementsUpdate = new ArrayList<>();
-        Agreement agreementUpdate = new Agreement();
+        List<AgreementDto> agreementsUpdate = new ArrayList<>();
+        AgreementDto agreementUpdate = new AgreementDto();
         agreementUpdate.setName("new agreement");
         agreementsUpdate.add(agreementUpdate);
-        agreements.get(0).setName(agreementsUpdate.get(0).getName());
+        agreementsDto.get(0).setName(agreementsUpdate.get(0).getName());
 
-        List<Agreement> agreements2 = agreementService.update(agreements);
+        List<AgreementDto> agreementsTest = agreementService.update(agreementsDto);
 
-        for (Agreement agreementI : agreements2) {
+        for (AgreementDto agreementI : agreementsTest) {
             Assert.assertNotNull(agreementI.getId());
             Assert.assertNotNull(agreementI.getHref());
             Assert.assertNotNull(agreementI.getName());
             Assert.assertEquals("new agreement", agreementI.getName());
-            Mockito.verify(agreementRepository).save(agreementI);
         }
 
     }

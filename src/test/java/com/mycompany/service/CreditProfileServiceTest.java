@@ -1,12 +1,11 @@
 package com.mycompany.service;
 
-import com.mycompany.repository.CreditProfile;
+import com.mycompany.model.CreditProfileDto;
 import com.mycompany.repository.CreditProfileRepository;
 import com.mycompany.repository.Customer;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,20 +27,19 @@ class CreditProfileServiceTest {
     @Test
     void save() {
         Customer customer = new Customer();
-        List<CreditProfile> creditProfiles = new ArrayList<>();
-        CreditProfile creditProfile = new CreditProfile();
-        creditProfile.setCreditScore(6);
+        List<CreditProfileDto> creditProfilesDto = new ArrayList<>();
+        CreditProfileDto creditProfileDto = new CreditProfileDto();
+        creditProfileDto.setCreditScore(6);
 
-        creditProfiles.add(creditProfile);
+        creditProfilesDto.add(creditProfileDto);
 
-        List<CreditProfile> creditProfiles1 = creditProfileService.save(creditProfiles, customer);
+        List<CreditProfileDto> creditProfilesTest = creditProfileService.save(creditProfilesDto, customer);
 
-        for (CreditProfile creditProfileI : creditProfiles1) {
+        for (CreditProfileDto creditProfileI : creditProfilesTest) {
             Assert.assertNotNull(creditProfileI.getId());
             Assert.assertNotNull(creditProfileI.getCustomer());
             Assert.assertNotNull(creditProfileI.getCreditScore());
-            Assert.assertEquals(6, creditProfile.getCreditScore());
-            Mockito.verify(creditProfileRepository).save(creditProfileI);
+            Assert.assertEquals(6, creditProfileDto.getCreditScore());
         }
 
     }
@@ -49,28 +47,27 @@ class CreditProfileServiceTest {
     @Test
     void update() {
         Customer customer = new Customer();
-        List<CreditProfile> creditProfiles = new ArrayList<>();
-        CreditProfile creditProfile = new CreditProfile();
-        creditProfile.setCreditScore(6);
-        creditProfile.setId("id");
-        creditProfile.setCustomer(customer);
+        List<CreditProfileDto> creditProfilesDto = new ArrayList<>();
+        CreditProfileDto creditProfileDto = new CreditProfileDto();
+        creditProfileDto.setCreditScore(6);
+        creditProfileDto.setId("id");
+        creditProfileDto.setCustomer(customer);
 
-        creditProfiles.add(creditProfile);
+        creditProfilesDto.add(creditProfileDto);
 
-        List<CreditProfile> creditProfilesUpdate = new ArrayList<>();
-        CreditProfile creditProfileUpdate = new CreditProfile();
+        List<CreditProfileDto> creditProfilesUpdate = new ArrayList<>();
+        CreditProfileDto creditProfileUpdate = new CreditProfileDto();
         creditProfileUpdate.setCreditScore(7);
         creditProfilesUpdate.add(creditProfileUpdate);
-        creditProfiles.get(0).setCreditScore(creditProfilesUpdate.get(0).getCreditScore());
+        creditProfilesDto.get(0).setCreditScore(creditProfilesUpdate.get(0).getCreditScore());
 
-        List<CreditProfile> creditProfiles2 = creditProfileService.update(creditProfiles);
+        List<CreditProfileDto> creditProfilesTest = creditProfileService.update(creditProfilesDto);
 
-        for (CreditProfile creditProfileI : creditProfiles2) {
+        for (CreditProfileDto creditProfileI : creditProfilesTest) {
             Assert.assertNotNull(creditProfileI.getId());
             Assert.assertNotNull(creditProfileI.getCustomer());
             Assert.assertNotNull(creditProfileI.getCreditScore());
-            Assert.assertEquals(7, creditProfile.getCreditScore());
-            Mockito.verify(creditProfileRepository).save(creditProfileI);
+            Assert.assertEquals(7, creditProfileDto.getCreditScore());
         }
     }
 }

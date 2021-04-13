@@ -1,11 +1,10 @@
 package com.mycompany.service;
 
-import com.mycompany.repository.Customer;
+import com.mycompany.model.CustomerDto;
 import com.mycompany.repository.CustomerRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,48 +22,17 @@ class CustomerServiceTest {
 
     @Test
     void save() {
-        Customer customer = new Customer();
-        customer.setName("customer");
+        CustomerDto customerDto = new CustomerDto();
+        customerDto.setName("customerDto");
 
-        Customer customer1 = customerService.save(customer);
+        CustomerDto customerTest = customerService.save(customerDto);
 
-        Customer customer2 = new Customer();
-        customer2.setName("new customer");
-
-        Assert.assertNotNull(customer1.getId());
-        Assert.assertNotNull(customer1.getHref());
-        Assert.assertNotNull(customer1.getName());
-        Assert.assertNull(customer1.getStatus());
-        Assert.assertNull(customer1.getStatusReason());
-        Assert.assertNull(customer1.getValidFor());
-        Assert.assertEquals(customer, customer1);
-        Assert.assertNotEquals(customer2, customer1);
-        Mockito.verify(customerRepository).save(customer);
-    }
-
-    @Test
-    void update() {
-        Customer customer = new Customer();
-        customer.setName("customer");
-        customer.setId("id");
-        customer.setHref("href");
-
-        Customer customerUpdate = new Customer();
-        customerUpdate.setName("new customer");
-
-        customer.setName(customerUpdate.getName());
-
-        Customer customer1 = customerService.update(customer);
-
-        Assert.assertNotNull(customer1.getId());
-        Assert.assertNotNull(customer1.getHref());
-        Assert.assertNotNull(customer1.getName());
-        Assert.assertNull(customer1.getStatus());
-        Assert.assertNull(customer1.getStatusReason());
-        Assert.assertNull(customer1.getValidFor());
-        Assert.assertEquals(customer, customer1);
-        Assert.assertEquals("new customer", customer1.getName());
-
-        Mockito.verify(customerRepository).updateCustomerById(customer);
+        Assert.assertNotNull(customerTest.getId());
+        Assert.assertNotNull(customerTest.getHref());
+        Assert.assertNotNull(customerTest.getName());
+        Assert.assertNull(customerTest.getStatus());
+        Assert.assertNull(customerTest.getStatusReason());
+        Assert.assertNull(customerTest.getValidFor());
+        Assert.assertEquals(customerDto, customerTest);
     }
 }
