@@ -38,7 +38,8 @@ public class EngagedPartyService {
         String id = UUID.randomUUID().toString();
         engagedParty.setId(id);
         engagedParty.setHref("https://host:port/tmf-api/customerManagement/v4/engagedParty/" + id);
-        return engagedPartyTransformer.transform(repository.save(engagedParty));
+        repository.save(engagedParty);
+        return engagedPartyTransformer.transform(engagedParty);
     }
 
     public void delete(EngagedPartyDto engagedPartyDto) {

@@ -77,8 +77,8 @@ public class CustomerService {
         String id = UUID.randomUUID().toString();
         customer.setId(id);
         customer.setHref("https://host:port/tmf-api/customerManagement/v4/customer/" + id);
-
-        customerDto.setCustomer(repository.save(customer));
+        repository.save(customer);
+        customerDto.setCustomer(customer);
         customerDto.setEngagedParty(engagedPartyService.save(customerDto.getEngagedParty(), customer));
         customerDto.setAccounts(accountService.save(customerDto.getAccounts(), customer));
         customerDto.setAgreements(agreementService.save(customerDto.getAgreements(), customer));

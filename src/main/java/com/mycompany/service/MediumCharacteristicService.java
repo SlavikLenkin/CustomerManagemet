@@ -31,7 +31,8 @@ public class MediumCharacteristicService {
         mediumCharacteristic.setContactMedium(contactMedium);
         String id = UUID.randomUUID().toString();
         mediumCharacteristic.setId(id);
-        return mediumCharacteristicTransformer.transform(repository.save(mediumCharacteristic));
+        repository.save(mediumCharacteristic);
+        return mediumCharacteristicTransformer.transform(mediumCharacteristic);
     }
 
     public void delete(MediumCharacteristicDto mediumCharacteristicDto) {
