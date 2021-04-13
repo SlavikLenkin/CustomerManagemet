@@ -1,12 +1,11 @@
 package com.mycompany.service;
 
-import com.mycompany.repository.Characteristic;
+import com.mycompany.model.CharacteristicDto;
 import com.mycompany.repository.CharacteristicRepository;
 import com.mycompany.repository.Customer;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,48 +27,45 @@ class CharacteristicServiceTest {
     @Test
     void save() {
         Customer customer = new Customer();
-        List<Characteristic> characteristics = new ArrayList<>();
-        Characteristic characteristic = new Characteristic();
-        characteristic.setName("characteristic");
-        characteristic.setCustomer(customer);
+        List<CharacteristicDto> characteristicsDto = new ArrayList<>();
+        CharacteristicDto characteristicDto = new CharacteristicDto();
+        characteristicDto.setName("characteristic");
+        characteristicDto.setCustomer(customer);
 
-        characteristics.add(characteristic);
+        characteristicsDto.add(characteristicDto);
 
-        List<Characteristic> characteristics1 = characteristicService.save(characteristics, customer);
+        List<CharacteristicDto> characteristicsTest = characteristicService.save(characteristicsDto, customer);
 
-        for (Characteristic characteristicI : characteristics1) {
+        for (CharacteristicDto characteristicI : characteristicsTest) {
             Assert.assertNotNull(characteristicI.getId());
             Assert.assertNotNull(characteristicI.getName());
             Assert.assertEquals("characteristic", characteristicI.getName());
-            Mockito.verify(characteristicRepository, Mockito.times(1)).save(characteristicI);
         }
     }
 
     @Test
     void update() {
         Customer customer = new Customer();
-        List<Characteristic> characteristics = new ArrayList<>();
-        Characteristic characteristic = new Characteristic();
-        characteristic.setName("characteristic");
-        characteristic.setCustomer(customer);
+        List<CharacteristicDto> characteristicsDto = new ArrayList<>();
+        CharacteristicDto characteristicDto = new CharacteristicDto();
+        characteristicDto.setName("characteristic");
+        characteristicDto.setId("id");
+        characteristicDto.setCustomer(customer);
 
-        characteristics.add(characteristic);
+        characteristicsDto.add(characteristicDto);
 
-        List<Characteristic> characteristics1 = characteristicService.save(characteristics, customer);
-
-        List<Characteristic> characteristicsUpdate = new ArrayList<>();
-        Characteristic characteristicUpdate = new Characteristic();
+        List<CharacteristicDto> characteristicsUpdate = new ArrayList<>();
+        CharacteristicDto characteristicUpdate = new CharacteristicDto();
         characteristicUpdate.setName("new characteristic");
         characteristicsUpdate.add(characteristicUpdate);
-        characteristics1.get(0).setName(characteristicsUpdate.get(0).getName());
+        characteristicsDto.get(0).setName(characteristicsUpdate.get(0).getName());
 
-        List<Characteristic> characteristics2 = characteristicService.update(characteristics1);
+        List<CharacteristicDto> characteristics2 = characteristicService.update(characteristicsDto);
 
-        for (Characteristic characteristicI : characteristics2) {
+        for (CharacteristicDto characteristicI : characteristics2) {
             Assert.assertNotNull(characteristicI.getId());
             Assert.assertNotNull(characteristicI.getName());
             Assert.assertEquals("new characteristic", characteristicI.getName());
-            Mockito.verify(characteristicRepository, Mockito.times(2)).save(characteristicI);
         }
 
     }
