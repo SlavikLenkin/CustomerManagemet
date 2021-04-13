@@ -14,8 +14,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.when;
-
 @RunWith(MockitoJUnitRunner.class)
 @SpringBootTest
 class AccountServiceTest {
@@ -24,7 +22,6 @@ class AccountServiceTest {
     AccountRepository accountRepository;
     @Autowired
     private AccountService accountService;
-
 
 
     @Test

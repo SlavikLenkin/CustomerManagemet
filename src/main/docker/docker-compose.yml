@@ -9,16 +9,16 @@ services:
     volumes:
       - ./pg_data:/var/lib/postgresql/data/pgdata
     environment:
-       POSTGRES_USER: postgres
-       POSTGRES_PASSWORD: 1234
-       POSTGRES_DB: CustomerManagamentNormalization
-       PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: CustomerManagamentNormalization
+      PGDATA: /var/lib/postgresql/data/pgdata
     restart: always
   app:
     build: .
     container_name: application
     ports:
-    - 8080:8080
+      - 8080:8080
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/CustomerManagamentNormalization
       - SPRING_DATASOURCE_USERNAME=postgres
