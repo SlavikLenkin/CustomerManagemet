@@ -2,6 +2,7 @@ package com.mycompany.repository;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.vladmihalcea.hibernate.type.array.StringArrayType;
+import lombok.Data;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ import java.util.List;
         name = "string-array",
         typeClass = StringArrayType.class
 )
+@Data
 public class Customer implements Serializable {
 
     @Column(name = "href")
@@ -59,118 +61,6 @@ public class Customer implements Serializable {
 
     @OneToMany(mappedBy = "customer")
     private List<ContactMedium> contactMediumList;
-
-    public List<ContactMedium> getContactMediumList() {
-        return contactMediumList;
-    }
-
-    public void setContactMediumList(List<ContactMedium> contactMediumList) {
-        this.contactMediumList = contactMediumList;
-    }
-
-    public EngagedParty getEngagedParty() {
-        return engagedParty;
-    }
-
-    public void setEngagedParty(EngagedParty engagedParty) {
-        this.engagedParty = engagedParty;
-    }
-
-    public List<RelatedParty> getRelatedParties() {
-        return relatedParties;
-    }
-
-    public void setRelatedParties(List<RelatedParty> relatedParties) {
-        this.relatedParties = relatedParties;
-    }
-
-    public List<PaymentMethod> getPaymentMethods() {
-        return paymentMethods;
-    }
-
-    public void setPaymentMethods(List<PaymentMethod> paymentMethods) {
-        this.paymentMethods = paymentMethods;
-    }
-
-    public List<CreditProfile> getCreditProfiles() {
-        return creditProfiles;
-    }
-
-    public void setCreditProfiles(List<CreditProfile> creditProfiles) {
-        this.creditProfiles = creditProfiles;
-    }
-
-    public List<Characteristic> getCharacteristics() {
-        return characteristics;
-    }
-
-    public void setCharacteristics(List<Characteristic> characteristics) {
-        this.characteristics = characteristics;
-    }
-
-    public List<Agreement> getAgreements() {
-        return agreements;
-    }
-
-    public void setAgreements(List<Agreement> agreements) {
-        this.agreements = agreements;
-    }
-
-    public List<Account> getAccounts() {
-        return accounts;
-    }
-
-    public void setAccounts(List<Account> accounts) {
-        this.accounts = accounts;
-    }
-
-    public String getHref() {
-        return href;
-    }
-
-    public void setHref(String href) {
-        this.href = href;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getStatusReason() {
-        return statusReason;
-    }
-
-    public void setStatusReason(String statusReason) {
-        this.statusReason = statusReason;
-    }
-
-    public ValidFor getValidFor() {
-        return validFor;
-    }
-
-    public void setValidFor(ValidFor validFor) {
-        this.validFor = validFor;
-    }
 
     @Override
     public String toString() {

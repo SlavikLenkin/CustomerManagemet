@@ -33,49 +33,6 @@ public class CreditProfile implements Serializable {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    public CreditProfile() {
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public Date getCreditProfileDate() {
-        return creditProfileDate;
-    }
-
-    public void setCreditProfileDate(Date creditProfileDate) {
-        this.creditProfileDate = creditProfileDate;
-    }
-
-    public int getCreditRiskRating() {
-        return creditRiskRating;
-    }
-
-    public void setCreditRiskRating(int creditRiskRating) {
-        this.creditRiskRating = creditRiskRating;
-    }
-
-    public int getCreditScore() {
-        return creditScore;
-    }
-
-    public void setCreditScore(int creditScore) {
-        this.creditScore = creditScore;
-    }
-
-    public ValidFor getValidFor() {
-        return validFor;
-    }
-
-    public void setValidFor(ValidFor validFor) {
-        this.validFor = validFor;
-    }
-
     @Override
     public String toString() {
         return "CreditProfile{" +
