@@ -31,7 +31,6 @@ class RelatedPartyServiceTest {
         RelatedPartyDto relatedPartyDto = new RelatedPartyDto();
         relatedPartyDto.setName("relatedPartyDto");
         relatedPartyDtoList.add(relatedPartyDto);
-
         List<RelatedPartyDto> relatedPartyDtoListTest = relatedPartyService.save(relatedPartyDtoList, customer);
 
         for (RelatedPartyDto relatedPartyI : relatedPartyDtoListTest) {
