@@ -1,15 +1,17 @@
 package com.mycompany.service;
 
 import com.mycompany.model.AgreementDto;
+import com.mycompany.repository.Agreement;
 import com.mycompany.repository.AgreementRepository;
 import com.mycompany.repository.Customer;
-import org.junit.Assert;
+import com.mycompany.transfomer.AgreementTransformer;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,58 +20,48 @@ import java.util.List;
 @SpringBootTest
 class AgreementServiceTest {
 
-    @MockBean
+    @Mock
     AgreementRepository agreementRepository;
 
-    @Autowired
+    @Mock
+    AgreementTransformer agreementTransformer;
+
+    @InjectMocks
     private AgreementService agreementService;
 
     @Test
     void save() {
         Customer customer = new Customer();
+        Agreement agreement = new Agreement();
         List<AgreementDto> agreementsDto = new ArrayList<>();
         AgreementDto agreementDto = new AgreementDto();
-        agreementDto.setName("agreement");
-        agreementDto.setCustomer(customer);
 
         agreementsDto.add(agreementDto);
 
-        List<AgreementDto> agreementsDtoTest = agreementService.save(agreementsDto, customer);
+        Mockito.when(agreementTransformer.transform(agreementDto)).thenReturn(agreement);
+        Mockito.when(agreementTransformer.transform(agreement)).thenReturn(agreementDto);
+        Mockito.when(agreementRepository.save(agreement)).thenReturn(agreement);
 
-        for (AgreementDto agreementI : agreementsDtoTest) {
-            Assert.assertNotNull(agreementI.getId());
-            Assert.assertNotNull(agreementI.getHref());
-            Assert.assertNotNull(agreementI.getName());
-            Assert.assertEquals("agreement", agreementI.getName());
-        }
+        agreementService.save(agreementsDto, customer);
 
+        Mockito.verify(agreementTransformer).transform(agreementDto);
+        Mockito.verify(agreementTransformer).transform(agreement);
+        Mockito.verify(agreementRepository).save(agreement);
     }
 
     @Test
     void update() {
-        Customer customer = new Customer();
+        Agreement agreement = new Agreement();
         List<AgreementDto> agreementsDto = new ArrayList<>();
         AgreementDto agreementDto = new AgreementDto();
-        agreementDto.setName("agreement");
-        agreementDto.setId("id");
-        agreementDto.setHref("href");
-        agreementDto.setCustomer(customer);
         agreementsDto.add(agreementDto);
 
-        List<AgreementDto> agreementsUpdate = new ArrayList<>();
-        AgreementDto agreementUpdate = new AgreementDto();
-        agreementUpdate.setName("new agreement");
-        agreementsUpdate.add(agreementUpdate);
-        agreementsDto.get(0).setName(agreementsUpdate.get(0).getName());
+        Mockito.when(agreementTransformer.transform(agreementDto)).thenReturn(agreement);
+        Mockito.when(agreementRepository.save(agreement)).thenReturn(agreement);
 
-        List<AgreementDto> agreementsTest = agreementService.update(agreementsDto);
+        agreementService.update(agreementsDto);
 
-        for (AgreementDto agreementI : agreementsTest) {
-            Assert.assertNotNull(agreementI.getId());
-            Assert.assertNotNull(agreementI.getHref());
-            Assert.assertNotNull(agreementI.getName());
-            Assert.assertEquals("new agreement", agreementI.getName());
-        }
-
+        Mockito.verify(agreementTransformer).transform(agreementDto);
+        Mockito.verify(agreementRepository).save(agreement);
     }
 }

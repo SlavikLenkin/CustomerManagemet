@@ -2,14 +2,16 @@ package com.mycompany.service;
 
 import com.mycompany.model.PaymentMethodDto;
 import com.mycompany.repository.Customer;
+import com.mycompany.repository.PaymentMethod;
 import com.mycompany.repository.PaymentMethodRepository;
-import org.junit.Assert;
+import com.mycompany.transfomer.PaymentMethodTransformer;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,58 +20,48 @@ import java.util.List;
 @SpringBootTest
 class PaymentMethodServiceTest {
 
-    @MockBean
+    @Mock
     PaymentMethodRepository paymentMethodRepository;
 
-    @Autowired
+    @Mock
+    PaymentMethodTransformer paymentMethodTransformer;
+
+    @InjectMocks
     private PaymentMethodService paymentMethodService;
 
     @Test
     void save() {
-
         Customer customer = new Customer();
+        PaymentMethod paymentMethod = new PaymentMethod();
         List<PaymentMethodDto> paymentMethodsDto = new ArrayList<>();
         PaymentMethodDto paymentMethodDto = new PaymentMethodDto();
-        paymentMethodDto.setName("paymentMethodDto");
         paymentMethodsDto.add(paymentMethodDto);
-        paymentMethodDto.setCustomer(customer);
 
-        List<PaymentMethodDto> paymentMethodsTest = paymentMethodService.save(paymentMethodsDto, customer);
+        Mockito.when(paymentMethodTransformer.transform(paymentMethodDto)).thenReturn(paymentMethod);
+        Mockito.when(paymentMethodTransformer.transform(paymentMethod)).thenReturn(paymentMethodDto);
+        Mockito.when(paymentMethodRepository.save(paymentMethod)).thenReturn(paymentMethod);
 
-        for (PaymentMethodDto paymentMethodI : paymentMethodsTest) {
-            Assert.assertNotNull(paymentMethodI.getId());
-            Assert.assertNotNull(paymentMethodI.getCustomer());
-            Assert.assertEquals("paymentMethodDto", paymentMethodI.getName());
-        }
+        paymentMethodService.save(paymentMethodsDto, customer);
 
+        Mockito.verify(paymentMethodTransformer).transform(paymentMethodDto);
+        Mockito.verify(paymentMethodTransformer).transform(paymentMethod);
+        Mockito.verify(paymentMethodRepository).save(paymentMethod);
     }
 
     @Test
     void update() {
-        Customer customer = new Customer();
+        PaymentMethod paymentMethod = new PaymentMethod();
         List<PaymentMethodDto> paymentMethodsDto = new ArrayList<>();
         PaymentMethodDto paymentMethodDto = new PaymentMethodDto();
-        paymentMethodDto.setName("paymentMethodDto");
         paymentMethodsDto.add(paymentMethodDto);
-        paymentMethodDto.setCustomer(customer);
-        paymentMethodDto.setId("id");
-        paymentMethodDto.setHref("href");
 
-        List<PaymentMethodDto> paymentMethodsUpdate = new ArrayList<>();
-        PaymentMethodDto paymentMethodUpdate = new PaymentMethodDto();
-        paymentMethodUpdate.setName("new paymentMethodDto");
+        Mockito.when(paymentMethodTransformer.transform(paymentMethodDto)).thenReturn(paymentMethod);
+        Mockito.when(paymentMethodRepository.save(paymentMethod)).thenReturn(paymentMethod);
 
-        paymentMethodsUpdate.add(paymentMethodUpdate);
+        paymentMethodService.update(paymentMethodsDto);
 
-        paymentMethodsDto.get(0).setName(paymentMethodsUpdate.get(0).getName());
-
-        List<PaymentMethodDto> paymentMethodsTest = paymentMethodService.update(paymentMethodsDto);
-
-        for (PaymentMethodDto paymentMethodI : paymentMethodsTest) {
-            Assert.assertNotNull(paymentMethodI.getId());
-            Assert.assertNotNull(paymentMethodI.getCustomer());
-            Assert.assertEquals("new paymentMethodDto", paymentMethodI.getName());
-        }
+        Mockito.verify(paymentMethodTransformer).transform(paymentMethodDto);
+        Mockito.verify(paymentMethodRepository).save(paymentMethod);
     }
 }
 

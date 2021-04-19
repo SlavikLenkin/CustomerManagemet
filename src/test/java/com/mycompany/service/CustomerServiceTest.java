@@ -1,38 +1,84 @@
 package com.mycompany.service;
 
-import com.mycompany.model.CustomerDto;
+import com.mycompany.model.*;
+import com.mycompany.repository.Customer;
 import com.mycompany.repository.CustomerRepository;
-import org.junit.Assert;
+import com.mycompany.transfomer.CustomerTransformer;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RunWith(MockitoJUnitRunner.class)
 @SpringBootTest
 class CustomerServiceTest {
 
-    @Autowired
-    private CustomerService customerService;
-
-    @MockBean
+    @Mock
     CustomerRepository customerRepository;
+
+    @Mock
+    CustomerTransformer customerTransformer;
+
+    @Mock
+    EngagedPartyService engagedPartyService;
+
+    @Mock
+    AccountService accountService;
+
+    @Mock
+    AgreementService agreementService;
+
+    @Mock
+    CharacteristicService characteristicService;
+
+    @Mock
+    CreditProfileService creditProfileService;
+
+    @Mock
+    PaymentMethodService paymentMethodService;
+
+    @Mock
+    RelatedPartyService relatedPartyService;
+
+    @Mock
+    ContactMediumService contactMediumService;
+
+    @InjectMocks
+    CustomerService customerService;
 
     @Test
     void save() {
+        Customer customer = new Customer();
+        EngagedPartyDto engagedPartyDto = new EngagedPartyDto();
+        List<AccountDto> accountDto = new ArrayList<>();
+        List<AgreementDto> agreementDtoList = new ArrayList<>();
+        List<CharacteristicDto> characteristicDtoList = new ArrayList<>();
+        List<CreditProfileDto> creditProfileDtoList = new ArrayList<>();
+        List<PaymentMethodDto> paymentMethodDtoList = new ArrayList<>();
+        List<RelatedPartyDto> relatedPartyDtoList = new ArrayList<>();
+        List<ContactMediumDto> contactMediumDtoList = new ArrayList<>();
         CustomerDto customerDto = new CustomerDto();
-        customerDto.setName("customerDto");
 
-        CustomerDto customerTest = customerService.save(customerDto);
+        Mockito.when(customerTransformer.transform(customerDto)).thenReturn(customer);
+        Mockito.when(customerRepository.save(customer)).thenReturn(customer);
+        Mockito.when(engagedPartyService.save(engagedPartyDto, customer)).thenReturn(engagedPartyDto);
+        Mockito.when(accountService.save(accountDto, customer)).thenReturn(accountDto);
+        Mockito.when(agreementService.save(agreementDtoList, customer)).thenReturn(agreementDtoList);
+        Mockito.when(characteristicService.save(characteristicDtoList, customer)).thenReturn(characteristicDtoList);
+        Mockito.when(creditProfileService.save(creditProfileDtoList, customer)).thenReturn(creditProfileDtoList);
+        Mockito.when(paymentMethodService.save(paymentMethodDtoList, customer)).thenReturn(paymentMethodDtoList);
+        Mockito.when(relatedPartyService.save(relatedPartyDtoList, customer)).thenReturn(relatedPartyDtoList);
+        Mockito.when(contactMediumService.save(contactMediumDtoList, customer)).thenReturn(contactMediumDtoList);
 
-        Assert.assertNotNull(customerTest.getId());
-        Assert.assertNotNull(customerTest.getHref());
-        Assert.assertNotNull(customerTest.getName());
-        Assert.assertNull(customerTest.getStatus());
-        Assert.assertNull(customerTest.getStatusReason());
-        Assert.assertNull(customerTest.getValidFor());
-        Assert.assertEquals(customerDto, customerTest);
+        customerService.save(customerDto);
+
+        Mockito.verify(customerTransformer).transform(customerDto);
+        Mockito.verify(customerRepository).save(customer);
     }
 }

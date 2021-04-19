@@ -1,15 +1,17 @@
 package com.mycompany.service;
 
 import com.mycompany.model.CharacteristicDto;
+import com.mycompany.repository.Characteristic;
 import com.mycompany.repository.CharacteristicRepository;
 import com.mycompany.repository.Customer;
-import org.junit.Assert;
+import com.mycompany.transfomer.CharacteristicTransformer;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,56 +20,47 @@ import java.util.List;
 @SpringBootTest
 class CharacteristicServiceTest {
 
-    @MockBean
+    @Mock
     CharacteristicRepository characteristicRepository;
 
-    @Autowired
+    @Mock
+    CharacteristicTransformer characteristicTransformer;
+
+    @InjectMocks
     private CharacteristicService characteristicService;
 
     @Test
     void save() {
         Customer customer = new Customer();
+        Characteristic characteristic = new Characteristic();
         List<CharacteristicDto> characteristicsDto = new ArrayList<>();
         CharacteristicDto characteristicDto = new CharacteristicDto();
-        characteristicDto.setName("characteristic");
-        characteristicDto.setCustomer(customer);
-
         characteristicsDto.add(characteristicDto);
 
-        List<CharacteristicDto> characteristicsTest = characteristicService.save(characteristicsDto, customer);
+        Mockito.when(characteristicTransformer.transform(characteristicDto)).thenReturn(characteristic);
+        Mockito.when(characteristicTransformer.transform(characteristic)).thenReturn(characteristicDto);
+        Mockito.when(characteristicRepository.save(characteristic)).thenReturn(characteristic);
 
-        for (CharacteristicDto characteristicI : characteristicsTest) {
-            Assert.assertNotNull(characteristicI.getId());
-            Assert.assertNotNull(characteristicI.getName());
-            Assert.assertEquals("characteristic", characteristicI.getName());
-        }
+        characteristicService.save(characteristicsDto, customer);
+
+        Mockito.verify(characteristicTransformer).transform(characteristicDto);
+        Mockito.verify(characteristicTransformer).transform(characteristic);
+        Mockito.verify(characteristicRepository).save(characteristic);
     }
 
     @Test
     void update() {
-        Customer customer = new Customer();
+        Characteristic characteristic = new Characteristic();
         List<CharacteristicDto> characteristicsDto = new ArrayList<>();
         CharacteristicDto characteristicDto = new CharacteristicDto();
-        characteristicDto.setName("characteristic");
-        characteristicDto.setId("id");
-        characteristicDto.setCustomer(customer);
-
         characteristicsDto.add(characteristicDto);
 
-        List<CharacteristicDto> characteristicsUpdate = new ArrayList<>();
-        CharacteristicDto characteristicUpdate = new CharacteristicDto();
-        characteristicUpdate.setName("new characteristic");
-        characteristicsUpdate.add(characteristicUpdate);
-        characteristicsDto.get(0).setName(characteristicsUpdate.get(0).getName());
+        Mockito.when(characteristicTransformer.transform(characteristicDto)).thenReturn(characteristic);
+        Mockito.when(characteristicRepository.save(characteristic)).thenReturn(characteristic);
 
-        List<CharacteristicDto> characteristics2 = characteristicService.update(characteristicsDto);
+        characteristicService.update(characteristicsDto);
 
-        for (CharacteristicDto characteristicI : characteristics2) {
-            Assert.assertNotNull(characteristicI.getId());
-            Assert.assertNotNull(characteristicI.getName());
-            Assert.assertEquals("new characteristic", characteristicI.getName());
-        }
-
+        Mockito.verify(characteristicTransformer).transform(characteristicDto);
+        Mockito.verify(characteristicRepository).save(characteristic);
     }
-
 }

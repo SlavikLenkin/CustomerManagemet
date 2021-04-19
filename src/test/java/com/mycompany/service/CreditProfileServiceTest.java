@@ -1,15 +1,17 @@
 package com.mycompany.service;
 
 import com.mycompany.model.CreditProfileDto;
+import com.mycompany.repository.CreditProfile;
 import com.mycompany.repository.CreditProfileRepository;
 import com.mycompany.repository.Customer;
-import org.junit.Assert;
+import com.mycompany.transfomer.CreditProfileTransformer;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,56 +20,48 @@ import java.util.List;
 @SpringBootTest
 class CreditProfileServiceTest {
 
-    @MockBean
+    @Mock
     CreditProfileRepository creditProfileRepository;
 
-    @Autowired
+    @Mock
+    CreditProfileTransformer creditProfileTransformer;
+
+    @InjectMocks
     private CreditProfileService creditProfileService;
 
     @Test
     void save() {
         Customer customer = new Customer();
+        CreditProfile creditProfile = new CreditProfile();
         List<CreditProfileDto> creditProfilesDto = new ArrayList<>();
         CreditProfileDto creditProfileDto = new CreditProfileDto();
-        creditProfileDto.setCreditScore(6);
-
         creditProfilesDto.add(creditProfileDto);
 
-        List<CreditProfileDto> creditProfilesTest = creditProfileService.save(creditProfilesDto, customer);
+        Mockito.when(creditProfileTransformer.transform(creditProfileDto)).thenReturn(creditProfile);
+        Mockito.when(creditProfileTransformer.transform(creditProfile)).thenReturn(creditProfileDto);
+        Mockito.when(creditProfileRepository.save(creditProfile)).thenReturn(creditProfile);
 
-        for (CreditProfileDto creditProfileI : creditProfilesTest) {
-            Assert.assertNotNull(creditProfileI.getId());
-            Assert.assertNotNull(creditProfileI.getCustomer());
-            Assert.assertNotNull(creditProfileI.getCreditScore());
-            Assert.assertEquals(6, creditProfileDto.getCreditScore());
-        }
+        creditProfileService.save(creditProfilesDto, customer);
+
+        Mockito.verify(creditProfileTransformer).transform(creditProfileDto);
+        Mockito.verify(creditProfileTransformer).transform(creditProfile);
+        Mockito.verify(creditProfileRepository).save(creditProfile);
 
     }
 
     @Test
     void update() {
-        Customer customer = new Customer();
+        CreditProfile creditProfile = new CreditProfile();
         List<CreditProfileDto> creditProfilesDto = new ArrayList<>();
         CreditProfileDto creditProfileDto = new CreditProfileDto();
-        creditProfileDto.setCreditScore(6);
-        creditProfileDto.setId("id");
-        creditProfileDto.setCustomer(customer);
-
         creditProfilesDto.add(creditProfileDto);
 
-        List<CreditProfileDto> creditProfilesUpdate = new ArrayList<>();
-        CreditProfileDto creditProfileUpdate = new CreditProfileDto();
-        creditProfileUpdate.setCreditScore(7);
-        creditProfilesUpdate.add(creditProfileUpdate);
-        creditProfilesDto.get(0).setCreditScore(creditProfilesUpdate.get(0).getCreditScore());
+        Mockito.when(creditProfileTransformer.transform(creditProfileDto)).thenReturn(creditProfile);
+        Mockito.when(creditProfileRepository.save(creditProfile)).thenReturn(creditProfile);
 
-        List<CreditProfileDto> creditProfilesTest = creditProfileService.update(creditProfilesDto);
+        creditProfileService.update(creditProfilesDto);
 
-        for (CreditProfileDto creditProfileI : creditProfilesTest) {
-            Assert.assertNotNull(creditProfileI.getId());
-            Assert.assertNotNull(creditProfileI.getCustomer());
-            Assert.assertNotNull(creditProfileI.getCreditScore());
-            Assert.assertEquals(7, creditProfileDto.getCreditScore());
-        }
+        Mockito.verify(creditProfileTransformer).transform(creditProfileDto);
+        Mockito.verify(creditProfileRepository).save(creditProfile);
     }
 }

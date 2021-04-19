@@ -54,7 +54,6 @@ public class ContactMediumService {
             contactMediumDto.setMediumCharacteristic(mediumCharacteristicService
                     .save(mediumCharacteristic, contactMedium));
 
-
             contactMediumDto.setContactMedium(contactMedium);
         }
         return contactsMediumDto;

@@ -1,15 +1,17 @@
 package com.mycompany.service;
 
 import com.mycompany.model.ContactMediumDto;
+import com.mycompany.repository.ContactMedium;
 import com.mycompany.repository.ContactMediumRepository;
 import com.mycompany.repository.Customer;
-import org.junit.Assert;
+import com.mycompany.transfomer.ContactMediumTransformer;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,54 +20,47 @@ import java.util.List;
 @SpringBootTest
 class ContactMediumServiceTest {
 
-    @MockBean
+    @Mock
     ContactMediumRepository contactMediumRepository;
-    @MockBean
+    @Mock
+    ContactMediumTransformer contactMediumTransformer;
+    @Mock
     MediumCharacteristicService mediumCharacteristicService;
 
-    @Autowired
+    @InjectMocks
     private ContactMediumService contactMediumService;
-
 
     @Test
     void save() {
         Customer customer = new Customer();
+        ContactMedium contactMedium = new ContactMedium();
         ContactMediumDto contactMediumDto = new ContactMediumDto();
-        contactMediumDto.setMediumType("type");
-        contactMediumDto.setCustomer(customer);
         List<ContactMediumDto> contactMediumDtoList = new ArrayList<>();
         contactMediumDtoList.add(contactMediumDto);
 
-        List<ContactMediumDto> contactMediumTest = contactMediumService.save(contactMediumDtoList, customer);
+        Mockito.when(contactMediumTransformer.transform(contactMediumDto)).thenReturn(contactMedium);
+        Mockito.when(contactMediumRepository.save(contactMedium)).thenReturn(contactMedium);
 
-        Assert.assertNotNull(contactMediumTest.get(0).getId());
-        Assert.assertNotNull(contactMediumTest.get(0).getCustomer());
-        Assert.assertNotNull(contactMediumTest.get(0).getMediumType());
-        Assert.assertEquals("type", contactMediumTest.get(0).getMediumType());
+        contactMediumService.save(contactMediumDtoList, customer);
+
+        Mockito.verify(contactMediumTransformer).transform(contactMediumDto);
+        Mockito.verify(contactMediumRepository).save(contactMedium);
     }
 
     @Test
     void update() {
         Customer customer = new Customer();
+        ContactMedium contactMedium = new ContactMedium();
         ContactMediumDto contactMediumDto = new ContactMediumDto();
-        contactMediumDto.setId("id");
-        contactMediumDto.setMediumType("type");
-        contactMediumDto.setCustomer(customer);
         List<ContactMediumDto> contactMediumDtoList = new ArrayList<>();
         contactMediumDtoList.add(contactMediumDto);
 
-        ContactMediumDto contactMediumUpdate = new ContactMediumDto();
-        contactMediumUpdate.setMediumType("new type");
-        contactMediumDto.setMediumType(contactMediumUpdate.getMediumType());
-        List<ContactMediumDto> contactMediumDtoListUpdate = new ArrayList<>();
-        contactMediumDtoListUpdate.add(contactMediumUpdate);
-        contactMediumDtoList.get(0).setMediumType(contactMediumDtoListUpdate.get(0).getMediumType());
+        Mockito.when(contactMediumTransformer.transform(contactMediumDto)).thenReturn(contactMedium);
+        Mockito.when(contactMediumRepository.save(contactMedium)).thenReturn(contactMedium);
 
-        List<ContactMediumDto> contactMediumTest = contactMediumService.update(contactMediumDtoList, customer);
+        contactMediumService.update(contactMediumDtoList, customer);
 
-        Assert.assertNotNull(contactMediumTest.get(0).getId());
-        Assert.assertNotNull(contactMediumTest.get(0).getCustomer());
-        Assert.assertNotNull(contactMediumTest.get(0).getMediumType());
-        Assert.assertEquals("new type", contactMediumTest.get(0).getMediumType());
+        Mockito.verify(contactMediumTransformer).transform(contactMediumDto);
+        Mockito.verify(contactMediumRepository).save(contactMedium);
     }
 }
