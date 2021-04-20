@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ContactMediumTransformer {
@@ -22,10 +23,24 @@ public class ContactMediumTransformer {
         }
         ContactMedium target = new ContactMedium();
         target.setId(contactMediumDto.getId());
-        target.setMediumType(contactMediumDto.getMediumType());
+        target.setMediumType(contactMediumDto.getMediumType().orElse(null));
         target.setPreferred(contactMediumDto.isPreferred());
         target.setValidFor(contactMediumDto.getValidFor());
         return target;
+    }
+
+    public ContactMediumDto transform(ContactMedium contactMedium) {
+        if (contactMedium == null) {
+            return null;
+        }
+        ContactMediumDto contactMediumDto = new ContactMediumDto();
+        contactMediumDto.setId(contactMedium.getId());
+        contactMediumDto.setPreferred(contactMedium.isPreferred());
+        contactMediumDto.setMediumType(Optional.ofNullable(contactMedium.getMediumType()));
+        contactMediumDto.setValidFor(contactMedium.getValidFor());
+        contactMediumDto.setMediumCharacteristic(mediumCharacteristicTransformer
+                .transform(contactMedium.getMediumCharacteristic()));
+        return contactMediumDto;
     }
 
     public List<ContactMediumDto> transform(List<ContactMedium> contactMediumList) {
@@ -34,11 +49,7 @@ public class ContactMediumTransformer {
         }
         List<ContactMediumDto> contactMediumDtoList = new ArrayList<>();
         for (ContactMedium contactMedium : contactMediumList) {
-            ContactMediumDto contactMediumDto = new ContactMediumDto();
-            contactMediumDto.setContactMedium(contactMedium);
-            contactMediumDto.setMediumCharacteristic(mediumCharacteristicTransformer
-                    .transform(contactMedium.getMediumCharacteristic()));
-            contactMediumDtoList.add(contactMediumDto);
+            contactMediumDtoList.add(transform(contactMedium));
         }
         return contactMediumDtoList;
     }

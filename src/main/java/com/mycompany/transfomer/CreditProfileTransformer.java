@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CreditProfileTransformer {
@@ -16,10 +17,10 @@ public class CreditProfileTransformer {
         }
         CreditProfile creditProfile = new CreditProfile();
         creditProfile.setId(creditProfileDto.getId());
-        creditProfile.setCreditProfileDate(creditProfileDto.getCreditProfileDate());
-        creditProfile.setCreditScore(creditProfileDto.getCreditScore());
+        creditProfile.setCreditProfileDate(creditProfileDto.getCreditProfileDate().orElse(null));
+        creditProfile.setCreditScore(creditProfileDto.getCreditScore().orElse(null));
         creditProfile.setValidFor(creditProfileDto.getValidFor());
-        creditProfile.setCreditRiskRating(creditProfileDto.getCreditRiskRating());
+        creditProfile.setCreditRiskRating(creditProfileDto.getCreditRiskRating().orElse(null));
         creditProfile.setCustomer(creditProfileDto.getCustomer());
         return creditProfile;
     }
@@ -41,10 +42,10 @@ public class CreditProfileTransformer {
         }
         CreditProfileDto creditProfileDto = new CreditProfileDto();
         creditProfileDto.setId(creditProfile.getId());
-        creditProfileDto.setCreditProfileDate(creditProfile.getCreditProfileDate());
-        creditProfileDto.setCreditScore(creditProfile.getCreditScore());
+        creditProfileDto.setCreditProfileDate(Optional.ofNullable(creditProfile.getCreditProfileDate()));
+        creditProfileDto.setCreditScore(Optional.of(creditProfile.getCreditScore()));
         creditProfileDto.setValidFor(creditProfile.getValidFor());
-        creditProfileDto.setCreditRiskRating(creditProfile.getCreditRiskRating());
+        creditProfileDto.setCreditRiskRating(Optional.of(creditProfile.getCreditRiskRating()));
         creditProfileDto.setCustomer(creditProfile.getCustomer());
         return creditProfileDto;
     }

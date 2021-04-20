@@ -10,6 +10,7 @@ import lombok.Data;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Data
@@ -19,7 +20,7 @@ public class ContactMediumDto {
 
     private boolean preferred;
 
-    private String mediumType;
+    private Optional<String> mediumType;
 
     private ValidFor validFor;
 
@@ -37,7 +38,7 @@ public class ContactMediumDto {
     public void setContactMedium(ContactMedium contactMedium) {
         this.id = contactMedium.getId();
         this.preferred = contactMedium.isPreferred();
-        this.mediumType = contactMedium.getMediumType();
+        this.mediumType = Optional.ofNullable(contactMedium.getMediumType());
         this.validFor = contactMedium.getValidFor();
     }
 }

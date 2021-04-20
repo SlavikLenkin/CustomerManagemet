@@ -6,6 +6,7 @@ import com.mycompany.repository.Customer;
 import lombok.Data;
 
 import javax.persistence.Transient;
+import java.util.Optional;
 
 @Data
 public class EngagedPartyDto {
@@ -14,7 +15,7 @@ public class EngagedPartyDto {
     private final String type = "Organization";
     private String href;
     private String id;
-    private String name;
+    private Optional<String> name;
     @JsonIgnore
     private Customer customer;
 }

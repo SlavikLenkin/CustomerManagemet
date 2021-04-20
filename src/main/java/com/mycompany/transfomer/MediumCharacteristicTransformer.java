@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MediumCharacteristicTransformer {
@@ -17,17 +18,17 @@ public class MediumCharacteristicTransformer {
         MediumCharacteristic mediumCharacteristic = new MediumCharacteristic();
         mediumCharacteristic.setId(mediumCharacteristicDto.getId());
         mediumCharacteristic.setContactMedium(mediumCharacteristicDto.getContactMedium());
-        mediumCharacteristic.setCity(mediumCharacteristicDto.getCity());
-        mediumCharacteristic.setStreet2(mediumCharacteristicDto.getStreet2());
-        mediumCharacteristic.setStreet1(mediumCharacteristicDto.getStreet1());
-        mediumCharacteristic.setStateOrProvince(mediumCharacteristicDto.getStateOrProvince());
-        mediumCharacteristic.setSocialNetworkId(mediumCharacteristicDto.getSocialNetworkId());
-        mediumCharacteristic.setPostCode(mediumCharacteristicDto.getPostCode());
-        mediumCharacteristic.setPhoneNumber(mediumCharacteristicDto.getPhoneNumber());
-        mediumCharacteristic.setFaxNumber(mediumCharacteristicDto.getFaxNumber());
-        mediumCharacteristic.setCountry(mediumCharacteristicDto.getCountry());
-        mediumCharacteristic.setEmailAddress(mediumCharacteristicDto.getEmailAddress());
-        mediumCharacteristic.setContactType(mediumCharacteristicDto.getContactType());
+        mediumCharacteristic.setCity(mediumCharacteristicDto.getCity().orElse(null));
+        mediumCharacteristic.setStreet2(mediumCharacteristicDto.getStreet2().orElse(null));
+        mediumCharacteristic.setStreet1(mediumCharacteristicDto.getStreet1().orElse(null));
+        mediumCharacteristic.setStateOrProvince(mediumCharacteristicDto.getStateOrProvince().orElse(null));
+        mediumCharacteristic.setSocialNetworkId(mediumCharacteristicDto.getSocialNetworkId().orElse(null));
+        mediumCharacteristic.setPostCode(mediumCharacteristicDto.getPostCode().orElse(null));
+        mediumCharacteristic.setPhoneNumber(mediumCharacteristicDto.getPhoneNumber().orElse(null));
+        mediumCharacteristic.setFaxNumber(mediumCharacteristicDto.getFaxNumber().orElse(null));
+        mediumCharacteristic.setCountry(mediumCharacteristicDto.getCountry().orElse(null));
+        mediumCharacteristic.setEmailAddress(mediumCharacteristicDto.getEmailAddress().orElse(null));
+        mediumCharacteristic.setContactType(mediumCharacteristicDto.getContactType().orElse(null));
         return mediumCharacteristic;
     }
 
@@ -38,17 +39,17 @@ public class MediumCharacteristicTransformer {
         MediumCharacteristicDto mediumCharacteristicDto = new MediumCharacteristicDto();
         mediumCharacteristicDto.setId(mediumCharacteristic.getId());
         mediumCharacteristicDto.setContactMedium(mediumCharacteristic.getContactMedium());
-        mediumCharacteristicDto.setCity(mediumCharacteristic.getCity());
-        mediumCharacteristicDto.setStreet2(mediumCharacteristic.getStreet2());
-        mediumCharacteristicDto.setStreet1(mediumCharacteristic.getStreet1());
-        mediumCharacteristicDto.setStateOrProvince(mediumCharacteristic.getStateOrProvince());
-        mediumCharacteristicDto.setSocialNetworkId(mediumCharacteristic.getSocialNetworkId());
-        mediumCharacteristicDto.setPostCode(mediumCharacteristic.getPostCode());
-        mediumCharacteristicDto.setPhoneNumber(mediumCharacteristic.getPhoneNumber());
-        mediumCharacteristicDto.setFaxNumber(mediumCharacteristic.getFaxNumber());
-        mediumCharacteristicDto.setCountry(mediumCharacteristic.getCountry());
-        mediumCharacteristicDto.setEmailAddress(mediumCharacteristic.getEmailAddress());
-        mediumCharacteristicDto.setContactType(mediumCharacteristic.getContactType());
+        mediumCharacteristicDto.setCity(Optional.ofNullable(mediumCharacteristic.getCity()));
+        mediumCharacteristicDto.setStreet2(Optional.ofNullable(mediumCharacteristic.getStreet2()));
+        mediumCharacteristicDto.setStreet1(Optional.ofNullable(mediumCharacteristic.getStreet1()));
+        mediumCharacteristicDto.setStateOrProvince(Optional.ofNullable(mediumCharacteristic.getStateOrProvince()));
+        mediumCharacteristicDto.setSocialNetworkId(Optional.ofNullable(mediumCharacteristic.getSocialNetworkId()));
+        mediumCharacteristicDto.setPostCode(Optional.ofNullable(mediumCharacteristic.getPostCode()));
+        mediumCharacteristicDto.setPhoneNumber(Optional.ofNullable(mediumCharacteristic.getPhoneNumber()));
+        mediumCharacteristicDto.setFaxNumber(Optional.ofNullable(mediumCharacteristic.getFaxNumber()));
+        mediumCharacteristicDto.setCountry(Optional.ofNullable(mediumCharacteristic.getCountry()));
+        mediumCharacteristicDto.setEmailAddress(Optional.ofNullable(mediumCharacteristic.getEmailAddress()));
+        mediumCharacteristicDto.setContactType(Optional.ofNullable(mediumCharacteristic.getContactType()));
         return mediumCharacteristicDto;
     }
 

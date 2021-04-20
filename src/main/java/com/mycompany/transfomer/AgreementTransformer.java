@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AgreementTransformer {
@@ -16,7 +17,7 @@ public class AgreementTransformer {
         }
         Agreement agreement = new Agreement();
         agreement.setHref(agreementDto.getHref());
-        agreement.setName(agreementDto.getName());
+        agreement.setName(agreementDto.getName().orElse(null));
         agreement.setId(agreementDto.getId());
         agreement.setCustomer(agreementDto.getCustomer());
         return agreement;
@@ -39,7 +40,7 @@ public class AgreementTransformer {
         }
         AgreementDto agreementDto = new AgreementDto();
         agreementDto.setId(agreement.getId());
-        agreementDto.setName(agreement.getName());
+        agreementDto.setName(Optional.ofNullable(agreement.getName()));
         agreementDto.setHref(agreement.getHref());
         agreementDto.setCustomer(agreement.getCustomer());
         return agreementDto;

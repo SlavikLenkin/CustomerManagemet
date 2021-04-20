@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PaymentMethodTransformer {
@@ -17,7 +18,7 @@ public class PaymentMethodTransformer {
         PaymentMethod paymentMethod = new PaymentMethod();
         paymentMethod.setId(paymentMethodDto.getId());
         paymentMethod.setHref(paymentMethodDto.getHref());
-        paymentMethod.setName(paymentMethodDto.getName());
+        paymentMethod.setName(paymentMethodDto.getName().orElse(null));
         paymentMethod.setCustomer(paymentMethodDto.getCustomer());
         return paymentMethod;
     }
@@ -29,7 +30,7 @@ public class PaymentMethodTransformer {
         PaymentMethodDto paymentMethodDto = new PaymentMethodDto();
         paymentMethodDto.setId(paymentMethod.getId());
         paymentMethodDto.setHref(paymentMethod.getHref());
-        paymentMethodDto.setName(paymentMethod.getName());
+        paymentMethodDto.setName(Optional.ofNullable(paymentMethod.getName()));
         paymentMethodDto.setCustomer(paymentMethod.getCustomer());
         return paymentMethodDto;
     }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AccountTransformer {
@@ -17,8 +18,8 @@ public class AccountTransformer {
         Account account = new Account();
         account.setHref(accountDto.getHref());
         account.setId(accountDto.getId());
-        account.setName(accountDto.getName());
-        account.setDescription(accountDto.getDescription());
+        account.setName(accountDto.getName().orElse(null));
+        account.setDescription(accountDto.getDescription().orElse(null));
         account.setCustomer(accountDto.getCustomer());
         return account;
     }
@@ -41,8 +42,8 @@ public class AccountTransformer {
         AccountDto accountDto = new AccountDto();
         accountDto.setId(account.getId());
         accountDto.setHref(account.getHref());
-        accountDto.setName(account.getName());
-        accountDto.setDescription(account.getDescription());
+        accountDto.setName(Optional.ofNullable(account.getName()));
+        accountDto.setDescription(Optional.ofNullable(account.getDescription()));
         accountDto.setCustomer(account.getCustomer());
         return accountDto;
     }

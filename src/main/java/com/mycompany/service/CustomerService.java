@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -104,18 +105,19 @@ public class CustomerService {
         if (customerDto == null) {
             return null;
         }
-        Customer customerUpdate = customerTransformer.transform(customerDtoUpdate);
-        Customer customer = customerTransformer.transform(customerDto);
 
-        if (customerUpdate.getName() != null) {
+        CustomerDto customerUpdate = customerDtoUpdate;
+        CustomerDto customer = customerDto;
+
+        if (Optional.ofNullable(customerUpdate.getName()).isPresent()) {
             customer.setName(customerUpdate.getName());
         }
 
-        if (customerUpdate.getStatus() != null) {
+        if (Optional.ofNullable(customerUpdate.getStatus()).isPresent()) {
             customer.setStatus(customerUpdate.getStatus());
         }
 
-        if (customerUpdate.getStatusReason() != null) {
+        if (Optional.ofNullable(customerUpdate.getStatusReason()).isPresent()) {
             customer.setStatusReason(customerUpdate.getStatusReason());
         }
 
@@ -127,7 +129,7 @@ public class CustomerService {
         EngagedPartyDto engagedParty = customerDto.getEngagedParty();
 
         if (engagedPartyUpdate != null) {
-            if (engagedPartyUpdate.getName() != null) {
+            if (Optional.ofNullable(engagedPartyUpdate.getName()).isPresent()) {
                 engagedParty.setName(engagedPartyUpdate.getName());
             }
         }
@@ -141,10 +143,10 @@ public class CustomerService {
                 if (accountUpdate != null)
                     for (AccountDto account : accounts) {
                         if (account.getId().equals(accountUpdate.getId())) {
-                            if (accountUpdate.getName() != null) {
+                            if (Optional.ofNullable(accountUpdate.getName()).isPresent()) {
                                 account.setName(accountUpdate.getName());
                             }
-                            if (accountUpdate.getDescription() != null) {
+                            if (Optional.ofNullable(accountUpdate.getDescription()).isPresent()) {
                                 account.setDescription(accountUpdate.getDescription());
                             }
                         }
@@ -161,7 +163,7 @@ public class CustomerService {
             for (AgreementDto agreementUpdate : agreementsUpdate) {
                 for (AgreementDto agreement : agreements) {
                     if (agreement.getId().equals(agreementUpdate.getId())) {
-                        if (agreementUpdate.getName() != null) {
+                        if (Optional.ofNullable(agreementUpdate.getName()).isPresent()) {
                             agreement.setName(agreementUpdate.getName());
                         }
                     }
@@ -178,13 +180,13 @@ public class CustomerService {
             for (CharacteristicDto characteristicUpdate : characteristicsUpdate) {
                 for (CharacteristicDto characteristic : characteristics) {
                     if (characteristic.getId().equals(characteristicUpdate.getId())) {
-                        if (characteristicUpdate.getName() != null) {
+                        if (Optional.ofNullable(characteristicUpdate.getName()).isPresent()) {
                             characteristic.setName(characteristicUpdate.getName());
                         }
-                        if (characteristicUpdate.getValue() != null) {
+                        if (Optional.ofNullable(characteristicUpdate.getValue()).isPresent()) {
                             characteristic.setValue(characteristicUpdate.getValue());
                         }
-                        if (characteristicUpdate.getValueType() != null) {
+                        if (Optional.ofNullable(characteristicUpdate.getValueType()).isPresent()) {
                             characteristic.setValueType(characteristicUpdate.getValueType());
                         }
                     }
@@ -201,16 +203,16 @@ public class CustomerService {
             for (CreditProfileDto creditProfileUpdate : creditProfilesUpdate) {
                 for (CreditProfileDto creditProfile : creditProfiles) {
                     if (creditProfile.getId().equals(creditProfileUpdate.getId())) {
-                        if (creditProfileUpdate.getCreditProfileDate() != null) {
+                        if (Optional.ofNullable(creditProfileUpdate.getCreditProfileDate()).isPresent()) {
                             creditProfile.setCreditProfileDate(creditProfileUpdate.getCreditProfileDate());
                         }
-                        if (creditProfileUpdate.getCreditRiskRating() != 0) {
+                        if (Optional.ofNullable(creditProfileUpdate.getCreditRiskRating()).isPresent()) {
                             creditProfile.setCreditRiskRating(creditProfileUpdate.getCreditRiskRating());
                         }
-                        if (creditProfileUpdate.getCreditScore() != 0) {
+                        if (Optional.ofNullable(creditProfileUpdate.getCreditScore()).isPresent()) {
                             creditProfile.setCreditScore(creditProfileUpdate.getCreditScore());
                         }
-                        if (creditProfileUpdate.getValidFor() != null) {
+                        if (Optional.ofNullable(creditProfileUpdate.getValidFor()).isPresent()) {
                             creditProfile.setValidFor(creditProfileUpdate.getValidFor());
                         }
                     }
@@ -227,7 +229,7 @@ public class CustomerService {
             for (PaymentMethodDto paymentMethodUpdate : paymentMethodsUpdate) {
                 for (PaymentMethodDto paymentMethod : paymentMethods) {
                     if (paymentMethod.getId().equals(paymentMethodUpdate.getId())) {
-                        if (paymentMethodUpdate.getName() != null) {
+                        if (Optional.ofNullable(paymentMethodUpdate.getName()).isPresent()) {
                             paymentMethod.setName(paymentMethodUpdate.getName());
                         }
                     }
@@ -244,10 +246,10 @@ public class CustomerService {
             for (RelatedPartyDto relatedPartyUpdate : relatedPartiesUpdate) {
                 for (RelatedPartyDto relatedParty : relatedParties) {
                     if (relatedParty.getId().equals(relatedPartyUpdate.getId())) {
-                        if (relatedPartyUpdate.getName() != null) {
+                        if (Optional.ofNullable(relatedPartyUpdate.getName()).isPresent()) {
                             relatedParty.setName(relatedPartyUpdate.getName());
                         }
-                        if (relatedPartyUpdate.getRole() != null) {
+                        if (Optional.ofNullable(relatedPartyUpdate.getRole()).isPresent()) {
                             relatedParty.setRole(relatedPartyUpdate.getRole());
                         }
                     }
@@ -267,7 +269,7 @@ public class CustomerService {
                         if (contactMediumDtoUpdate.isPreferred() != contactMediumDto.isPreferred()) {
                             contactMediumDto.setPreferred(contactMediumDtoUpdate.isPreferred());
                         }
-                        if (contactMediumDtoUpdate.getMediumType() != null) {
+                        if (Optional.ofNullable(contactMediumDtoUpdate.getMediumType()).isPresent()) {
                             contactMediumDto.setMediumType(contactMediumDtoUpdate.getMediumType());
                         }
                         if (contactMediumDtoUpdate.getValidFor() != null) {
@@ -278,39 +280,39 @@ public class CustomerService {
                                     .getMediumCharacteristic();
                             MediumCharacteristicDto mediumCharacteristic = contactMediumDto
                                     .getMediumCharacteristic();
-                            if (mediumCharacteristicUpdate.getCity() != null) {
+                            if (Optional.ofNullable(mediumCharacteristicUpdate.getCity()).isPresent()) {
                                 mediumCharacteristic.setCity(mediumCharacteristicUpdate.getCity());
                             }
-                            if (mediumCharacteristicUpdate.getContactType() != null) {
+                            if (Optional.ofNullable(mediumCharacteristicUpdate.getContactType()).isPresent()) {
                                 mediumCharacteristic.setContactType(mediumCharacteristicUpdate.getContactType());
                             }
-                            if (mediumCharacteristicUpdate.getCountry() != null) {
+                            if (Optional.ofNullable(mediumCharacteristicUpdate.getCountry()).isPresent()) {
                                 mediumCharacteristic.setCountry(mediumCharacteristicUpdate.getCountry());
                             }
-                            if (mediumCharacteristicUpdate.getEmailAddress() != null) {
+                            if (Optional.ofNullable(mediumCharacteristicUpdate.getEmailAddress()).isPresent()) {
                                 mediumCharacteristic.setEmailAddress(mediumCharacteristicUpdate.getEmailAddress());
                             }
-                            if (mediumCharacteristicUpdate.getFaxNumber() != null) {
+                            if (Optional.ofNullable(mediumCharacteristicUpdate.getFaxNumber()).isPresent()) {
                                 mediumCharacteristic.setFaxNumber(mediumCharacteristicUpdate.getFaxNumber());
                             }
-                            if (mediumCharacteristicUpdate.getPhoneNumber() != null) {
+                            if (Optional.ofNullable(mediumCharacteristicUpdate.getPhoneNumber()).isPresent()) {
                                 mediumCharacteristic.setPhoneNumber(mediumCharacteristicUpdate.getPhoneNumber());
                             }
-                            if (mediumCharacteristicUpdate.getPostCode() != null) {
+                            if (Optional.ofNullable(mediumCharacteristicUpdate.getPostCode()).isPresent()) {
                                 mediumCharacteristic.setPostCode(mediumCharacteristicUpdate.getPostCode());
                             }
-                            if (mediumCharacteristicUpdate.getSocialNetworkId() != null) {
+                            if (Optional.ofNullable(mediumCharacteristicUpdate.getSocialNetworkId()).isPresent()) {
                                 mediumCharacteristic.setSocialNetworkId(mediumCharacteristicUpdate
                                         .getSocialNetworkId());
                             }
-                            if (mediumCharacteristicUpdate.getStateOrProvince() != null) {
+                            if (Optional.ofNullable(mediumCharacteristicUpdate.getStateOrProvince()).isPresent()) {
                                 mediumCharacteristic.setStateOrProvince(mediumCharacteristicUpdate
                                         .getStateOrProvince());
                             }
-                            if (mediumCharacteristicUpdate.getStreet1() != null) {
+                            if (Optional.ofNullable(mediumCharacteristicUpdate.getStreet1()).isPresent()) {
                                 mediumCharacteristic.setStreet1(mediumCharacteristicUpdate.getStreet1());
                             }
-                            if (mediumCharacteristicUpdate.getStreet2() != null) {
+                            if (Optional.ofNullable(mediumCharacteristicUpdate.getStreet2()).isPresent()) {
                                 mediumCharacteristic.setStreet2(mediumCharacteristicUpdate.getStreet2());
                             }
                             contactMediumDto.setMediumCharacteristic(mediumCharacteristic);
@@ -321,8 +323,8 @@ public class CustomerService {
             customerDto.setContactMediumDtoList(contactMediumService.update(contactMediumDtoList, customerTransformer
                     .transform(customerDto)));
         }
-        repository.updateCustomerById(customer);
-        customerDto.setCustomer(customer);
+        repository.updateCustomerById(customerTransformer.transform(customer));
+        customerDto.setCustomer(customerTransformer.transform(customer));
         return customerDto;
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CharacteristicTransformer {
@@ -17,9 +18,9 @@ public class CharacteristicTransformer {
         Characteristic characteristic = new Characteristic();
         characteristic.setId(characteristicDto.getId());
         characteristic.setCustomer(characteristicDto.getCustomer());
-        characteristic.setName(characteristicDto.getName());
-        characteristic.setValueType(characteristicDto.getValueType());
-        characteristic.setValue(characteristicDto.getValue());
+        characteristic.setName(characteristicDto.getName().orElse(null));
+        characteristic.setValueType(characteristicDto.getValueType().orElse(null));
+        characteristic.setValue(characteristicDto.getValue().orElse(null));
         return characteristic;
     }
 
@@ -41,9 +42,9 @@ public class CharacteristicTransformer {
         CharacteristicDto characteristicDto = new CharacteristicDto();
         characteristicDto.setId(characteristic.getId());
         characteristicDto.setCustomer(characteristic.getCustomer());
-        characteristicDto.setName(characteristic.getName());
-        characteristicDto.setValueType(characteristic.getValueType());
-        characteristicDto.setValue(characteristic.getValue());
+        characteristicDto.setName(Optional.ofNullable(characteristic.getName()));
+        characteristicDto.setValueType(Optional.ofNullable(characteristic.getValueType()));
+        characteristicDto.setValue(Optional.ofNullable(characteristic.getValue()));
         return characteristicDto;
     }
 }

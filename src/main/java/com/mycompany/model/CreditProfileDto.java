@@ -7,14 +7,15 @@ import lombok.Data;
 
 import javax.persistence.Embedded;
 import java.util.Date;
+import java.util.Optional;
 
 @Data
 public class CreditProfileDto {
 
     private String id;
-    private Date creditProfileDate;
-    private int creditRiskRating;
-    private int creditScore;
+    private Optional<Date> creditProfileDate;
+    private Optional<Integer> creditRiskRating;
+    private Optional<Integer> creditScore;
     @Embedded
     private ValidFor validFor;
     @JsonIgnore

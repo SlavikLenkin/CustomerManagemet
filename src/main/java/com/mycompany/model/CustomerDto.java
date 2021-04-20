@@ -7,6 +7,7 @@ import com.mycompany.repository.ValidFor;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Data
@@ -16,11 +17,11 @@ public class CustomerDto {
 
     private String id;
 
-    private String name;
+    private Optional<String> name;
 
-    private String status;
+    private Optional<String> status;
 
-    private String statusReason;
+    private Optional<String> statusReason;
 
     private ValidFor validFor;
 
@@ -51,9 +52,9 @@ public class CustomerDto {
     public void setCustomer(Customer customer) {
         this.href = customer.getHref();
         this.id = customer.getId();
-        this.name = customer.getName();
-        this.status = customer.getStatus();
-        this.statusReason = customer.getStatusReason();
+        this.name = Optional.ofNullable(customer.getName());
+        this.status = Optional.ofNullable(customer.getStatus());
+        this.statusReason = Optional.ofNullable(customer.getStatusReason());
         this.validFor = customer.getValidFor();
 
     }

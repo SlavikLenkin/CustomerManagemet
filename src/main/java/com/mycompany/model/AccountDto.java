@@ -4,13 +4,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mycompany.repository.Customer;
 import lombok.Data;
 
+import java.util.Optional;
+
 @Data
 public class AccountDto {
 
-    private String description;
+    private Optional<String> description;
     private String href;
     private String id;
-    private String name;
+    private Optional<String> name;
     @JsonIgnore
     private Customer customer;
 }

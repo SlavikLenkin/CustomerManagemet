@@ -41,9 +41,9 @@ public class CustomerTransformer {
         Customer target = new Customer();
         target.setHref(customerDto.getHref());
         target.setId(customerDto.getId());
-        target.setName(customerDto.getName());
-        target.setStatus(customerDto.getStatus());
-        target.setStatusReason(customerDto.getStatusReason());
+        target.setName(customerDto.getName().orElse(null));
+        target.setStatus(customerDto.getStatus().orElse(null));
+        target.setStatusReason(customerDto.getStatusReason().orElse(null));
         target.setValidFor(customerDto.getValidFor());
         return target;
     }

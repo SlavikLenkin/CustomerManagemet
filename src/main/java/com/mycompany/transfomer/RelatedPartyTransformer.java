@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RelatedPartyTransformer {
@@ -17,8 +18,8 @@ public class RelatedPartyTransformer {
         RelatedParty relatedParty = new RelatedParty();
         relatedParty.setId(relatedPartyDto.getId());
         relatedParty.setHref(relatedPartyDto.getHref());
-        relatedParty.setName(relatedPartyDto.getName());
-        relatedParty.setRole(relatedPartyDto.getRole());
+        relatedParty.setName(relatedPartyDto.getName().orElse(null));
+        relatedParty.setRole(relatedPartyDto.getRole().orElse(null));
         relatedParty.setCustomer(relatedPartyDto.getCustomer());
         return relatedParty;
     }
@@ -30,8 +31,8 @@ public class RelatedPartyTransformer {
         RelatedPartyDto relatedPartyDto = new RelatedPartyDto();
         relatedPartyDto.setId(relatedParty.getId());
         relatedPartyDto.setHref(relatedParty.getHref());
-        relatedPartyDto.setName(relatedParty.getName());
-        relatedPartyDto.setRole(relatedParty.getRole());
+        relatedPartyDto.setName(Optional.ofNullable(relatedParty.getName()));
+        relatedPartyDto.setRole(Optional.ofNullable(relatedParty.getRole()));
         relatedPartyDto.setCustomer(relatedParty.getCustomer());
         return relatedPartyDto;
     }
