@@ -5,7 +5,6 @@ import com.mycompany.repository.ContactMedium;
 import com.mycompany.repository.MediumCharacteristic;
 import com.mycompany.repository.MediumCharacteristicRepository;
 import com.mycompany.transfomer.MediumCharacteristicTransformer;
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -51,22 +50,18 @@ class MediumCharacteristicServiceTest {
 
     @Test
     void update() {
-        ContactMedium contactMedium = new ContactMedium();
-        MediumCharacteristicDto mediumCharacteristic = new MediumCharacteristicDto();
-        mediumCharacteristic.setCity("city");
-        mediumCharacteristic.setContactMedium(contactMedium);
-        mediumCharacteristic.setId("id");
+        MediumCharacteristic mediumCharacteristic = new MediumCharacteristic();
+        MediumCharacteristicDto mediumCharacteristicDto = new MediumCharacteristicDto();
 
-        MediumCharacteristicDto mediumCharacteristicUpdate = new MediumCharacteristicDto();
-        mediumCharacteristicUpdate.setCity("new city");
-        mediumCharacteristic.setCity(mediumCharacteristicUpdate.getCity());
+        Mockito.when(mediumCharacteristicTransformer.transform(mediumCharacteristicDto))
+                .thenReturn(mediumCharacteristic);
+        Mockito.when(mediumCharacteristicRepository.save(mediumCharacteristic))
+                .thenReturn(mediumCharacteristic);
 
-        MediumCharacteristicDto mediumCharacteristicDto = mediumCharacteristicService.update(mediumCharacteristic);
+        mediumCharacteristicService.update(mediumCharacteristicDto);
 
-        Assert.assertNotNull(mediumCharacteristicDto.getId());
-        Assert.assertNotNull(mediumCharacteristicDto.getContactMedium());
-        Assert.assertNotNull(mediumCharacteristicDto.getCity());
-        Assert.assertEquals("new city", mediumCharacteristicDto.getCity());
+        Mockito.verify(mediumCharacteristicTransformer).transform(mediumCharacteristicDto);
+        Mockito.verify(mediumCharacteristicRepository).save(mediumCharacteristic);
     }
 }
 
