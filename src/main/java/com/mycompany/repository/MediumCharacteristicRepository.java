@@ -11,5 +11,4 @@ public interface MediumCharacteristicRepository extends JpaRepository<MediumChar
 
     @Query(value = queryFindMediumCharacteristic, nativeQuery = true)
     MediumCharacteristic findMediumCharacteristicById(@Param("id") String id);
-
 }

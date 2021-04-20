@@ -1,6 +1,5 @@
 package com.mycompany.service;
 
-
 import com.mycompany.model.RelatedPartyDto;
 import com.mycompany.repository.Customer;
 import com.mycompany.repository.RelatedParty;
@@ -19,7 +18,8 @@ public class RelatedPartyService {
     final RelatedPartyRepository repository;
     final RelatedPartyTransformer relatedPartyTransformer;
 
-    public RelatedPartyService(RelatedPartyRepository repository, RelatedPartyTransformer relatedPartyTransformer) {
+    public RelatedPartyService(RelatedPartyRepository repository
+            , RelatedPartyTransformer relatedPartyTransformer) {
         this.repository = repository;
         this.relatedPartyTransformer = relatedPartyTransformer;
     }

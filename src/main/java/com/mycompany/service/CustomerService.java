@@ -27,7 +27,6 @@ public class CustomerService {
     private final CustomerTransformer customerTransformer;
     private final ContactMediumService contactMediumService;
 
-
     public CustomerService(CustomerRepository repository
             , AccountService accountService, EngagedPartyService engagedPartyService
             , RelatedPartyService relatedPartyService, PaymentMethodService paymentMethodService
@@ -79,14 +78,22 @@ public class CustomerService {
         customer.setHref("https://host:port/tmf-api/customerManagement/v4/customer/" + id);
         repository.save(customer);
         customerDto.setCustomer(customer);
-        customerDto.setEngagedParty(engagedPartyService.save(customerDto.getEngagedParty(), customer));
-        customerDto.setAccounts(accountService.save(customerDto.getAccounts(), customer));
-        customerDto.setAgreements(agreementService.save(customerDto.getAgreements(), customer));
-        customerDto.setCharacteristics(characteristicService.save(customerDto.getCharacteristics(), customer));
-        customerDto.setCreditProfiles(creditProfileService.save(customerDto.getCreditProfiles(), customer));
-        customerDto.setPaymentMethods(paymentMethodService.save(customerDto.getPaymentMethods(), customer));
-        customerDto.setRelatedParties(relatedPartyService.save(customerDto.getRelatedParties(), customer));
-        customerDto.setContactMediumDtoList(contactMediumService.save(customerDto.getContactMediumDtoList(), customer));
+        customerDto.setEngagedParty(engagedPartyService
+                .save(customerDto.getEngagedParty(), customer));
+        customerDto.setAccounts(accountService
+                .save(customerDto.getAccounts(), customer));
+        customerDto.setAgreements(agreementService
+                .save(customerDto.getAgreements(), customer));
+        customerDto.setCharacteristics(characteristicService
+                .save(customerDto.getCharacteristics(), customer));
+        customerDto.setCreditProfiles(creditProfileService
+                .save(customerDto.getCreditProfiles(), customer));
+        customerDto.setPaymentMethods(paymentMethodService
+                .save(customerDto.getPaymentMethods(), customer));
+        customerDto.setRelatedParties(relatedPartyService
+                .save(customerDto.getRelatedParties(), customer));
+        customerDto.setContactMediumDtoList(contactMediumService
+                .save(customerDto.getContactMediumDtoList(), customer));
         return customerDto;
     }
 

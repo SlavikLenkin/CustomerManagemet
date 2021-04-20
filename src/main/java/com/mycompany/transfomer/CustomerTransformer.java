@@ -48,7 +48,6 @@ public class CustomerTransformer {
         return target;
     }
 
-    //TODO transform
     public CustomerDto transform(Customer customer) {
         if (customer == null) {
             return null;

@@ -18,7 +18,8 @@ public class PaymentMethodService {
     final PaymentMethodRepository repository;
     final PaymentMethodTransformer paymentMethodTransformer;
 
-    public PaymentMethodService(PaymentMethodRepository repository, PaymentMethodTransformer paymentMethodTransformer) {
+    public PaymentMethodService(PaymentMethodRepository repository
+            , PaymentMethodTransformer paymentMethodTransformer) {
         this.repository = repository;
         this.paymentMethodTransformer = paymentMethodTransformer;
     }

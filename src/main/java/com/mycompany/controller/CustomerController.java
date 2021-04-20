@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-
 @RestController
 @RequestMapping("/customerManagement/v4")
 @Api(tags = "Customer")
@@ -21,7 +20,6 @@ import java.util.List;
 public class CustomerController implements ApiPath {
 
     final CustomerService customerService;
-
 
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
@@ -79,5 +77,4 @@ public class CustomerController implements ApiPath {
         customerService.delete(customerDto);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
-
 }

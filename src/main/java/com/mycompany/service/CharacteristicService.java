@@ -1,6 +1,5 @@
 package com.mycompany.service;
 
-
 import com.mycompany.model.CharacteristicDto;
 import com.mycompany.repository.Characteristic;
 import com.mycompany.repository.CharacteristicRepository;

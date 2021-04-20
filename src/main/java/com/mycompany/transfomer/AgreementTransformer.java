@@ -44,6 +44,4 @@ public class AgreementTransformer {
         agreementDto.setCustomer(agreement.getCustomer());
         return agreementDto;
     }
-
-
 }

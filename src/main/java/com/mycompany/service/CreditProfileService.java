@@ -18,7 +18,8 @@ public class CreditProfileService {
     private final CreditProfileRepository repository;
     private final CreditProfileTransformer creditProfileTransformer;
 
-    public CreditProfileService(CreditProfileRepository repository, CreditProfileTransformer creditProfileTransformer) {
+    public CreditProfileService(CreditProfileRepository repository
+            , CreditProfileTransformer creditProfileTransformer) {
         this.repository = repository;
         this.creditProfileTransformer = creditProfileTransformer;
     }

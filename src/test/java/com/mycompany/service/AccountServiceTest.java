@@ -29,7 +29,6 @@ class AccountServiceTest {
     @InjectMocks
     private AccountService accountService;
 
-
     @Test
     void save() {
         Account account = new Account();

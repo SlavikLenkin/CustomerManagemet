@@ -13,7 +13,5 @@ public interface AgreementRepository extends JpaRepository<Agreement, Integer> {
 
     @Query(value = queryFindAgreement, nativeQuery = true)
     List<Agreement> findAgreementById(@Param("id") String[] id);
-
-
 }
 

@@ -1,6 +1,5 @@
 package com.mycompany.repository;
 
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,6 +13,4 @@ public interface EngagedPartyRepository extends JpaRepository<EngagedParty, Inte
 
     @Query(value = queryFindEngagedParty, nativeQuery = true)
     EngagedParty findEngagedPartyById(@Param("id") String id);
-
-
 }

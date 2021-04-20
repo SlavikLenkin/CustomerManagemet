@@ -17,7 +17,8 @@ public class EngagedPartyService {
     private final EngagedPartyRepository repository;
     private final EngagedPartyTransformer engagedPartyTransformer;
 
-    public EngagedPartyService(EngagedPartyRepository repository, EngagedPartyTransformer engagedPartyTransformer) {
+    public EngagedPartyService(EngagedPartyRepository repository
+            , EngagedPartyTransformer engagedPartyTransformer) {
         this.repository = repository;
         this.engagedPartyTransformer = engagedPartyTransformer;
     }

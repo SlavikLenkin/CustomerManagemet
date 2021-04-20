@@ -13,5 +13,4 @@ public interface CharacteristicRepository extends JpaRepository<Characteristic, 
 
     @Query(value = queryFindCharacteristic, nativeQuery = true)
     List<Characteristic> findCharacteristicById(@Param("id") String[] id);
-
 }

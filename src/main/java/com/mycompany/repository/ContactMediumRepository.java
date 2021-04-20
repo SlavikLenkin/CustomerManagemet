@@ -13,6 +13,4 @@ public interface ContactMediumRepository extends JpaRepository<ContactMedium, In
 
     @Query(value = queryFindContactMedium, nativeQuery = true)
     List<ContactMedium> findContactMediumById(@Param("id") String[] id);
-
-
 }

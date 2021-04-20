@@ -40,5 +40,4 @@ public class ContactMediumDto {
         this.mediumType = contactMedium.getMediumType();
         this.validFor = contactMedium.getValidFor();
     }
-
 }

@@ -1,6 +1,5 @@
 package com.mycompany.service;
 
-
 import com.mycompany.model.ContactMediumDto;
 import com.mycompany.model.MediumCharacteristicDto;
 import com.mycompany.repository.ContactMedium;
@@ -24,7 +23,10 @@ public class ContactMediumService {
     final MediumCharacteristicService mediumCharacteristicService;
     final MediumCharacteristicTransformer mediumCharacteristicTransformer;
 
-    public ContactMediumService(ContactMediumRepository repository, ContactMediumTransformer contactMediumTransformer, MediumCharacteristicService mediumCharacteristicService, MediumCharacteristicTransformer mediumCharacteristicTransformer) {
+    public ContactMediumService(ContactMediumRepository repository
+            , ContactMediumTransformer contactMediumTransformer
+            , MediumCharacteristicService mediumCharacteristicService
+            , MediumCharacteristicTransformer mediumCharacteristicTransformer) {
         this.repository = repository;
         this.contactMediumTransformer = contactMediumTransformer;
         this.mediumCharacteristicService = mediumCharacteristicService;

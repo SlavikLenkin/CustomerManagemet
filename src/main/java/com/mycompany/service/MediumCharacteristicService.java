@@ -17,17 +17,20 @@ public class MediumCharacteristicService {
     final MediumCharacteristicRepository repository;
     final MediumCharacteristicTransformer mediumCharacteristicTransformer;
 
-    public MediumCharacteristicService(MediumCharacteristicRepository repository, MediumCharacteristicTransformer mediumCharacteristicTransformer) {
+    public MediumCharacteristicService(MediumCharacteristicRepository repository
+            , MediumCharacteristicTransformer mediumCharacteristicTransformer) {
         this.repository = repository;
         this.mediumCharacteristicTransformer = mediumCharacteristicTransformer;
     }
 
-    public MediumCharacteristicDto save(MediumCharacteristicDto mediumCharacteristicDto, ContactMedium contactMedium) {
+    public MediumCharacteristicDto save(MediumCharacteristicDto mediumCharacteristicDto
+            , ContactMedium contactMedium) {
         log.debug("save");
         if (mediumCharacteristicDto == null) {
             return null;
         }
-        MediumCharacteristic mediumCharacteristic = mediumCharacteristicTransformer.transform(mediumCharacteristicDto);
+        MediumCharacteristic mediumCharacteristic = mediumCharacteristicTransformer
+                .transform(mediumCharacteristicDto);
         mediumCharacteristic.setContactMedium(contactMedium);
         String id = UUID.randomUUID().toString();
         mediumCharacteristic.setId(id);
