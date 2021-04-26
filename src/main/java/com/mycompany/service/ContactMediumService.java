@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -40,6 +41,12 @@ public class ContactMediumService {
         }
 
         for (ContactMediumDto contactMediumDto : contactsMediumDto) {
+            if (contactMediumDto.getMediumType() == null) {
+                contactMediumDto.setMediumType(Optional.empty());
+            }
+            if (contactMediumDto.getPreferred() == null) {
+                contactMediumDto.setPreferred(Optional.empty());
+            }
             contactMediumDto.setCustomer(customer);
             MediumCharacteristicDto mediumCharacteristic;
 

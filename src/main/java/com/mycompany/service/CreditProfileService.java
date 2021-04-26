@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -31,6 +32,15 @@ public class CreditProfileService {
         }
         int i = 0;
         for (CreditProfileDto creditProfileDto : creditProfilesDto) {
+            if (creditProfileDto.getCreditProfileDate() == null) {
+                creditProfileDto.setCreditProfileDate(Optional.empty());
+            }
+            if (creditProfileDto.getCreditScore() == null) {
+                creditProfileDto.setCreditScore(Optional.empty());
+            }
+            if (creditProfileDto.getCreditRiskRating() == null) {
+                creditProfileDto.setCreditRiskRating(Optional.empty());
+            }
             CreditProfile creditProfile = creditProfileTransformer.transform(creditProfileDto);
             creditProfile.setCustomer(customer);
             String id = UUID.randomUUID().toString();

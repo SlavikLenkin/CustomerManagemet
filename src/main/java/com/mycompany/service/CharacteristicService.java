@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -30,6 +31,15 @@ public class CharacteristicService {
         }
         int i = 0;
         for (CharacteristicDto characteristicDto : characteristicsDto) {
+            if (characteristicDto.getName() == null) {
+                characteristicDto.setName(Optional.empty());
+            }
+            if (characteristicDto.getValue() == null) {
+                characteristicDto.setValue(Optional.empty());
+            }
+            if (characteristicDto.getValueType() == null) {
+                characteristicDto.setValueType(Optional.empty());
+            }
             Characteristic characteristic = characteristicTransformer.transform(characteristicDto);
             characteristic.setCustomer(customer);
             String id = UUID.randomUUID().toString();

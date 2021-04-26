@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -31,6 +32,9 @@ public class PaymentMethodService {
         }
         int i = 0;
         for (PaymentMethodDto paymentMethodDto : paymentMethodsDto) {
+            if (paymentMethodDto.getName() == null) {
+                paymentMethodDto.setName(Optional.empty());
+            }
             PaymentMethod paymentMethod = paymentMethodTransformer.transform(paymentMethodDto);
             paymentMethod.setCustomer(customer);
             String id = UUID.randomUUID().toString();

@@ -14,7 +14,7 @@ public class EventService {
 
     private int eventId = 0;
 
-    private Event createEvent(String eventType){
+    private Event createEvent(String eventType) {
         Event event = new Event();
         eventId++;
         event.setEventId("" + eventId);
@@ -22,6 +22,7 @@ public class EventService {
         event.setEventTime(new Date().toString());
         return event;
     }
+
     public Event createEvent(CustomerDto customerDto, String eventType) {
         Event event = createEvent(eventType);
         List<CustomerDto> customerDtoList = new ArrayList<>();

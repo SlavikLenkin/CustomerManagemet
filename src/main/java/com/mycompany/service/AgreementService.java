@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -30,6 +31,9 @@ public class AgreementService {
         }
         int i = 0;
         for (AgreementDto agreementDto : agreementsDto) {
+            if (agreementDto.getName() == null) {
+                agreementDto.setName(Optional.empty());
+            }
             Agreement agreement = agreementTransformer.transform(agreementDto);
             agreement.setCustomer(customer);
             String id = UUID.randomUUID().toString();

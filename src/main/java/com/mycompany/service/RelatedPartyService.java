@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -31,6 +32,12 @@ public class RelatedPartyService {
         }
         int i = 0;
         for (RelatedPartyDto relatedPartyDto : relatedPartiesDto) {
+            if (relatedPartyDto.getName() == null) {
+                relatedPartyDto.setName(Optional.empty());
+            }
+            if (relatedPartyDto.getRole() == null) {
+                relatedPartyDto.setRole(Optional.empty());
+            }
             RelatedParty relatedParty = relatedPartyTransformer.transform(relatedPartyDto);
             relatedParty.setCustomer(customer);
             String id = UUID.randomUUID().toString();

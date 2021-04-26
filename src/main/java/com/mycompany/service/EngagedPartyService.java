@@ -8,6 +8,7 @@ import com.mycompany.transfomer.EngagedPartyTransformer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -33,6 +34,9 @@ public class EngagedPartyService {
         log.debug("save");
         if (engagedPartyDto == null) {
             return null;
+        }
+        if (engagedPartyDto.getName() == null) {
+            engagedPartyDto.setName(Optional.empty());
         }
         EngagedParty engagedParty = engagedPartyTransformer.transform(engagedPartyDto);
         engagedParty.setCustomer(customer);

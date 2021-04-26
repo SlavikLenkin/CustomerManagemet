@@ -8,6 +8,7 @@ import com.mycompany.transfomer.MediumCharacteristicTransformer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -28,6 +29,39 @@ public class MediumCharacteristicService {
         log.debug("save");
         if (mediumCharacteristicDto == null) {
             return null;
+        }
+        if (mediumCharacteristicDto.getCity() == null) {
+            mediumCharacteristicDto.setCity(Optional.empty());
+        }
+        if (mediumCharacteristicDto.getContactType() == null) {
+            mediumCharacteristicDto.setContactType(Optional.empty());
+        }
+        if (mediumCharacteristicDto.getCountry() == null) {
+            mediumCharacteristicDto.setCountry(Optional.empty());
+        }
+        if (mediumCharacteristicDto.getEmailAddress() == null) {
+            mediumCharacteristicDto.setEmailAddress(Optional.empty());
+        }
+        if (mediumCharacteristicDto.getFaxNumber() == null) {
+            mediumCharacteristicDto.setFaxNumber(Optional.empty());
+        }
+        if (mediumCharacteristicDto.getPhoneNumber() == null) {
+            mediumCharacteristicDto.setPhoneNumber(Optional.empty());
+        }
+        if (mediumCharacteristicDto.getPostCode() == null) {
+            mediumCharacteristicDto.setPostCode(Optional.empty());
+        }
+        if (mediumCharacteristicDto.getSocialNetworkId() == null) {
+            mediumCharacteristicDto.setSocialNetworkId(Optional.empty());
+        }
+        if (mediumCharacteristicDto.getStateOrProvince() == null) {
+            mediumCharacteristicDto.setStateOrProvince(Optional.empty());
+        }
+        if (mediumCharacteristicDto.getStreet1() == null) {
+            mediumCharacteristicDto.setStreet1(Optional.empty());
+        }
+        if (mediumCharacteristicDto.getStreet2() == null) {
+            mediumCharacteristicDto.setStreet2(Optional.empty());
         }
         MediumCharacteristic mediumCharacteristic = mediumCharacteristicTransformer
                 .transform(mediumCharacteristicDto);

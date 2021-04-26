@@ -73,6 +73,15 @@ public class CustomerService {
     @Transactional
     public CustomerDto save(CustomerDto customerDto) {
         log.debug("save");
+        if (customerDto.getStatus() == null) {
+            customerDto.setStatus(Optional.empty());
+        }
+        if (customerDto.getName() == null) {
+            customerDto.setName(Optional.empty());
+        }
+        if (customerDto.getStatusReason() == null) {
+            customerDto.setStatusReason(Optional.empty());
+        }
         Customer customer = customerTransformer.transform(customerDto);
         String id = UUID.randomUUID().toString();
         customer.setId(id);

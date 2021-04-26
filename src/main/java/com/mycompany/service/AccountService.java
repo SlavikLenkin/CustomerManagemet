@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -30,6 +31,12 @@ public class AccountService {
         }
         int i = 0;
         for (AccountDto accountDto : accountsDto) {
+            if (accountDto.getName() == null) {
+                accountDto.setName(Optional.empty());
+            }
+            if (accountDto.getDescription() == null) {
+                accountDto.setDescription(Optional.empty());
+            }
             Account account = accountTransformer.transform(accountDto);
             account.setCustomer(customer);
             String id = UUID.randomUUID().toString();

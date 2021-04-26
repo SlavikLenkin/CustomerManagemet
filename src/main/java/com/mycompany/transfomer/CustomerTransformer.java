@@ -38,14 +38,14 @@ public class CustomerTransformer {
         if (customerDto == null) {
             return null;
         }
-        Customer target = new Customer();
-        target.setHref(customerDto.getHref());
-        target.setId(customerDto.getId());
-        target.setName(customerDto.getName().orElse(null));
-        target.setStatus(customerDto.getStatus().orElse(null));
-        target.setStatusReason(customerDto.getStatusReason().orElse(null));
-        target.setValidFor(customerDto.getValidFor());
-        return target;
+        Customer customer = new Customer();
+        customer.setHref(customerDto.getHref());
+        customer.setId(customerDto.getId());
+        customer.setName(customerDto.getName().orElse(null));
+        customer.setStatus(customerDto.getStatus().orElse(null));
+        customer.setStatusReason(customerDto.getStatusReason().orElse(null));
+        customer.setValidFor(customerDto.getValidFor());
+        return customer;
     }
 
     public CustomerDto transform(Customer customer) {

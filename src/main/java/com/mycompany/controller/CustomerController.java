@@ -8,7 +8,6 @@ import com.mycompany.service.EventService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -74,10 +73,10 @@ public class CustomerController implements ApiPath {
         CustomerDto customerDto = customerService.update(id, customerDtoUpdate);
         if (customerDto == null)
             return new ResponseEntity(HttpStatus.NOT_FOUND);
-        if (Optional.ofNullable(customerDtoUpdate.getStatus()).isPresent()){
+        if (Optional.ofNullable(customerDtoUpdate.getStatus()).isPresent()) {
             this.producer.sendMessage(eventService.createEvent(customerDtoUpdate.getStatus()
-                    ,"CustomerStateChangeEvent").toString());
-        }else {
+                    , "CustomerStateChangeEvent").toString());
+        } else {
             this.producer.sendMessage(eventService.createEvent(customerDto, "CustomerAttributeValueChangeEvent")
                     .toString());
         }
