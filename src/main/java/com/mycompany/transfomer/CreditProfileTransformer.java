@@ -43,9 +43,9 @@ public class CreditProfileTransformer {
         CreditProfileDto creditProfileDto = new CreditProfileDto();
         creditProfileDto.setId(creditProfile.getId());
         creditProfileDto.setCreditProfileDate(Optional.ofNullable(creditProfile.getCreditProfileDate()));
-        creditProfileDto.setCreditScore(Optional.of(creditProfile.getCreditScore()));
+        creditProfileDto.setCreditScore(Optional.ofNullable(creditProfile.getCreditScore()));
         creditProfileDto.setValidFor(creditProfile.getValidFor());
-        creditProfileDto.setCreditRiskRating(Optional.of(creditProfile.getCreditRiskRating()));
+        creditProfileDto.setCreditRiskRating(Optional.ofNullable(creditProfile.getCreditRiskRating()));
         creditProfileDto.setCustomer(creditProfile.getCustomer());
         return creditProfileDto;
     }

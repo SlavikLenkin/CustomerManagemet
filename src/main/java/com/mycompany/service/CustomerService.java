@@ -130,7 +130,7 @@ public class CustomerService {
             customer.setStatusReason(customerUpdate.getStatusReason());
         }
 
-        if (customerUpdate.getValidFor() != null) {
+        if (customerUpdate.getValidFor() != null && customer.getValidFor() != null) {
             customer.setValidFor(customerUpdate.getValidFor());
         }
 

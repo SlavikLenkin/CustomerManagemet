@@ -20,10 +20,10 @@ public class CreditProfile implements Serializable {
     private Date creditProfileDate;
 
     @Column(name = "credit_risk_rating")
-    private int creditRiskRating;
+    private Integer creditRiskRating;
 
     @Column(name = "credit_score")
-    private int creditScore;
+    private Integer creditScore;
 
     @Embedded
     private ValidFor validFor;
