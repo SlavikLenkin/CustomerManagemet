@@ -18,7 +18,7 @@ public class ContactMediumDto {
 
     private String id;
 
-    private boolean preferred;
+    private Optional<Boolean> preferred;
 
     private Optional<String> mediumType;
 
@@ -37,7 +37,7 @@ public class ContactMediumDto {
 
     public void setContactMedium(ContactMedium contactMedium) {
         this.id = contactMedium.getId();
-        this.preferred = contactMedium.isPreferred();
+        this.preferred = Optional.ofNullable(contactMedium.getPreferred());
         this.mediumType = Optional.ofNullable(contactMedium.getMediumType());
         this.validFor = contactMedium.getValidFor();
     }

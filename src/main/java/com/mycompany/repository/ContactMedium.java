@@ -15,7 +15,7 @@ public class ContactMedium {
     private String id;
 
     @Column(name = "preferred")
-    private boolean preferred;
+    private Boolean preferred;
 
     @Column(name = "medium_type")
     private String mediumType;

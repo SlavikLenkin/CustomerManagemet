@@ -132,9 +132,9 @@ public class CustomerService {
             if (Optional.ofNullable(engagedPartyUpdate.getName()).isPresent()) {
                 engagedParty.setName(engagedPartyUpdate.getName());
             }
+            customerDto.setEngagedParty(engagedPartyService.update(engagedParty));
         }
 
-        customerDto.setEngagedParty(engagedPartyService.update(engagedParty));
         List<AccountDto> accountsUpdate = customerDtoUpdate.getAccounts();
         List<AccountDto> accounts = customerDto.getAccounts();
 
@@ -266,8 +266,8 @@ public class CustomerService {
             for (ContactMediumDto contactMediumDtoUpdate : contactMediumDtoListUpdate) {
                 for (ContactMediumDto contactMediumDto : contactMediumDtoList) {
                     if (contactMediumDto.getId().equals(contactMediumDtoUpdate.getId())) {
-                        if (contactMediumDtoUpdate.isPreferred() != contactMediumDto.isPreferred()) {
-                            contactMediumDto.setPreferred(contactMediumDtoUpdate.isPreferred());
+                        if (Optional.ofNullable(contactMediumDtoUpdate.getPreferred()).isPresent()) {
+                            contactMediumDto.setPreferred(contactMediumDtoUpdate.getPreferred());
                         }
                         if (Optional.ofNullable(contactMediumDtoUpdate.getMediumType()).isPresent()) {
                             contactMediumDto.setMediumType(contactMediumDtoUpdate.getMediumType());

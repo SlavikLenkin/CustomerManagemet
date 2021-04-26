@@ -1,17 +1,21 @@
 package com.mycompany.controller;
 
 import com.mycompany.ApiPath;
+import com.mycompany.kafka.Producer;
 import com.mycompany.model.CustomerDto;
 import com.mycompany.service.CustomerService;
+import com.mycompany.service.EventService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/customerManagement/v4")
@@ -19,10 +23,14 @@ import java.util.List;
 @Slf4j
 public class CustomerController implements ApiPath {
 
-    final CustomerService customerService;
+    private final CustomerService customerService;
+    private final Producer producer;
+    private final EventService eventService;
 
-    public CustomerController(CustomerService customerService) {
+    public CustomerController(CustomerService customerService, Producer producer, EventService eventService) {
         this.customerService = customerService;
+        this.producer = producer;
+        this.eventService = eventService;
     }
 
     @ApiOperation(value = "getAll")
@@ -53,6 +61,8 @@ public class CustomerController implements ApiPath {
         if (customerDto == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
+        this.producer.sendMessage(eventService.createEvent(customerDto, "CustomerCreateEvent")
+                .toString());
         return ResponseEntity.ok().body(customerService.save(customerDto));
     }
 
@@ -64,6 +74,13 @@ public class CustomerController implements ApiPath {
         CustomerDto customerDto = customerService.update(id, customerDtoUpdate);
         if (customerDto == null)
             return new ResponseEntity(HttpStatus.NOT_FOUND);
+        if (Optional.ofNullable(customerDtoUpdate.getStatus()).isPresent()){
+            this.producer.sendMessage(eventService.createEvent(customerDtoUpdate.getStatus()
+                    ,"CustomerStateChangeEvent").toString());
+        }else {
+            this.producer.sendMessage(eventService.createEvent(customerDto, "CustomerAttributeValueChangeEvent")
+                    .toString());
+        }
         return ResponseEntity.ok().body(customerDto);
     }
 
@@ -75,6 +92,8 @@ public class CustomerController implements ApiPath {
         if (customerDto == null)
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         customerService.delete(customerDto);
+        this.producer.sendMessage(eventService.createEvent(customerDto, "CustomerDeleteEvent")
+                .toString());
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }

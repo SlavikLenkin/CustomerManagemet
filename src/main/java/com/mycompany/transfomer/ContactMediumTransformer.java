@@ -21,12 +21,12 @@ public class ContactMediumTransformer {
         if (contactMediumDto == null) {
             return null;
         }
-        ContactMedium target = new ContactMedium();
-        target.setId(contactMediumDto.getId());
-        target.setMediumType(contactMediumDto.getMediumType().orElse(null));
-        target.setPreferred(contactMediumDto.isPreferred());
-        target.setValidFor(contactMediumDto.getValidFor());
-        return target;
+        ContactMedium contactMedium = new ContactMedium();
+        contactMedium.setId(contactMediumDto.getId());
+        contactMedium.setMediumType(contactMediumDto.getMediumType().orElse(null));
+        contactMedium.setPreferred(contactMediumDto.getPreferred().orElse(null));
+        contactMedium.setValidFor(contactMediumDto.getValidFor());
+        return contactMedium;
     }
 
     public ContactMediumDto transform(ContactMedium contactMedium) {
@@ -35,7 +35,7 @@ public class ContactMediumTransformer {
         }
         ContactMediumDto contactMediumDto = new ContactMediumDto();
         contactMediumDto.setId(contactMedium.getId());
-        contactMediumDto.setPreferred(contactMedium.isPreferred());
+        contactMediumDto.setPreferred(Optional.ofNullable(contactMedium.getPreferred()));
         contactMediumDto.setMediumType(Optional.ofNullable(contactMedium.getMediumType()));
         contactMediumDto.setValidFor(contactMedium.getValidFor());
         contactMediumDto.setMediumCharacteristic(mediumCharacteristicTransformer
