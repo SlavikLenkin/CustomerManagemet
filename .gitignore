@@ -1,4 +1,4 @@
 /.idea
 /target
 /demo.iml
-/demo-0.0.1-SNAPSHOT.jar
+*.jar
