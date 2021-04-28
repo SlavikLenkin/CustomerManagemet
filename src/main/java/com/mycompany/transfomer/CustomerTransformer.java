@@ -2,7 +2,10 @@ package com.mycompany.transfomer;
 
 import com.mycompany.model.CustomerDto;
 import com.mycompany.repository.Customer;
+import com.mycompany.repository.ValidFor;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 @Service
 public class CustomerTransformer {

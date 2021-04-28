@@ -130,7 +130,7 @@ public class CustomerService {
             customer.setStatusReason(customerUpdate.getStatusReason());
         }
 
-        if (customerUpdate.getValidFor() != null && customer.getValidFor() != null) {
+        if (Optional.ofNullable(customerUpdate.getValidFor()).isPresent()) {
             customer.setValidFor(customerUpdate.getValidFor());
         }
 
@@ -332,7 +332,7 @@ public class CustomerService {
             customerDto.setContactMediumDtoList(contactMediumService.update(contactMediumDtoList, customerTransformer
                     .transform(customerDto)));
         }
-        repository.updateCustomerById(customerTransformer.transform(customer));
+        repository.save(customerTransformer.transform(customer));
         customerDto.setCustomer(customerTransformer.transform(customer));
         return customerDto;
     }

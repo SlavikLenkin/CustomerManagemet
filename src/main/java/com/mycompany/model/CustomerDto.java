@@ -6,6 +6,7 @@ import com.mycompany.repository.Customer;
 import com.mycompany.repository.ValidFor;
 import lombok.Data;
 
+import javax.persistence.Embedded;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +24,7 @@ public class CustomerDto {
 
     private Optional<String> statusReason;
 
+    @Embedded
     private ValidFor validFor;
 
     @JsonProperty(value = "engagedParty")

@@ -134,7 +134,7 @@ class CustomerServiceTest {
         customerService.update(id, customerDto);
 
         Mockito.verify(customerTransformer, Mockito.times(3)).transform(customerDto);
-        Mockito.verify(customerRepository).updateCustomerById(customer);
+        Mockito.verify(customerRepository).save(customer);
         Mockito.verify(engagedPartyService).update(engagedPartyDto);
         Mockito.verify(accountService).update(accountDto);
         Mockito.verify(agreementService).update(agreementDtoList);

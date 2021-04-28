@@ -2,9 +2,9 @@ package com.mycompany.controller;
 
 import com.mycompany.ApiPath;
 import com.mycompany.kafka.Producer;
+import com.mycompany.kafka.service.EventService;
 import com.mycompany.model.CustomerDto;
 import com.mycompany.service.CustomerService;
-import com.mycompany.service.EventService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -74,12 +74,11 @@ public class CustomerController implements ApiPath {
         if (customerDto == null)
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         if (Optional.ofNullable(customerDtoUpdate.getStatus()).isPresent()) {
-            this.producer.sendMessage(eventService.createEvent(customerDtoUpdate.getStatus()
+            this.producer.sendMessage(eventService.createEvent(customerDtoUpdate.getStatus(), customerDto.getStatus()
                     , "CustomerStateChangeEvent").toString());
-        } else {
-            this.producer.sendMessage(eventService.createEvent(customerDto, "CustomerAttributeValueChangeEvent")
-                    .toString());
         }
+        this.producer.sendMessage(eventService.createEvent(customerDto, "CustomerAttributeValueChangeEvent")
+                .toString());
         return ResponseEntity.ok().body(customerDto);
     }
 
