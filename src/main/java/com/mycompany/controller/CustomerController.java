@@ -60,8 +60,6 @@ public class CustomerController implements ApiPath {
         if (customerDto == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        this.producer.sendMessage(eventService.createEvent(customerDto, "CustomerCreateEvent")
-                .toString());
         return ResponseEntity.ok().body(customerService.save(customerDto));
     }
 
@@ -73,12 +71,6 @@ public class CustomerController implements ApiPath {
         CustomerDto customerDto = customerService.update(id, customerDtoUpdate);
         if (customerDto == null)
             return new ResponseEntity(HttpStatus.NOT_FOUND);
-        if (Optional.ofNullable(customerDtoUpdate.getStatus()).isPresent()) {
-            this.producer.sendMessage(eventService.createEvent(customerDtoUpdate.getStatus(), customerDto.getStatus()
-                    , "CustomerStateChangeEvent").toString());
-        }
-        this.producer.sendMessage(eventService.createEvent(customerDto, "CustomerAttributeValueChangeEvent")
-                .toString());
         return ResponseEntity.ok().body(customerDto);
     }
 
@@ -90,8 +82,6 @@ public class CustomerController implements ApiPath {
         if (customerDto == null)
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         customerService.delete(customerDto);
-        this.producer.sendMessage(eventService.createEvent(customerDto, "CustomerDeleteEvent")
-                .toString());
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }

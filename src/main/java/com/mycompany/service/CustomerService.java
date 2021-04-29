@@ -1,10 +1,13 @@
 package com.mycompany.service;
 
+import com.mycompany.kafka.Producer;
+import com.mycompany.kafka.service.EventService;
 import com.mycompany.model.*;
 import com.mycompany.repository.Customer;
 import com.mycompany.repository.CustomerRepository;
 import com.mycompany.transfomer.CustomerTransformer;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -17,7 +20,7 @@ import java.util.UUID;
 @Slf4j
 public class CustomerService {
 
-    final CustomerRepository repository;
+    private final CustomerRepository repository;
     private final AccountService accountService;
     private final EngagedPartyService engagedPartyService;
     private final RelatedPartyService relatedPartyService;
@@ -27,13 +30,15 @@ public class CustomerService {
     private final CreditProfileService creditProfileService;
     private final CustomerTransformer customerTransformer;
     private final ContactMediumService contactMediumService;
+    private final Producer producer;
+    private final EventService eventService;
 
     public CustomerService(CustomerRepository repository
             , AccountService accountService, EngagedPartyService engagedPartyService
             , RelatedPartyService relatedPartyService, PaymentMethodService paymentMethodService
             , CharacteristicService characteristicService, AgreementService agreementService
             , CreditProfileService creditProfileService, CustomerTransformer customerTransformer
-            , ContactMediumService contactMediumService) {
+            , ContactMediumService contactMediumService, Producer producer, EventService eventService) {
 
         this.repository = repository;
         this.accountService = accountService;
@@ -45,6 +50,8 @@ public class CustomerService {
         this.creditProfileService = creditProfileService;
         this.customerTransformer = customerTransformer;
         this.contactMediumService = contactMediumService;
+        this.producer = producer;
+        this.eventService = eventService;
     }
 
     @Transactional
@@ -67,6 +74,8 @@ public class CustomerService {
     @Transactional
     public void delete(CustomerDto customerDto) {
         log.debug("delete");
+        this.producer.sendMessage(eventService.createEvent(customerDto, "CustomerDeleteEvent")
+                .toString());
         repository.delete(customerTransformer.transform(customerDto));
     }
 
@@ -104,6 +113,8 @@ public class CustomerService {
                 .save(customerDto.getRelatedParties(), customer));
         customerDto.setContactMediumDtoList(contactMediumService
                 .save(customerDto.getContactMediumDtoList(), customer));
+        this.producer.sendMessage(eventService.createEvent(customerDto, "CustomerCreateEvent")
+                .toString());
         return customerDto;
     }
 
@@ -115,23 +126,22 @@ public class CustomerService {
             return null;
         }
 
-        CustomerDto customerUpdate = customerDtoUpdate;
-        CustomerDto customer = customerDto;
-
-        if (Optional.ofNullable(customerUpdate.getName()).isPresent()) {
-            customer.setName(customerUpdate.getName());
+        if (Optional.ofNullable(customerDtoUpdate.getName()).isPresent()) {
+            customerDto.setName(customerDtoUpdate.getName());
         }
 
-        if (Optional.ofNullable(customerUpdate.getStatus()).isPresent()) {
-            customer.setStatus(customerUpdate.getStatus());
+        if (Optional.ofNullable(customerDtoUpdate.getStatus()).isPresent()) {
+            this.producer.sendMessage(eventService.createEvent(customerDto.getStatus(), customerDtoUpdate.getStatus()
+                    , "CustomerStateChangeEvent").toString());
+            customerDto.setStatus(customerDtoUpdate.getStatus());
         }
 
-        if (Optional.ofNullable(customerUpdate.getStatusReason()).isPresent()) {
-            customer.setStatusReason(customerUpdate.getStatusReason());
+        if (Optional.ofNullable(customerDtoUpdate.getStatusReason()).isPresent()) {
+            customerDto.setStatusReason(customerDtoUpdate.getStatusReason());
         }
 
-        if (Optional.ofNullable(customerUpdate.getValidFor()).isPresent()) {
-            customer.setValidFor(customerUpdate.getValidFor());
+        if (Optional.ofNullable(customerDtoUpdate.getValidFor()).isPresent()) {
+            customerDto.setValidFor(customerDtoUpdate.getValidFor());
         }
 
         EngagedPartyDto engagedPartyUpdate = customerDtoUpdate.getEngagedParty();
@@ -332,8 +342,10 @@ public class CustomerService {
             customerDto.setContactMediumDtoList(contactMediumService.update(contactMediumDtoList, customerTransformer
                     .transform(customerDto)));
         }
-        repository.save(customerTransformer.transform(customer));
-        customerDto.setCustomer(customerTransformer.transform(customer));
+        repository.save(customerTransformer.transform(customerDto));
+        customerDto.setCustomer(customerTransformer.transform(customerDto));
+        this.producer.sendMessage(eventService.createEvent(customerDto, "CustomerAttributeValueChangeEvent")
+                .toString());
         return customerDto;
     }
 }
