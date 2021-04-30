@@ -16,12 +16,13 @@ import java.util.Optional;
 @Data
 public class ContactMediumDto {
 
+    @JsonProperty(value = "@referredType")
+    private final String type = "TelephoneMedium";
+    @JsonProperty(value = "@schemaLocation")
+    private final String location = "https://my.schemas/TelephoneMedium.schema.json";
     private String id;
-
     private Optional<Boolean> preferred;
-
     private Optional<String> mediumType;
-
     private ValidFor validFor;
 
     @JsonIgnore

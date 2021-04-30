@@ -1,8 +1,6 @@
 package com.mycompany.controller;
 
 import com.mycompany.ApiPath;
-import com.mycompany.kafka.Producer;
-import com.mycompany.kafka.service.EventService;
 import com.mycompany.model.CustomerDto;
 import com.mycompany.service.CustomerService;
 import io.swagger.annotations.Api;
@@ -11,10 +9,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/customerManagement/v4")
@@ -23,13 +22,9 @@ import java.util.Optional;
 public class CustomerController implements ApiPath {
 
     private final CustomerService customerService;
-    private final Producer producer;
-    private final EventService eventService;
 
-    public CustomerController(CustomerService customerService, Producer producer, EventService eventService) {
+    public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
-        this.producer = producer;
-        this.eventService = eventService;
     }
 
     @ApiOperation(value = "getAll")
@@ -37,9 +32,6 @@ public class CustomerController implements ApiPath {
     public ResponseEntity<List<CustomerDto>> getAll() {
         log.debug("getAll");
         List<CustomerDto> customerDtoList = customerService.findAllCustomers();
-        if (customerDtoList == null) {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
-        }
         return ResponseEntity.ok().body(customerDtoList);
     }
 
@@ -57,10 +49,10 @@ public class CustomerController implements ApiPath {
     @PostMapping(PATH_CUSTOMER)
     public ResponseEntity<CustomerDto> createCustomer(@Valid @RequestBody CustomerDto customerDto) {
         log.debug("createCustomer");
-        if (customerDto == null) {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
-        }
-        return ResponseEntity.ok().body(customerService.save(customerDto));
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest().path("/{id}")
+                .buildAndExpand(customerDto.getId()).toUri();
+        return ResponseEntity.created(location).body(customerService.save(customerDto));
     }
 
     @ApiOperation(value = "patchCustomer")

@@ -12,7 +12,6 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 1234
       POSTGRES_DB: CustomerManagement
-      PGDATA: /var/lib/postgresql/data/pgdata
     restart: always
   app:
     build: .
@@ -24,7 +23,6 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=1234
       - LOGGING_LEVEL_COM_MYCOMPANY=DEBUG
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=none
       - SPRING_KAFKA_PRODUCER_BOOTSTRAP_SERVERS=kafka:9092
       - SPRING_KAFKA_PRODUCER_KEY_SERIALIZER=org.apache.kafka.common.serialization.StringSerializer
       - SPRING_KAFKA_PRODUCER_VALUE_SERIALIZER=org.apache.kafka.common.serialization.StringSerializer

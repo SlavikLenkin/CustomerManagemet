@@ -14,16 +14,13 @@ import java.util.Optional;
 @Data
 public class CustomerDto {
 
+    @JsonProperty(value = "@type")
+    private final String type = "Customer";
     private String href;
-
     private String id;
-
     private Optional<String> name;
-
     private Optional<String> status;
-
     private Optional<String> statusReason;
-
     @Embedded
     private ValidFor validFor;
 

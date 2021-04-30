@@ -7,7 +7,6 @@ import com.mycompany.repository.Customer;
 import com.mycompany.repository.CustomerRepository;
 import com.mycompany.transfomer.CustomerTransformer;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -20,6 +19,7 @@ import java.util.UUID;
 @Slf4j
 public class CustomerService {
 
+    public static final String CUSTOMER_CREATE_EVENT = "CustomerCreateEvent";
     private final CustomerRepository repository;
     private final AccountService accountService;
     private final EngagedPartyService engagedPartyService;
@@ -56,18 +56,18 @@ public class CustomerService {
 
     @Transactional
     public List<CustomerDto> findAllCustomers() {
-        log.debug("getAllFullCustomer");
-        List<CustomerDto> allCustomerDto = new ArrayList<>();
+        log.debug("getAllCustomer");
+        List<CustomerDto> CustomersDto = new ArrayList<>();
         List<Customer> customers = repository.findAll();
         for (Customer customer : customers) {
-            allCustomerDto.add(customerTransformer.transform(customer));
+            CustomersDto.add(customerTransformer.transform(customer));
         }
-        return allCustomerDto;
+        return CustomersDto;
     }
 
     @Transactional
     public CustomerDto findCustomerById(String id) {
-        log.debug("findCustomerById");
+        log.debug("findCustomerById{}", id);
         return customerTransformer.transform(repository.findCustomerById(id));
     }
 
@@ -113,7 +113,7 @@ public class CustomerService {
                 .save(customerDto.getRelatedParties(), customer));
         customerDto.setContactMediumDtoList(contactMediumService
                 .save(customerDto.getContactMediumDtoList(), customer));
-        this.producer.sendMessage(eventService.createEvent(customerDto, "CustomerCreateEvent")
+        this.producer.sendMessage(eventService.createEvent(customerDto, CUSTOMER_CREATE_EVENT)
                 .toString());
         return customerDto;
     }

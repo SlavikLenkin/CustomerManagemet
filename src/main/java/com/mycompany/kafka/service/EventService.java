@@ -28,12 +28,12 @@ public class EventService {
         eventId++;
         stateChangeEvent.setEventId(String.valueOf(eventId));
         if (status == null) {
-            stateChangeEvent.setStatus("null");
-        }else
+            stateChangeEvent.setStatus(null);
+        } else
             stateChangeEvent.setStatus(Optional.ofNullable(status).toString());
         if (newStatus == null) {
-            stateChangeEvent.setNewStatus("null");
-        }else
+            stateChangeEvent.setNewStatus(null);
+        } else
             stateChangeEvent.setNewStatus(Optional.ofNullable(newStatus).toString());
         stateChangeEvent.setEventType(eventType);
         stateChangeEvent.setEventTime(new Date().toString());

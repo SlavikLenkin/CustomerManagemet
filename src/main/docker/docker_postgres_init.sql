@@ -27,8 +27,8 @@ CREATE TABLE public.account
 
 ALTER TABLE public.account
     OWNER to postgres;
-	
-	
+
+
 CREATE TABLE public.agreement
 (
     id          character varying(100) COLLATE pg_catalog."default" NOT NULL,
@@ -45,8 +45,8 @@ CREATE TABLE public.agreement
 
 ALTER TABLE public.agreement
     OWNER to postgres;
-	
-	
+
+
 CREATE TABLE public.characteristic
 (
     name        character varying(100) COLLATE pg_catalog."default",
@@ -63,7 +63,7 @@ CREATE TABLE public.characteristic
 ) TABLESPACE pg_default;
 
 ALTER TABLE public.characteristic
-    OWNER to postgres;	
+    OWNER to postgres;
 
 CREATE TABLE public.credit_profile
 (
@@ -84,7 +84,7 @@ CREATE TABLE public.credit_profile
 
 ALTER TABLE public.credit_profile
     OWNER to postgres;
-	
+
 CREATE TABLE public.contact_medium
 (
     preferred       boolean                                             NOT NULL,
@@ -103,7 +103,7 @@ CREATE TABLE public.contact_medium
 
 ALTER TABLE public.contact_medium
     OWNER to postgres;
-	
+
 CREATE TABLE public.engaged_party
 (
     href        character varying(100) COLLATE pg_catalog."default",
@@ -146,7 +146,7 @@ CREATE TABLE public.medium_characteristic
 
 ALTER TABLE public.medium_characteristic
     OWNER to postgres;
-	
+
 CREATE TABLE public.payment_method
 (
     href        character varying(100) COLLATE pg_catalog."default",
@@ -163,7 +163,7 @@ CREATE TABLE public.payment_method
 
 ALTER TABLE public.payment_method
     OWNER to postgres;
-	
+
 CREATE TABLE public.related_party
 (
     id          character varying(100) COLLATE pg_catalog."default" NOT NULL,

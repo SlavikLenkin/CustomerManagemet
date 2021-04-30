@@ -1,5 +1,8 @@
 package com.mycompany.service;
 
+import com.mycompany.kafka.Producer;
+import com.mycompany.kafka.model.Event;
+import com.mycompany.kafka.service.EventService;
 import com.mycompany.model.*;
 import com.mycompany.repository.Customer;
 import com.mycompany.repository.CustomerRepository;
@@ -49,6 +52,12 @@ class CustomerServiceTest {
     @Mock
     ContactMediumService contactMediumService;
 
+    @Mock
+    Producer producer;
+
+    @Mock
+    EventService eventService;
+
     @InjectMocks
     CustomerService customerService;
 
@@ -63,6 +72,7 @@ class CustomerServiceTest {
         List<PaymentMethodDto> paymentMethodDtoList = new ArrayList<>();
         List<RelatedPartyDto> relatedPartyDtoList = new ArrayList<>();
         List<ContactMediumDto> contactMediumDtoList = new ArrayList<>();
+        Event event = new Event();
         CustomerDto customerDto = new CustomerDto();
         customerDto.setEngagedParty(engagedPartyDto);
         customerDto.setAccounts(accountDto);
@@ -83,6 +93,7 @@ class CustomerServiceTest {
         Mockito.when(paymentMethodService.save(paymentMethodDtoList, customer)).thenReturn(paymentMethodDtoList);
         Mockito.when(relatedPartyService.save(relatedPartyDtoList, customer)).thenReturn(relatedPartyDtoList);
         Mockito.when(contactMediumService.save(contactMediumDtoList, customer)).thenReturn(contactMediumDtoList);
+        Mockito.when(eventService.createEvent(customerDto,"CustomerCreateEvent")).thenReturn(event);
 
         customerService.save(customerDto);
 
@@ -109,6 +120,7 @@ class CustomerServiceTest {
         List<PaymentMethodDto> paymentMethodDtoList = new ArrayList<>();
         List<RelatedPartyDto> relatedPartyDtoList = new ArrayList<>();
         List<ContactMediumDto> contactMediumDtoList = new ArrayList<>();
+        Event event = new Event();
         CustomerDto customerDto = new CustomerDto();
         customerDto.setEngagedParty(engagedPartyDto);
         customerDto.setAccounts(accountDto);
@@ -130,6 +142,7 @@ class CustomerServiceTest {
         Mockito.when(relatedPartyService.update(relatedPartyDtoList)).thenReturn(relatedPartyDtoList);
         Mockito.when(contactMediumService.update(contactMediumDtoList, customer)).thenReturn(contactMediumDtoList);
         Mockito.when(customerService.findCustomerById(id)).thenReturn(customerDto);
+        Mockito.when(eventService.createEvent(customerDto,"CustomerAttributeValueChangeEvent")).thenReturn(event);
 
         customerService.update(id, customerDto);
 

@@ -1,11 +1,7 @@
 package com.mycompany.repository;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.vladmihalcea.hibernate.type.array.StringArrayType;
 import lombok.Data;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,10 +10,6 @@ import java.util.List;
 @Entity
 @Table(name = "customer")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@TypeDef(
-        name = "string-array",
-        typeClass = StringArrayType.class
-)
 @Data
 public class Customer implements Serializable {
 
